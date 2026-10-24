@@ -190,6 +190,19 @@ public class EditingTests
     }
 
     [Fact]
+    public void Enum_converters_list_and_check_attribute_text_for_editors()
+    {
+        var converter = WixEnumConverters.PackageScopeType;
+
+        Assert.Equal(
+            ["perMachine", "perMachineOrUser", "perUser", "perUserOrMachine"],
+            Enum.GetValues<PackageScopeType>().Select(converter.Format).Order(StringComparer.Ordinal));
+        Assert.Equal(PackageScopeType.PerUser, converter.Parse("perUser").Value);
+        Assert.Equal(WixValueKind.Expression, converter.Parse("$(var.Scope)").Kind);
+        Assert.Equal(WixValueKind.Invalid, converter.Parse("everyone").Kind);
+    }
+
+    [Fact]
     public void Expression_factory_rejects_plain_text()
     {
         Assert.Throws<ArgumentException>(() => WixValue<bool>.FromExpression("maybe"));

@@ -71,7 +71,8 @@ package.Add(new Property { Id = "ARPNOMODIFY", Value = "1" });   // lands in Id 
   whose value hasn't changed, down to individual attributes. Encoding, BOM, line endings and indentation
   are detected and used for new content.
 - **Values can be expressions.** Typed attributes are `WixValue<T>?`: a literal, a `$(var.X)`/`!(loc.X)`
-  expression, or invalid text kept as written. Reading never throws or rewrites.
+  expression, or invalid text kept as written. Reading never throws or rewrites. Editors convert text with
+  `WixConverters` (yes/no, numbers) and `WixEnumConverters` (each enum, e.g. listing its choices).
 - **No global state, no UI.** `netstandard2.0` and `net8.0`; WPF and designers live in IsWiX.
 - **WiX v4+ only.** v3 files are rejected with a hint to run `wix convert`.
 - **Exact WiX names.** Classes, properties and enum values use the names in the WiX schema and docs, even

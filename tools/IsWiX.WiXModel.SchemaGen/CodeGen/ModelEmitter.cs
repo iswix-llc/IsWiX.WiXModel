@@ -196,11 +196,22 @@ internal sealed class ModelEmitter
     {
         var code = Header();
         code.Open($"namespace {Namespace}");
-        code.Open("internal static class WixEnumConverters");
+        code.Line("/// <summary>");
+        code.Line("/// Converters between the generated enums and their attribute text, for editors that list or check values.");
+        code.Line("/// </summary>");
+        code.Open("public static class WixEnumConverters");
+        var first = true;
         foreach (var model in _types.Enums)
         {
             var enumRef = $"global::{Namespace}.{model.Name}";
-            code.Line($"public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<{enumRef}> {model.Name} = new {model.Name}Converter();");
+            if (!first)
+            {
+                code.Line();
+            }
+
+            first = false;
+            code.Line($"/// <summary>Reads and writes <see cref=\"{enumRef}\"/> values as the schema spells them.</summary>");
+            code.Line($"public static global::IsWiX.WiXModel.Core.WixValueConverter<{enumRef}> {model.Name} {{ get; }} = new {model.Name}Converter();");
         }
 
         foreach (var model in _types.Enums)

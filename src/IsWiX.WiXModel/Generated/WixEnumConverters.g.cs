@@ -7,49 +7,133 @@
 
 namespace IsWiX.WiXModel
 {
-    internal static class WixEnumConverters
+    /// <summary>
+    /// Converters between the generated enums and their attribute text, for editors that list or check values.
+    /// </summary>
+    public static class WixEnumConverters
     {
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BitnessType> BitnessType = new BitnessTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ClassThreadingModel> ClassThreadingModel = new ClassThreadingModelConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ColumnCategory> ColumnCategory = new ColumnCategoryConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ColumnModularize> ColumnModularize = new ColumnModularizeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ColumnType> ColumnType = new ColumnTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ComponentLocation> ComponentLocation = new ComponentLocationConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ComponentSearchType> ComponentSearchType = new ComponentSearchTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CompressionLevelType> CompressionLevelType = new CompressionLevelTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ConfigurationFormat> ConfigurationFormat = new ConfigurationFormatConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ControlIconSize> ControlIconSize = new ControlIconSizeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionExecute> CustomActionExecute = new CustomActionExecuteConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionReturn> CustomActionReturn = new CustomActionReturnConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionScript> CustomActionScript = new CustomActionScriptConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.EnvironmentAction> EnvironmentAction = new EnvironmentActionConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.EnvironmentPart> EnvironmentPart = new EnvironmentPartConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ExitType> ExitType = new ExitTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FeatureInstallDefault> FeatureInstallDefault = new FeatureInstallDefaultConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FeatureTypicalDefault> FeatureTypicalDefault = new FeatureTypicalDefaultConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FileAssembly> FileAssembly = new FileAssemblyConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FileProcessorArchitecture> FileProcessorArchitecture = new FileProcessorArchitectureConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.IniFileAction> IniFileAction = new IniFileActionConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.IniFileSearchType> IniFileSearchType = new IniFileSearchTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.InstallUninstallType> InstallUninstallType = new InstallUninstallTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.MajorUpgradeSchedule> MajorUpgradeSchedule = new MajorUpgradeScheduleConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ODBCDataSourceRegistration> ODBCDataSourceRegistration = new ODBCDataSourceRegistrationConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.PackageScopeType> PackageScopeType = new PackageScopeTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryKeyAction> RegistryKeyAction = new RegistryKeyActionConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryRootType> RegistryRootType = new RegistryRootTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistrySearchRoot> RegistrySearchRoot = new RegistrySearchRootConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistrySearchType> RegistrySearchType = new RegistrySearchTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryValueAction> RegistryValueAction = new RegistryValueActionConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryValueType> RegistryValueType = new RegistryValueTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RemoveRegistryKeyAction> RemoveRegistryKeyAction = new RemoveRegistryKeyActionConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.SequenceType> SequenceType = new SequenceTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ServiceInstallErrorControl> ServiceInstallErrorControl = new ServiceInstallErrorControlConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ServiceInstallStart> ServiceInstallStart = new ServiceInstallStartConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ServiceInstallType> ServiceInstallType = new ServiceInstallTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ShortcutShow> ShortcutShow = new ShortcutShowConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.StandardDirectoryType> StandardDirectoryType = new StandardDirectoryTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.UpgradeStrategyType> UpgradeStrategyType = new UpgradeStrategyTypeConverter();
-        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.YesNoDefaultType> YesNoDefaultType = new YesNoDefaultTypeConverter();
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.BitnessType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BitnessType> BitnessType { get; } = new BitnessTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ClassThreadingModel"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ClassThreadingModel> ClassThreadingModel { get; } = new ClassThreadingModelConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ColumnCategory"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ColumnCategory> ColumnCategory { get; } = new ColumnCategoryConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ColumnModularize"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ColumnModularize> ColumnModularize { get; } = new ColumnModularizeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ColumnType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ColumnType> ColumnType { get; } = new ColumnTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ComponentLocation"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ComponentLocation> ComponentLocation { get; } = new ComponentLocationConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ComponentSearchType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ComponentSearchType> ComponentSearchType { get; } = new ComponentSearchTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.CompressionLevelType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CompressionLevelType> CompressionLevelType { get; } = new CompressionLevelTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ConfigurationFormat"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ConfigurationFormat> ConfigurationFormat { get; } = new ConfigurationFormatConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ControlIconSize"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ControlIconSize> ControlIconSize { get; } = new ControlIconSizeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.CustomActionExecute"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionExecute> CustomActionExecute { get; } = new CustomActionExecuteConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.CustomActionReturn"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionReturn> CustomActionReturn { get; } = new CustomActionReturnConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.CustomActionScript"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionScript> CustomActionScript { get; } = new CustomActionScriptConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.EnvironmentAction"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.EnvironmentAction> EnvironmentAction { get; } = new EnvironmentActionConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.EnvironmentPart"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.EnvironmentPart> EnvironmentPart { get; } = new EnvironmentPartConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ExitType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ExitType> ExitType { get; } = new ExitTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.FeatureInstallDefault"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FeatureInstallDefault> FeatureInstallDefault { get; } = new FeatureInstallDefaultConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.FeatureTypicalDefault"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FeatureTypicalDefault> FeatureTypicalDefault { get; } = new FeatureTypicalDefaultConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.FileAssembly"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FileAssembly> FileAssembly { get; } = new FileAssemblyConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.FileProcessorArchitecture"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FileProcessorArchitecture> FileProcessorArchitecture { get; } = new FileProcessorArchitectureConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.IniFileAction"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.IniFileAction> IniFileAction { get; } = new IniFileActionConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.IniFileSearchType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.IniFileSearchType> IniFileSearchType { get; } = new IniFileSearchTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.InstallUninstallType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.InstallUninstallType> InstallUninstallType { get; } = new InstallUninstallTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.MajorUpgradeSchedule"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.MajorUpgradeSchedule> MajorUpgradeSchedule { get; } = new MajorUpgradeScheduleConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ODBCDataSourceRegistration"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ODBCDataSourceRegistration> ODBCDataSourceRegistration { get; } = new ODBCDataSourceRegistrationConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.PackageScopeType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.PackageScopeType> PackageScopeType { get; } = new PackageScopeTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.RegistryKeyAction"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryKeyAction> RegistryKeyAction { get; } = new RegistryKeyActionConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.RegistryRootType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryRootType> RegistryRootType { get; } = new RegistryRootTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.RegistrySearchRoot"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistrySearchRoot> RegistrySearchRoot { get; } = new RegistrySearchRootConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.RegistrySearchType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistrySearchType> RegistrySearchType { get; } = new RegistrySearchTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.RegistryValueAction"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryValueAction> RegistryValueAction { get; } = new RegistryValueActionConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.RegistryValueType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryValueType> RegistryValueType { get; } = new RegistryValueTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.RemoveRegistryKeyAction"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RemoveRegistryKeyAction> RemoveRegistryKeyAction { get; } = new RemoveRegistryKeyActionConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.SequenceType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.SequenceType> SequenceType { get; } = new SequenceTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ServiceInstallErrorControl"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ServiceInstallErrorControl> ServiceInstallErrorControl { get; } = new ServiceInstallErrorControlConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ServiceInstallStart"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ServiceInstallStart> ServiceInstallStart { get; } = new ServiceInstallStartConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ServiceInstallType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ServiceInstallType> ServiceInstallType { get; } = new ServiceInstallTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ShortcutShow"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ShortcutShow> ShortcutShow { get; } = new ShortcutShowConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.StandardDirectoryType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.StandardDirectoryType> StandardDirectoryType { get; } = new StandardDirectoryTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.UpgradeStrategyType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.UpgradeStrategyType> UpgradeStrategyType { get; } = new UpgradeStrategyTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.YesNoDefaultType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.YesNoDefaultType> YesNoDefaultType { get; } = new YesNoDefaultTypeConverter();
 
         private sealed class BitnessTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BitnessType>
         {
