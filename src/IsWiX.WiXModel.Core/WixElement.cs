@@ -59,10 +59,38 @@ namespace IsWiX.WiXModel.Core
         /// <returns>The text, or <see langword="null"/> when the attribute is absent.</returns>
         public string? GetAttributeValue(XName name) => Xml.Attribute(name)?.Value;
 
-        /// <summary>Sets an attribute's text, keeping its position. <see langword="null"/> removes it.</summary>
+        /// <summary>
+        /// Sets an attribute's text, keeping its position. <see langword="null"/> removes it. An attribute in an
+        /// extension namespace that has no prefix yet gets one declared on the root element.
+        /// </summary>
         /// <param name="name">The attribute name.</param>
         /// <param name="value">The text.</param>
-        public void SetAttributeValue(XName name, string? value) => Xml.SetAttributeValue(name, value);
+        public void SetAttributeValue(XName name, string? value)
+        {
+            Xml.SetAttributeValue(name, value);
+            if (value != null && Xml.Document != null)
+            {
+                WixNamespaces.Declare(Xml, name.Namespace);
+            }
+        }
+
+        /// <summary>
+        /// Adds any element as a child, such as one from a WiX extension that has no typed wrapper. It is placed
+        /// and indented like elements added through the typed model, and its namespace (and its attributes')
+        /// gets a prefix declared on the root element if it has none.
+        /// </summary>
+        /// <param name="element">A detached element.</param>
+        /// <returns>The element's wrapper.</returns>
+        /// <exception cref="InvalidOperationException"><paramref name="element"/> already has a parent.</exception>
+        public WixElement AddElement(XElement element)
+        {
+            if (element is null)
+            {
+                throw new ArgumentNullException(nameof(element));
+            }
+
+            return AddChild(Wrap(element));
+        }
 
         /// <summary>
         /// Removes this element from its parent, along with the line it occupied, so that the surrounding

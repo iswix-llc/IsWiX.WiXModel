@@ -13,6 +13,16 @@ namespace IsWiX.WiXModel.Core.Xml
     {
         public static void InsertElement(XElement parent, XElement child)
         {
+            InsertElementCore(parent, child);
+            if (parent.Document != null)
+            {
+                // Extension elements and attributes get xmlns:prefix on the root, not a made-up p1 prefix.
+                WixNamespaces.DeclareAll(child);
+            }
+        }
+
+        private static void InsertElementCore(XElement parent, XElement child)
+        {
             if (parent.Document is null)
             {
                 // Detached trees are laid out when they are added to a document.

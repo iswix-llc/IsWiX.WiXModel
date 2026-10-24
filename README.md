@@ -84,6 +84,9 @@ package.Add(new Property { Id = "ARPNOMODIFY", Value = "1" });   // lands in Id 
 - **Values can be expressions.** Typed attributes are `WixValue<T>?`: a literal, a `$(var.X)`/`!(loc.X)`
   expression, or invalid text kept as written. Reading never throws or rewrites. Editors convert text with
   `WixConverters` (yes/no, numbers) and `WixEnumConverters` (each enum, e.g. listing its choices).
+- **Extension namespaces declare themselves.** Adding an extension element (`element.AddElement(new XElement(WixNamespaces.Extension("util") + "User"))`)
+  or setting an extension attribute declares its namespace on the root with WiX's usual prefix (`util`,
+  `netfx`, `fw`, ...), or keeps the prefix the file already uses, instead of writing a made-up `p1:`.
 - **No global state, no UI.** `netstandard2.0` and `net8.0`; WPF and designers live in IsWiX.
 - **WiX v4+ only.** v3 files are rejected with a hint to run `wix convert`.
 - **Exact WiX names.** Classes, properties and enum values use the names in the WiX schema and docs, even
