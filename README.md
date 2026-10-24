@@ -40,6 +40,20 @@ foreach (var define in document.Defines) { /* Name, Value, IsConditional */ }
 A new define goes after the last unconditional one (or first in the root), on its own line. A name defined
 only inside `<?if?>` or `<?foreach?>` blocks is not changed: which branch is meant is ambiguous.
 
+## Authoring helpers
+
+Common patterns in one call. Each builds its elements completely before adding them, so with an ordering
+set they land at their canonical position:
+
+```csharp
+var app = group.AddFile(@"$(var.SourceDir)\app.exe");            // <Component><File Source KeyPath="yes" /></Component>
+group.AddFolder("INSTALLFOLDER", "logs");                         // a CreateFolder component with its own GUID
+app.AddShortcut("Acme", "ProgramMenuFolder", "Acme");             // advertised by default
+((Component)app.Parent!).AddService("AcmeSvc", "Acme Service");  // ServiceInstall + ServiceControl
+feature.AddComponentGroupRef("Files");                            // no-op when already referenced (also AddMergeRef)
+package.SetPropertyValue("ARPNOMODIFY", "1");                     // adds the property or changes only its Value
+```
+
 ## Diagnostics
 
 `document.Validate()` finds common mistakes without building, and never changes the document. Each
