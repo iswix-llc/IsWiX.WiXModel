@@ -92,6 +92,40 @@ public class RoundTripTests
             $"Only {loadable} of {candidates.Count} corpus files loaded as WiX v4+ sources.");
     }
 
+    [Theory]
+    [MemberData(nameof(CorpusFiles))]
+    public void Canonicalizing_keeps_every_node_and_is_idempotent(string path)
+    {
+        var document = WixSourceDocument.Load(new MemoryStream(IOFile.ReadAllBytes(path)));
+        document.Ordering = CanonicalOrder.Create();
+        var before = Inventory(document.Xml);
+
+        document.Canonicalize();
+        var text = document.ToString();
+
+        Assert.Equal(before, Inventory(document.Xml));
+        Assert.Equal(0, document.Canonicalize());
+        var reloaded = WixSourceDocument.Parse(text);
+        reloaded.Ordering = CanonicalOrder.Create();
+        Assert.Equal(0, reloaded.Canonicalize());
+        Assert.Equal(text, reloaded.ToString());
+    }
+
+    /// <summary>Every element (with its attributes and parent), comment and processing instruction, in a fixed order.</summary>
+    private static List<string> Inventory(System.Xml.Linq.XDocument xml) =>
+        xml.DescendantNodes()
+            .Select(n => n switch
+            {
+                System.Xml.Linq.XElement e => $"E {e.Parent?.Name} > {e.Name} " + string.Join(" ", e.Attributes().Select(a => $"{a.Name}={a.Value}")),
+                System.Xml.Linq.XComment c => $"C {c.Parent?.Name} {c.Value}",
+                System.Xml.Linq.XProcessingInstruction pi => $"P {pi.Parent?.Name} {pi.Target} {pi.Data}",
+                _ => null,
+            })
+            .Where(s => s != null)
+            .Select(s => s!)
+            .OrderBy(s => s, StringComparer.Ordinal)
+            .ToList();
+
     [Fact]
     public void Utf16_document_round_trips()
     {

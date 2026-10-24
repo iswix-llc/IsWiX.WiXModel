@@ -29,6 +29,28 @@ The schema lets `<Include>` hold any element, so its contents are read through `
 and other preprocessor instructions are kept exactly as written. Loading a file with the wrong class fails
 with a message naming the right one.
 
+## Canonical order
+
+For files that are branched and merged, an element's position should depend only on the file's content, not
+on the order edits happened in. Set an ordering on the document and the model inserts every new element at
+its canonical position:
+
+```csharp
+var document = WixDocument.Load("Product.wxs");
+document.Ordering = CanonicalOrder.Create();   // IsWiX's conventions
+document.Canonicalize();                        // optional: re-sort what is already there
+package.Add(new Property { Id = "ARPNOMODIFY", Value = "1" });   // lands in Id order among the properties
+```
+
+- `CanonicalOrder.Create()` is IsWiX's order: `Package` and `Fragment` children by kind (summary information
+  and upgrade first, sequences last), `Property` and top-level `Feature` by `Id`, `Component` in a
+  `ComponentGroup` by file source, `File` by source. Kinds it does not list go last, in their existing order.
+- Rules are data on a `WixOrdering` (`OrderChildren`, `SortBy`), so they can be extended or replaced.
+- `Canonicalize()` moves each element together with the comments directly above it, leaves an already
+  canonical document byte-for-byte unchanged, and never reorders a parent containing `<?if?>` or
+  `<?foreach?>` (new elements go after such blocks instead).
+- Without an ordering (the default), new elements go after the last sibling of the same kind.
+
 ## Layout
 
 | Path | What it is |

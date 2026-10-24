@@ -5,7 +5,9 @@ namespace IsWiX.WiXModel.Core.Xml
 {
     /// <summary>
     /// Keeps hand-edited files readable when the model adds or removes elements: new elements are indented
-    /// like their siblings and removed elements take their line with them.
+    /// like their siblings and removed elements take their line with them. With a <see cref="WixOrdering"/>
+    /// attached to the document, a new element goes at its canonical position; otherwise after the last sibling
+    /// of the same kind, or at the end.
     /// </summary>
     internal static class XmlLayout
     {
@@ -19,8 +21,25 @@ namespace IsWiX.WiXModel.Core.Xml
             }
 
             var indent = LosslessXml.GetFormat(parent.Document).Indent;
-            var anchor = (XNode?)parent.Elements(child.Name).LastOrDefault()
-                ?? parent.Nodes().LastOrDefault(n => !IsWhitespace(n));
+            XNode? anchor;
+            var ordering = WixOrdering.Get(parent.Document);
+            if (ordering != null && ordering.TryFindPredecessor(parent, child, out var predecessor))
+            {
+                anchor = predecessor;
+                if (anchor is null && parent.Elements().FirstOrDefault() is { } first)
+                {
+                    // Canonically first: go in front of the current first element, on its line.
+                    var firstIndent = IndentOf(first) ?? IndentOf(parent) + indent;
+                    first.AddBeforeSelf(child, new XText("\n" + firstIndent));
+                    FormatSubtree(child, firstIndent, indent);
+                    return;
+                }
+            }
+            else
+            {
+                anchor = (XNode?)parent.Elements(child.Name).LastOrDefault()
+                    ?? parent.Nodes().LastOrDefault(n => !IsWhitespace(n));
+            }
 
             string childIndent;
             if (anchor != null)

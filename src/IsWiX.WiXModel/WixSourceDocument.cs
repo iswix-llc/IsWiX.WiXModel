@@ -33,6 +33,27 @@ namespace IsWiX.WiXModel
         public bool IsLossless => LosslessXml.IsLossless(Xml);
 
         /// <summary>
+        /// Gets or sets the rules that place elements in canonical order, such as <see cref="CanonicalOrder.Create"/>.
+        /// With an ordering set, adding an element through the model inserts it at its canonical position, so the
+        /// result depends only on content, not on edit order. <see langword="null"/> (the default) adds after the
+        /// last sibling of the same kind.
+        /// </summary>
+        public WixOrdering? Ordering
+        {
+            get => WixOrdering.Get(Xml);
+            set => WixOrdering.Set(Xml, value);
+        }
+
+        /// <summary>
+        /// Re-sorts every element's children into canonical order using <see cref="Ordering"/>. Parents already in
+        /// order are untouched, so an already-canonical document still saves byte-for-byte.
+        /// </summary>
+        /// <returns>The number of parents whose children were re-sorted.</returns>
+        /// <exception cref="InvalidOperationException">No <see cref="Ordering"/> is set.</exception>
+        public int Canonicalize() =>
+            (Ordering ?? throw new InvalidOperationException("Set Ordering before calling Canonicalize, for example to CanonicalOrder.Create().")).Canonicalize(Xml);
+
+        /// <summary>
         /// Loads a .wxs or .wxi file, returning a <see cref="WixDocument"/> or a <see cref="WixIncludeDocument"/>
         /// depending on its root element. Use this when the kind of file is not known in advance.
         /// </summary>
