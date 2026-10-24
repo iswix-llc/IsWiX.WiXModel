@@ -1,0 +1,30 @@
+{
+  "schemaDirectory": "../../schemas/bal",
+  "schemaVersion": "v7.0.0",
+  "outputDirectory": "Generated/Bal",
+  "namespace": "IsWiX.WiXModel.Bal",
+  "base": "schemagen.json",
+  "memberPrefix": "Bal",
+  "elements": [
+    "BootstrapperApplicationPrerequisiteInformation",
+    "Condition",
+    "ManagedBootstrapperApplicationPrereqInformation",
+    "WixDotNetCoreBootstrapperApplicationHost",
+    "WixInternalUIBootstrapperApplication",
+    "WixManagedBootstrapperApplicationHost",
+    "WixPrerequisiteBootstrapperApplication",
+    "WixStandardBootstrapperApplication"
+  ],
+  "attributes": [
+    "BAFactoryAssembly",
+    "BAFunctions",
+    "CommandLineVariables",
+    "DisplayFilesInUseDialogCondition",
+    "DisplayInternalUICondition",
+    "Overridable",
+    "PrereqLicenseFile",
+    "PrereqLicenseUrl",
+    "PrereqPackage",
+    "PrimaryPackageType"
+  ]
+}

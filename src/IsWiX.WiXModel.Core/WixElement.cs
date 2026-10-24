@@ -117,7 +117,7 @@ namespace IsWiX.WiXModel.Core
         /// <summary>Sets or removes a string attribute.</summary>
         /// <param name="name">The attribute name.</param>
         /// <param name="value">The text; <see langword="null"/> removes the attribute.</param>
-        protected void SetString(XName name, string? value) => Xml.SetAttributeValue(name, value);
+        protected void SetString(XName name, string? value) => SetAttributeValue(name, value);
 
         /// <summary>Gets a typed attribute.</summary>
         /// <typeparam name="T">The literal type.</typeparam>
@@ -136,7 +136,7 @@ namespace IsWiX.WiXModel.Core
         /// <param name="converter">The attribute's converter.</param>
         /// <param name="value">The value; <see langword="null"/> removes the attribute.</param>
         protected void SetValue<T>(XName name, WixValueConverter<T> converter, WixValue<T>? value) =>
-            Xml.SetAttributeValue(name, value.HasValue ? converter.ToText(value.Value) : null);
+            SetAttributeValue(name, value.HasValue ? converter.ToText(value.Value) : null);
 
         /// <summary>Gets the child elements with a given name.</summary>
         /// <typeparam name="T">The wrapper type registered for <paramref name="name"/>.</typeparam>

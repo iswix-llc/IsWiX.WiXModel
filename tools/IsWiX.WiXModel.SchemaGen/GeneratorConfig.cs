@@ -10,7 +10,8 @@ namespace IsWiX.WiXModel.SchemaGen;
 /// <summary>
 /// The contents of <c>schemagen.json</c> (core WiX) or <c>schemagen.&lt;extension&gt;.json</c>. Paths are relative to
 /// the file. An extension names the core config as its <see cref="Base"/>: its attributes may use core types, and its
-/// elements' core parents get typed accessors prefixed with <see cref="MemberPrefix"/>.
+/// elements' core parents get typed accessors prefixed with <see cref="MemberPrefix"/>. Its top-level
+/// <see cref="Attributes"/> become typed properties of the core elements they go on.
 /// </summary>
 internal sealed record GeneratorConfig(
     string SchemaDirectory,
@@ -19,7 +20,8 @@ internal sealed record GeneratorConfig(
     string Namespace,
     IReadOnlyList<string> Elements,
     string? Base = null,
-    string? MemberPrefix = null)
+    string? MemberPrefix = null,
+    IReadOnlyList<string>? Attributes = null)
 {
     private static readonly JsonSerializerOptions Options = new() { PropertyNameCaseInsensitive = true };
 

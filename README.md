@@ -56,7 +56,7 @@ package.SetPropertyValue("ARPNOMODIFY", "1");                     // adds the pr
 
 ## Extension elements
 
-The elements of three WiX extensions are typed too. The core elements they nest in get collections and
+The elements of four WiX extensions are typed too. The core elements they nest in get collections and
 `Add` overloads, and adding one declares the extension's namespace on the root (`xmlns:util`, ...):
 
 | Extension | Namespace | Core members |
@@ -64,6 +64,7 @@ The elements of three WiX extensions are typed too. The core elements they nest 
 | Util | `IsWiX.WiXModel.Util` | `Util`-prefixed: `component.UtilUsers`, `component.UtilXmlFiles` |
 | NetFx | `IsWiX.WiXModel.NetFx` | `NetFx`-prefixed: `file.NetFxNativeImages`, `fragment.NetFxDotNetCoreSearches` |
 | UI | `IsWiX.WiXModel.UIExtension` (`UI` is the core element) | `package.WixUIs`, `ui.WixUIs` |
+| Bal | `IsWiX.WiXModel.Bal` | `Bal`-prefixed: `bootstrapperApplication.BalWixStandardBootstrapperApplications`, `bundle.BalConditions` |
 
 ```csharp
 var user = component.Add(new Util.User { Id = "SvcUser", Name = "svc", LogonAsService = true });
@@ -71,6 +72,11 @@ user.Add(new Util.GroupRef { Id = "Users" });
 file.Add(new NetFx.NativeImage { Id = "AppNgen", Platform = NetFx.NativeImagePlatformType.All });
 package.Add(new UIExtension.WixUI { Id = "WixUI_InstallDir", InstallDirectory = "INSTALLFOLDER" });
 ```
+
+Attributes an extension adds to core elements are typed properties of those elements, with the same prefix:
+`variable.BalOverridable`, `msiPackage.BalPrereqPackage`, `bundle.BalCommandLineVariables`. Setting one declares
+its namespace too, or keeps the prefix the file already uses. (Diagnostics don't check these attributes'
+values yet.)
 
 Extension attributes typed with core WiX types use the core enums (`Util.RegistrySearch.Bitness` is a
 `WixValue<BitnessType>?`). Elements of other extensions are still read and kept as `WixUnknownElement`.
@@ -88,8 +94,18 @@ bundle.Chains.Single().Add(new ExePackage { Id = "Prereq", SourceFile = "prereq.
 foreach (var search in bundle.UtilRegistrySearches) { /* Root, Key, Value, Bitness, ... */ }
 ```
 
-The bootstrapper application's own elements (`bal:WixStandardBootstrapperApplication`, ...) are in the Bal
-extension, which is not typed yet. Patch authoring (`Patch`, `PatchFamily`, ...) isn't typed yet either.
+The bootstrapper application comes from the Bal extension:
+
+```csharp
+bundle.BootstrapperApplications.Single().Add(new Bal.WixStandardBootstrapperApplication
+{
+    Theme = Bal.WixStandardBootstrapperApplicationTheme.RtfLicense,
+    LicenseFile = "License.rtf",
+});
+bundle.Variables.Single().BalOverridable = true;   // bal:Overridable="yes"
+```
+
+Patch authoring (`Patch`, `PatchFamily`, ...) isn't typed yet either.
 
 ## Diagnostics
 
@@ -139,7 +155,7 @@ package.Add(new Property { Id = "ARPNOMODIFY", Value = "1" });   // lands in Id 
 | `src/IsWiX.WiXModel.Core` | Infrastructure: lossless XML load/save (`LosslessXml`), `WixValue<T>` and converters, the `WixElement` base class and wrapper registry. No WiX element types. |
 | `src/IsWiX.WiXModel` | `WixDocument` plus the generated element wrappers in `Generated/` (checked in, never hand-edited). |
 | `tools/IsWiX.WiXModel.SchemaGen` | Reads the WiX schema fragments and emits `src/IsWiX.WiXModel/Generated`. |
-| `schemas/wix`, `schemas/util`, `schemas/netfx`, `schemas/ui` | The WiX core and extension schemas, vendored from the `v7.0.0` tag (see `schemas/README.md`). |
+| `schemas/wix`, `schemas/util`, `schemas/netfx`, `schemas/ui`, `schemas/bal` | The WiX core and extension schemas, vendored from the `v7.0.0` tag (see `schemas/README.md`). |
 | `tests/IsWiX.WiXModel.Tests` | Round-trip, editing and generator tests. |
 
 ## Design rules
@@ -208,7 +224,7 @@ silently wins, so the .NET type must always be qualified or aliased there.
 ## Regenerating the model
 
 Add element names to `src/IsWiX.WiXModel/schemagen.json` (or `schemagen.<extension>.json` for an
-extension: util, netfx, ui), then run the generator on that config:
+extension: util, netfx, ui, bal), then run the generator on that config:
 
 ```bash
 dotnet run --project tools/IsWiX.WiXModel.SchemaGen -- src/IsWiX.WiXModel/schemagen.json
@@ -219,7 +235,8 @@ dotnet run --project tools/IsWiX.WiXModel.SchemaGen -- src/IsWiX.WiXModel/schema
 ```
 
 An extension config names the core config as its `base` (for core types such as `wxs:YesNoTypeUnion`) and a
-`memberPrefix` for the collections it adds to core parents (empty for UI, whose `WixUI` needs none).
+`memberPrefix` for the collections it adds to core parents (empty for UI, whose `WixUI` needs none). Its
+`attributes` lists the top-level attributes it adds to core elements (Bal's `Overridable`, ...).
 `Generated_code_is_up_to_date` fails if the checked-in output doesn't match the generator.
 
 ## Testing

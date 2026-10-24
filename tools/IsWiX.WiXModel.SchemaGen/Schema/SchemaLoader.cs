@@ -8,7 +8,7 @@ namespace IsWiX.WiXModel.SchemaGen.Schema;
 
 /// <summary>
 /// Reads the WiX repository's per-element schema fragments. Each file holds one top-level
-/// <c>element</c>, <c>simpleType</c>, <c>complexType</c> or <c>attributeGroup</c> written without a namespace (the WiX build
+/// <c>element</c>, <c>attribute</c>, <c>simpleType</c>, <c>complexType</c> or <c>attributeGroup</c> written without a namespace (the WiX build
 /// wraps them in an <c>xs:schema</c>), so names are matched by local name.
 /// </summary>
 internal static class SchemaLoader
@@ -19,6 +19,7 @@ internal static class SchemaLoader
         var simpleTypes = new Dictionary<string, SimpleTypeDefinition>(StringComparer.Ordinal);
         var attributeGroups = new Dictionary<string, XElement>(StringComparer.Ordinal);
         var complexTypes = new Dictionary<string, XElement>(StringComparer.Ordinal);
+        var attributes = new Dictionary<string, GlobalAttribute>(StringComparer.Ordinal);
         string? targetNamespace = null;
 
         foreach (var file in Directory.EnumerateFiles(directory, "*.xsd").OrderBy(f => f, StringComparer.Ordinal))
@@ -44,6 +45,10 @@ internal static class SchemaLoader
                 case "attributeGroup":
                     attributeGroups.Add(name, root);
                     break;
+                case "attribute":
+                    // An extension attribute for elements of another namespace (bal:Overridable on a core Variable).
+                    attributes.Add(name, new GlobalAttribute(ReadAttribute(root), Parents(root)));
+                    break;
                 case "complexType":
                     // Shared content models such as ActionSequenceType, used by the standard actions.
                     if (Child(root, "complexContent") != null)
@@ -65,7 +70,8 @@ internal static class SchemaLoader
         return new SchemaSet(
             targetNamespace ?? throw new InvalidDataException($"{directory} has no ns.xsd declaring the target namespace."),
             definitions,
-            simpleTypes);
+            simpleTypes,
+            attributes);
     }
 
     private static ElementDefinition ReadElement(
@@ -156,16 +162,7 @@ internal static class SchemaLoader
             switch (child.Name.LocalName)
             {
                 case "attribute":
-                    var attributeName = (string?)child.Attribute("name")
-                        ?? throw new NotSupportedException($"Attribute references ('{(string?)child.Attribute("ref")}') are not supported.");
-                    var inline = Child(child, "simpleType");
-                    attributes.Add(new AttributeDefinition(
-                        attributeName,
-                        (string?)child.Attribute("type"),
-                        inline is null ? null : ReadSimpleType(inline, null),
-                        (string?)child.Attribute("use") == "required",
-                        Documentation(child),
-                        (string?)child.Attribute("version")));
+                    attributes.Add(ReadAttribute(child));
                     break;
                 case "attributeGroup":
                     var groupName = (string)child.Attribute("ref")!;
@@ -173,6 +170,20 @@ internal static class SchemaLoader
                     break;
             }
         }
+    }
+
+    private static AttributeDefinition ReadAttribute(XElement attribute)
+    {
+        var name = (string?)attribute.Attribute("name")
+            ?? throw new NotSupportedException($"Attribute references ('{(string?)attribute.Attribute("ref")}') are not supported.");
+        var inline = Child(attribute, "simpleType");
+        return new AttributeDefinition(
+            name,
+            (string?)attribute.Attribute("type"),
+            inline is null ? null : ReadSimpleType(inline, null),
+            (string?)attribute.Attribute("use") == "required",
+            Documentation(attribute),
+            (string?)attribute.Attribute("version"));
     }
 
     private static SimpleTypeDefinition ReadSimpleType(XElement simpleType, string? name)

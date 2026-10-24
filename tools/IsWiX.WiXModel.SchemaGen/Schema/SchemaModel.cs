@@ -5,7 +5,11 @@ namespace IsWiX.WiXModel.SchemaGen.Schema;
 internal sealed record SchemaSet(
     string TargetNamespace,
     IReadOnlyDictionary<string, ElementDefinition> Elements,
-    IReadOnlyDictionary<string, SimpleTypeDefinition> SimpleTypes);
+    IReadOnlyDictionary<string, SimpleTypeDefinition> SimpleTypes,
+    IReadOnlyDictionary<string, GlobalAttribute>? Attributes = null);
+
+/// <summary>A top-level attribute an extension schema adds to elements of another namespace (bal:Overridable).</summary>
+internal sealed record GlobalAttribute(AttributeDefinition Definition, IReadOnlyList<ParentReference> Parents);
 
 internal sealed record ElementDefinition(
     string Name,

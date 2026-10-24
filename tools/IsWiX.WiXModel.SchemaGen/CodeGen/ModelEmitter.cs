@@ -60,12 +60,20 @@ internal sealed class ModelEmitter
             throw new InvalidOperationException($"Elements not found in the schema: {string.Join(", ", missing)}.");
         }
 
+        var missingAttributes = (_config.Attributes ?? []).Where(a => _schema.Attributes?.ContainsKey(a) != true).ToList();
+        if (missingAttributes.Count > 0)
+        {
+            throw new InvalidOperationException($"Attributes not found in the schema: {string.Join(", ", missingAttributes)}.");
+        }
+
         var elements = _config.Elements.Distinct(StringComparer.Ordinal).Select(e => _schema.Elements[e]).ToList();
         var files = elements.Select(e => new GeneratedFile(e.Name + ".g.cs", EmitElement(e))).ToList();
+
+        // Before the enums: extension attributes on core parents may add some.
+        files.AddRange(EmitParentAccessors(elements));
         files.Add(new GeneratedFile("Enums.g.cs", EmitEnums()));
         files.Add(new GeneratedFile("WixEnumConverters.g.cs", EmitEnumConverters()));
         files.Add(new GeneratedFile("WixModelRegistration.g.cs", EmitRegistration(elements)));
-        files.AddRange(EmitParentAccessors(elements));
         return files.OrderBy(f => f.FileName, StringComparer.Ordinal).ToList();
     }
 
@@ -138,7 +146,13 @@ internal sealed class ModelEmitter
     private void EmitAttribute(CodeWriter code, ElementDefinition element, AttributeDefinition attribute, HashSet<string> used)
     {
         var propertyName = Naming.Unique(attribute.Name, used, "Attribute");
-        var type = _types.Map(element, attribute);
+        EmitProperty(code, attribute, propertyName, _types.Map(element, attribute), Naming.Literal(attribute.Name), null);
+    }
+
+    /// <param name="name">A C# expression for the attribute's XName.</param>
+    /// <param name="summary">The summary, or <see langword="null"/> for the attribute's own documentation.</param>
+    private static void EmitProperty(CodeWriter code, AttributeDefinition attribute, string propertyName, AttributeType type, string name, string? summary)
+    {
         var remarks = new List<string>();
         if (attribute.Required)
         {
@@ -150,8 +164,7 @@ internal sealed class ModelEmitter
             remarks.Add($"Requires WiX v{version} or later.");
         }
 
-        code.Documentation(Naming.Paragraphs(attribute.Documentation), remarks);
-        var name = Naming.Literal(attribute.Name);
+        code.Documentation(summary is null ? Naming.Paragraphs(attribute.Documentation) : [summary, .. Naming.Paragraphs(attribute.Documentation)], remarks);
         if (type.IsString)
         {
             code.Line($"public string? {propertyName}");
@@ -301,8 +314,9 @@ internal sealed class ModelEmitter
 
     /// <summary>
     /// For an extension: the core elements its elements may be nested in get a typed collection and Add overload
-    /// for each, in a partial class next to the generated core one (<c>component.UtilUsers</c>,
-    /// <c>component.Add(new Util.User())</c>).
+    /// for each, and the core elements its top-level attributes go on get a typed property for each, in a partial
+    /// class next to the generated core one (<c>component.UtilUsers</c>, <c>component.Add(new Util.User())</c>,
+    /// <c>variable.BalOverridable</c>).
     /// </summary>
     private IEnumerable<GeneratedFile> EmitParentAccessors(IReadOnlyList<ElementDefinition> elements)
     {
@@ -315,17 +329,21 @@ internal sealed class ModelEmitter
 
         // WiX's usual prefix for the namespace: its last segment (util, netfx, ui).
         var xmlPrefix = _schema.TargetNamespace[(_schema.TargetNamespace.LastIndexOf('/') + 1)..];
-        var byParent = elements
-            .SelectMany(e => (e.Parents ?? []).Where(p => p.Namespace == _baseSchema.TargetNamespace && _baseConfig.Elements.Contains(p.Name)).Select(p => (Parent: p.Name, Child: e.Name)))
-            .GroupBy(p => p.Parent, p => p.Child, StringComparer.Ordinal)
-            .OrderBy(g => g.Key, StringComparer.Ordinal);
-        foreach (var group in byParent)
+        bool IsCoreParent(ParentReference p) => p.Namespace == _baseSchema.TargetNamespace && _baseConfig.Elements.Contains(p.Name);
+        var children = elements
+            .SelectMany(e => (e.Parents ?? []).Where(IsCoreParent).Select(p => (Parent: p.Name, Child: e.Name)))
+            .ToLookup(p => p.Parent, p => p.Child, StringComparer.Ordinal);
+        var attributes = (_config.Attributes ?? []).Distinct(StringComparer.Ordinal).Select(a => _schema.Attributes![a])
+            .SelectMany(a => a.Parents.Where(IsCoreParent).Select(p => (Parent: p.Name, Attribute: a.Definition)))
+            .ToLookup(p => p.Parent, p => p.Attribute, StringComparer.Ordinal);
+        var parents = children.Select(g => g.Key).Union(attributes.Select(g => g.Key), StringComparer.Ordinal).Order(StringComparer.Ordinal);
+        foreach (var parent in parents)
         {
             var code = Header();
             code.Open($"namespace {_baseConfig.Namespace}");
-            code.Open($"public sealed partial class {group.Key}");
+            code.Open($"public sealed partial class {parent}");
             var first = true;
-            foreach (var child in group.OrderBy(c => c, StringComparer.Ordinal))
+            foreach (var child in children[parent].Order(StringComparer.Ordinal))
             {
                 var childRef = $"global::{Namespace}.{child}";
                 if (!first)
@@ -343,9 +361,26 @@ internal sealed class ModelEmitter
                 code.Line($"public {childRef} Add({childRef} child) => AddChild(child);");
             }
 
+            foreach (var attribute in attributes[parent].OrderBy(a => a.Name, StringComparer.Ordinal))
+            {
+                if (!first)
+                {
+                    code.Line();
+                }
+
+                first = false;
+                EmitProperty(
+                    code,
+                    attribute,
+                    prefix + attribute.Name,
+                    _types.MapGlobal(attribute),
+                    $"{XmlNamespace} + {Naming.Literal(attribute.Name)}",
+                    $"The <c>{xmlPrefix}:{attribute.Name}</c> attribute. Setting it declares its namespace on the root if needed.");
+            }
+
             code.Close();
             code.Close();
-            yield return new GeneratedFile($"{group.Key}.{_config.Namespace[(_config.Namespace.LastIndexOf('.') + 1)..]}.g.cs", code.ToString());
+            yield return new GeneratedFile($"{parent}.{_config.Namespace[(_config.Namespace.LastIndexOf('.') + 1)..]}.g.cs", code.ToString());
         }
     }
 

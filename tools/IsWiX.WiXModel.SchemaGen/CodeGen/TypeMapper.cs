@@ -61,6 +61,12 @@ internal sealed class TypeMapper
             ? MapSimpleType(inline, InlineEnumName(owner, attribute))
             : MapNamedType(attribute.TypeName);
 
+    /// <summary>Maps a top-level extension attribute; an inline enum is named after the attribute (PrimaryPackageType).</summary>
+    public AttributeType MapGlobal(AttributeDefinition attribute) =>
+        attribute.InlineType is { } inline
+            ? MapSimpleType(inline, _schema.SimpleTypes.ContainsKey(attribute.Name) ? attribute.Name + "Type" : attribute.Name)
+            : MapNamedType(attribute.TypeName);
+
     private AttributeType MapNamedType(string? typeName)
     {
         if (typeName != null && typeName.IndexOf(':') is > 0 and var colon && !typeName.StartsWith("xs:", StringComparison.Ordinal))
