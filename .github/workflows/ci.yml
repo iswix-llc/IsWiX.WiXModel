@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    steps:
+      - name: Check out the pull request
+        uses: actions/checkout@v4
+
+      # The SDK comes from global.json; the tests run on the .NET 8 runtime.
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+          dotnet-version: 8.0.x
+
+      - name: Build
+        run: dotnet build IsWiX.WiXModel.slnx -c Release
+
+      # Includes the check that src/IsWiX.WiXModel/Generated matches the generator.
+      - name: Test
+        run: dotnet test IsWiX.WiXModel.slnx -c Release --no-build
+
+      - name: Pack
+        run: dotnet pack IsWiX.WiXModel.slnx -c Release --no-build -o nupkg

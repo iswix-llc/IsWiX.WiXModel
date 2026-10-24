@@ -1,0 +1,131 @@
+name: Publish NuGet packages
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: Which part of the version to increment
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      # The SDK comes from global.json; the tests run on the .NET 8 runtime.
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+          dotnet-version: 8.0.x
+
+      # Both packages share the <Version> in src/Directory.Build.props.
+      - name: Increment the version
+        id: version
+        shell: pwsh
+        run: |
+          $props = 'src/Directory.Build.props'
+          $text = [IO.File]::ReadAllText($props)
+          if ($text -notmatch '<Version>(\d+)\.(\d+)\.(\d+)</Version>') { throw 'No <Version> element found.' }
+          $major = [int]$Matches[1]; $minor = [int]$Matches[2]; $patch = [int]$Matches[3]
+          switch ('${{ inputs.bump }}') {
+            'major' { $major++; $minor = 0; $patch = 0 }
+            'minor' { $minor++; $patch = 0 }
+            'patch' { $patch++ }
+          }
+          $new = "$major.$minor.$patch"
+          $text = $text -replace '<Version>\d+\.\d+\.\d+</Version>', "<Version>$new</Version>"
+          [IO.File]::WriteAllText($props, $text, (New-Object Text.UTF8Encoding($false)))
+          "version=$new" >> $env:GITHUB_OUTPUT
+          Write-Host "Publishing version $new"
+
+      - name: Build and test
+        shell: pwsh
+        run: |
+          dotnet build IsWiX.WiXModel.slnx -c Release
+          dotnet test IsWiX.WiXModel.slnx -c Release --no-build
+
+      - name: Sign in to Azure (federated identity)
+        uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # Each project's bin/Release holds a folder per target framework (netstandard2.0, net8.0).
+      - name: Sign IsWiX.WiXModel.Core (Artifact Signing)
+        uses: azure/artifact-signing-action@v2
+        with:
+          endpoint: https://eus.codesigning.azure.net/
+          signing-account-name: ISWIX-LLC
+          certificate-profile-name: IsWiX
+          files-folder: ${{ github.workspace }}/src/IsWiX.WiXModel.Core/bin/Release
+          files-folder-filter: dll
+          files-folder-recurse: true
+          file-digest: SHA256
+          timestamp-rfc3161: http://timestamp.acs.microsoft.com
+          timestamp-digest: SHA256
+
+      - name: Sign IsWiX.WiXModel (Artifact Signing)
+        uses: azure/artifact-signing-action@v2
+        with:
+          endpoint: https://eus.codesigning.azure.net/
+          signing-account-name: ISWIX-LLC
+          certificate-profile-name: IsWiX
+          files-folder: ${{ github.workspace }}/src/IsWiX.WiXModel/bin/Release
+          files-folder-filter: dll
+          files-folder-recurse: true
+          file-digest: SHA256
+          timestamp-rfc3161: http://timestamp.acs.microsoft.com
+          timestamp-digest: SHA256
+
+      - name: Pack
+        shell: pwsh
+        run: |
+          dotnet pack src/IsWiX.WiXModel.Core/IsWiX.WiXModel.Core.csproj -c Release -o nupkg --no-build
+          dotnet pack src/IsWiX.WiXModel/IsWiX.WiXModel.csproj -c Release -o nupkg --no-build
+
+      - name: Get a short-lived NuGet key (trusted publishing)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
+      # Core first: IsWiX.WiXModel depends on it. Symbol packages (.snupkg) beside each .nupkg are pushed with it.
+      - name: Publish to nuget.org
+        shell: pwsh
+        run: |
+          $v = '${{ steps.version.outputs.version }}'
+          foreach ($id in 'IsWiX.WiXModel.Core', 'IsWiX.WiXModel') {
+            dotnet nuget push "nupkg/$id.$v.nupkg" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
+            if ($LASTEXITCODE -ne 0) { throw "Pushing $id $v failed." }
+          }
+
+      - name: Commit and tag the release
+        shell: pwsh
+        run: |
+          $v = '${{ steps.version.outputs.version }}'
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add src/Directory.Build.props
+          git commit -m "Release $v"
+          git tag "v$v"
+          git push origin main --follow-tags
