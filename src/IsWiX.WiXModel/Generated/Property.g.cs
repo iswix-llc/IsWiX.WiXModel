@@ -11,9 +11,7 @@ namespace IsWiX.WiXModel
     /// Property value for a Package or Module.
     /// </summary>
     /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: ComplianceDrive,
-    /// ComponentSearch, RegistrySearch, RegistrySearchRef, IniFileSearch, DirectorySearch, DirectorySearchRef,
-    /// ProductSearch.
+    /// Child elements not yet in the typed model are available through Children and Xml: ComplianceDrive.
     /// </remarks>
     public sealed partial class Property : global::IsWiX.WiXModel.Core.WixElement
     {
@@ -102,5 +100,61 @@ namespace IsWiX.WiXModel
             get => GetValue("SuppressModularization", global::IsWiX.WiXModel.Core.WixConverters.YesNo);
             set => SetValue("SuppressModularization", global::IsWiX.WiXModel.Core.WixConverters.YesNo, value);
         }
+
+        /// <summary>Gets the child <c>ComponentSearch</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ComponentSearch> ComponentSearches => GetChildren<global::IsWiX.WiXModel.ComponentSearch>(global::IsWiX.WiXModel.ComponentSearch.ElementName);
+
+        /// <summary>Adds a <c>ComponentSearch</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.ComponentSearch Add(global::IsWiX.WiXModel.ComponentSearch child) => AddChild(child);
+
+        /// <summary>Gets the child <c>RegistrySearch</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.RegistrySearch> RegistrySearches => GetChildren<global::IsWiX.WiXModel.RegistrySearch>(global::IsWiX.WiXModel.RegistrySearch.ElementName);
+
+        /// <summary>Adds a <c>RegistrySearch</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.RegistrySearch Add(global::IsWiX.WiXModel.RegistrySearch child) => AddChild(child);
+
+        /// <summary>Gets the child <c>RegistrySearchRef</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.RegistrySearchRef> RegistrySearchRefs => GetChildren<global::IsWiX.WiXModel.RegistrySearchRef>(global::IsWiX.WiXModel.RegistrySearchRef.ElementName);
+
+        /// <summary>Adds a <c>RegistrySearchRef</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.RegistrySearchRef Add(global::IsWiX.WiXModel.RegistrySearchRef child) => AddChild(child);
+
+        /// <summary>Gets the child <c>IniFileSearch</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.IniFileSearch> IniFileSearches => GetChildren<global::IsWiX.WiXModel.IniFileSearch>(global::IsWiX.WiXModel.IniFileSearch.ElementName);
+
+        /// <summary>Adds a <c>IniFileSearch</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.IniFileSearch Add(global::IsWiX.WiXModel.IniFileSearch child) => AddChild(child);
+
+        /// <summary>Gets the child <c>DirectorySearch</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.DirectorySearch> DirectorySearches => GetChildren<global::IsWiX.WiXModel.DirectorySearch>(global::IsWiX.WiXModel.DirectorySearch.ElementName);
+
+        /// <summary>Adds a <c>DirectorySearch</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.DirectorySearch Add(global::IsWiX.WiXModel.DirectorySearch child) => AddChild(child);
+
+        /// <summary>Gets the child <c>DirectorySearchRef</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.DirectorySearchRef> DirectorySearchRefs => GetChildren<global::IsWiX.WiXModel.DirectorySearchRef>(global::IsWiX.WiXModel.DirectorySearchRef.ElementName);
+
+        /// <summary>Adds a <c>DirectorySearchRef</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.DirectorySearchRef Add(global::IsWiX.WiXModel.DirectorySearchRef child) => AddChild(child);
+
+        /// <summary>Gets the child <c>ProductSearch</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ProductSearch> ProductSearches => GetChildren<global::IsWiX.WiXModel.ProductSearch>(global::IsWiX.WiXModel.ProductSearch.ElementName);
+
+        /// <summary>Adds a <c>ProductSearch</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.ProductSearch Add(global::IsWiX.WiXModel.ProductSearch child) => AddChild(child);
     }
 }

@@ -13,7 +13,7 @@ internal sealed class ModelEmitter
     // Members of WixElement and object that generated members must not hide.
     private static readonly HashSet<string> ReservedMembers = new(StringComparer.Ordinal)
     {
-        "Xml", "Parent", "Children", "Wrap", "Remove", "Add", "ElementName",
+        "Xml", "Parent", "Children", "Wrap", "RemoveFromParent", "Add", "ElementName",
         "GetAttributeValue", "SetAttributeValue", "GetString", "SetString", "GetValue", "SetValue",
         "GetChildren", "AddChild", "ToString", "Equals", "GetHashCode", "GetType",
     };
@@ -100,7 +100,10 @@ internal sealed class ModelEmitter
         foreach (var child in typedChildren)
         {
             var childRef = $"global::{Namespace}.{child}";
-            var propertyName = Naming.Unique(Naming.Plural(child), used, "Elements");
+            // Standard actions (InstallFiles, CostFinalize, ...) are verbs that share one content model;
+            // "CostFinalizes" is not a word, so they are all named CostFinalizeElements and so on.
+            var collectionName = _schema.Elements[child].SharedContentType != null ? child + "Elements" : Naming.Plural(child);
+            var propertyName = Naming.Unique(collectionName, used, "Elements");
 
             code.Line();
             code.Line($"/// <summary>Gets the child <c>{child}</c> elements.</summary>");

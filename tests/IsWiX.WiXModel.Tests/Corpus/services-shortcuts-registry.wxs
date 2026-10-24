@@ -1,0 +1,47 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <ComponentGroup Id="Service" Directory="INSTALLFOLDER">
+      <!-- A Windows service, as the IsWiX services designer writes it. -->
+      <Component Id="AcmeService" Bitness="always64">
+        <File Id="AcmeServiceExe" Source="AcmeService.exe" KeyPath="yes" />
+        <ServiceInstall Name="AcmeService" DisplayName="Acme Service" Description="Runs Acme jobs"
+                        Type="ownProcess" Start="auto" ErrorControl="normal" Account="NT AUTHORITY\LocalService" Vital="yes">
+          <ServiceDependency Id="Tcpip" />
+          <ServiceConfig DelayedAutoStart="yes" OnInstall="yes" OnReinstall="yes">
+            <RequiredPrivilege Name="SeChangeNotifyPrivilege" />
+          </ServiceConfig>
+          <ServiceConfigFailureActions OnInstall="yes" ResetPeriod="86400">
+            <Failure Action="restartService" Delay="60000" />
+            <Failure Action="none" Delay="0" />
+          </ServiceConfigFailureActions>
+        </ServiceInstall>
+        <ServiceControl Name="AcmeService" Start="install" Stop="both" Remove="uninstall" Wait="yes">
+          <ServiceArgument Value="--quiet" />
+        </ServiceControl>
+      </Component>
+
+      <Component Id="Shortcuts" Directory="ProgramMenuFolder">
+        <Shortcut Id="AcmeShortcut" Name="Acme" Target="[INSTALLFOLDER]Acme.exe" WorkingDirectory="INSTALLFOLDER" Show="minimized" Icon="App.ico">
+          <ShortcutProperty Key="System.AppUserModel.ID" Value="Acme.App" />
+        </Shortcut>
+        <RemoveFolder Id="RemoveProgramMenu" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\Acme" Name="ShortcutInstalled" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+
+      <Component Id="Settings">
+        <RegistryKey Root="HKLM" Key="Software\Acme\Settings" ForceDeleteOnUninstall="yes">
+          <RegistryValue Name="Mode" Type="string" Value="production" />
+          <RegistryValue Name="Servers" Type="multiString" Action="append">
+            <MultiStringValue Value="alpha" />
+            <MultiStringValue Value="beta" />
+          </RegistryValue>
+          <RegistryKey Key="Logging">
+            <RegistryValue Name="Level" Type="integer" Value="3" />
+          </RegistryKey>
+        </RegistryKey>
+        <Environment Id="AcmePath" Name="PATH" Value="[INSTALLFOLDER]" Action="set" Part="last" System="yes" Permanent="no" />
+        <IniFile Id="AcmeIni" Name="acme.ini" Directory="INSTALLFOLDER" Section="General" Key="Mode" Value="production" Action="addLine" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

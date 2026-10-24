@@ -115,7 +115,7 @@ public class EditingTests
         var document = Parse(Tree);
         var directory = document.Root.Packages.Single().Directories.Single();
 
-        directory.Components.Single().Remove();
+        directory.Components.Single().RemoveFromParent();
 
         Assert.Equal(Lf("""
             <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
@@ -238,7 +238,7 @@ public class EditingTests
 
         Assert.Throws<InvalidOperationException>(() => package.Add(component));
 
-        component.Remove();
+        component.RemoveFromParent();
         package.Add(component);
         Assert.Same(package, component.Parent);
     }

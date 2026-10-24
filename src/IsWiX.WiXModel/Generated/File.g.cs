@@ -12,7 +12,7 @@ namespace IsWiX.WiXModel
     /// </summary>
     /// <remarks>
     /// Child elements not yet in the typed model are available through Children and Xml: AssemblyName, Permission,
-    /// PermissionEx, CopyFile, Shortcut, ODBCDriver, ODBCTranslator, SymbolPath, Class, AppId, TypeLib.
+    /// PermissionEx, CopyFile, ODBCDriver, ODBCTranslator, SymbolPath, Class, AppId, TypeLib.
     /// </remarks>
     public sealed partial class File : global::IsWiX.WiXModel.Core.WixElement
     {
@@ -375,5 +375,13 @@ namespace IsWiX.WiXModel
             get => GetValue("PatchWholeFile", global::IsWiX.WiXModel.Core.WixConverters.YesNo);
             set => SetValue("PatchWholeFile", global::IsWiX.WiXModel.Core.WixConverters.YesNo, value);
         }
+
+        /// <summary>Gets the child <c>Shortcut</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Shortcut> Shortcuts => GetChildren<global::IsWiX.WiXModel.Shortcut>(global::IsWiX.WiXModel.Shortcut.ElementName);
+
+        /// <summary>Adds a <c>Shortcut</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Shortcut Add(global::IsWiX.WiXModel.Shortcut child) => AddChild(child);
     }
 }

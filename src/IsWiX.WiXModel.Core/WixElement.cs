@@ -68,7 +68,10 @@ namespace IsWiX.WiXModel.Core
         /// Removes this element from its parent, along with the line it occupied, so that the surrounding
         /// layout is unchanged.
         /// </summary>
-        public void Remove()
+        /// <remarks>
+        /// Not named <c>Remove</c>: WiX attributes such as <c>ServiceControl/@Remove</c> need that name.
+        /// </remarks>
+        public void RemoveFromParent()
         {
             if (Xml.Parent is null)
             {
@@ -134,7 +137,7 @@ namespace IsWiX.WiXModel.Core
             // point at the original, so moving must be explicit.
             if (child.Xml.Parent != null || child.Xml.Document != null)
             {
-                throw new InvalidOperationException($"<{child.Xml.Name.LocalName}> already has a parent. Call Remove() before adding it elsewhere.");
+                throw new InvalidOperationException($"<{child.Xml.Name.LocalName}> already has a parent. Call RemoveFromParent() before adding it elsewhere.");
             }
 
             if (child.Xml == Xml || child.Xml.Descendants().Contains(Xml))

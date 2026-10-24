@@ -1,0 +1,40 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="Actions" Manufacturer="Acme" Version="1.0.0.0">
+    <Binary Id="CustomActionsDll" SourceFile="CustomActions.CA.dll" />
+
+    <CustomAction Id="ConfigureService" BinaryRef="CustomActionsDll" DllEntry="ConfigureService" Execute="deferred" Impersonate="no" Return="check" />
+    <CustomAction Id="SetConfigureServiceData" Property="ConfigureService" Value="INSTALLFOLDER=[INSTALLFOLDER]" />
+    <CustomActionRef Id="WixFailWhenDeferred" />
+
+    <InstallExecuteSequence>
+      <Custom Action="SetConfigureServiceData" Before="ConfigureService" />
+      <Custom Action="ConfigureService" After="InstallFiles" Condition="NOT Installed" />
+      <RemoveExistingProducts After="InstallInitialize" />
+      <LaunchConditions Suppress="yes" />
+      <InstallFiles Sequence="4000" />
+    </InstallExecuteSequence>
+    <InstallUISequence>
+      <Custom Action="SetConfigureServiceData" After="CostFinalize" />
+      <FindRelatedProducts Before="LaunchConditions" />
+    </InstallUISequence>
+    <AdminExecuteSequence />
+
+    <Property Id="EXISTINGDIR">
+      <DirectorySearch Id="ExistingInstall" Path="[ProgramFiles64Folder]Acme" Depth="1">
+        <FileSearch Id="ExistingExe" Name="Acme.exe" MinVersion="1.0.0.0" />
+      </DirectorySearch>
+    </Property>
+    <Property Id="RUNTIMEFOUND">
+      <ComponentSearch Id="RuntimeComponent" Guid="1A2B3C4D-5E6F-4071-8293-A4B5C6D7E8F9" Type="file" />
+    </Property>
+    <Property Id="LEGACYINI">
+      <IniFileSearch Id="LegacyIni" Name="legacy.ini" Section="Install" Key="Dir" Type="directory" />
+    </Property>
+    <Property Id="OLDPRODUCT">
+      <ProductSearch UpgradeCode="9A8B7C6D-5E4F-4321-ABCD-EF0123456789" Maximum="2.0.0" />
+    </Property>
+    <Property Id="SHAREDSEARCH">
+      <RegistrySearchRef Id="SharedRegistrySearch" />
+    </Property>
+  </Package>
+</Wix>

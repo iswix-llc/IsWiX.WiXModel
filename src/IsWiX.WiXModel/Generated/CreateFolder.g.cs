@@ -11,8 +11,7 @@ namespace IsWiX.WiXModel
     /// Create folder as part of parent Component.
     /// </summary>
     /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: Shortcut, Permission,
-    /// PermissionEx.
+    /// Child elements not yet in the typed model are available through Children and Xml: Permission, PermissionEx.
     /// </remarks>
     public sealed partial class CreateFolder : global::IsWiX.WiXModel.Core.WixElement
     {
@@ -48,5 +47,13 @@ namespace IsWiX.WiXModel
             get => GetString("Subdirectory");
             set => SetString("Subdirectory", value);
         }
+
+        /// <summary>Gets the child <c>Shortcut</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Shortcut> Shortcuts => GetChildren<global::IsWiX.WiXModel.Shortcut>(global::IsWiX.WiXModel.Shortcut.ElementName);
+
+        /// <summary>Adds a <c>Shortcut</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Shortcut Add(global::IsWiX.WiXModel.Shortcut child) => AddChild(child);
     }
 }

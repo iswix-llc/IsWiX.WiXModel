@@ -66,6 +66,32 @@ namespace IsWiX.WiXModel
     }
 
     /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum ComponentSearchType
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;directory&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The key path of the component is a directory.
+        /// </para>
+        /// </summary>
+        Directory,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;file&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The key path of the component is a file. This is the default value.
+        /// </para>
+        /// </summary>
+        File,
+    }
+
+    /// <summary>
     /// Indicates the compression level for a cabinet.
     /// </summary>
     public enum CompressionLevelType
@@ -94,6 +120,255 @@ namespace IsWiX.WiXModel
         /// Written as &lt;c&gt;none&lt;/c&gt;.
         /// </summary>
         None,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum CustomActionExecute
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;commit&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Indicates that the custom action will run after successful completion of the installation script (at the end
+        /// of the installation).
+        /// </para>
+        /// </summary>
+        Commit,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;deferred&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Indicates that the custom action runs in-script (possibly with elevated privileges).
+        /// </para>
+        /// </summary>
+        Deferred,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;firstSequence&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Indicates that the custom action will only run in the first sequence that runs it.
+        /// </para>
+        /// </summary>
+        FirstSequence,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;immediate&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Indicates that the custom action will run during normal processing time with user privileges. This is the
+        /// default.
+        /// </para>
+        /// </summary>
+        Immediate,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;oncePerProcess&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Indicates that the custom action will only run in the first sequence that runs it in the same process.
+        /// </para>
+        /// </summary>
+        OncePerProcess,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;rollback&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Indicates that a custom action will run in the rollback sequence when a failure occurs during installation,
+        /// usually to undo changes made by a deferred custom action.
+        /// </para>
+        /// </summary>
+        Rollback,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;secondSequence&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Indicates that a custom action should be run a second time if it was previously run in an earlier sequence.
+        /// </para>
+        /// </summary>
+        SecondSequence,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum CustomActionReturn
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;asyncNoWait&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Indicates that the custom action will run asyncronously and execution may continue after the installer
+        /// terminates.
+        /// </para>
+        /// </summary>
+        AsyncNoWait,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;asyncWait&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Indicates that the custom action will run asynchronously but the installer will wait for the return code at
+        /// sequence end.
+        /// </para>
+        /// </summary>
+        AsyncWait,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;check&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Indicates that the custom action will run synchronously and the return code will be checked for success. This
+        /// is the default.
+        /// </para>
+        /// </summary>
+        Check,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;ignore&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Indicates that the custom action will run synchronously and the return code will not be checked.
+        /// </para>
+        /// </summary>
+        Ignore,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum CustomActionScript
+    {
+        /// <summary>
+        /// Written as &lt;c&gt;jscript&lt;/c&gt;.
+        /// </summary>
+        Jscript,
+
+        /// <summary>
+        /// Written as &lt;c&gt;vbscript&lt;/c&gt;.
+        /// </summary>
+        Vbscript,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum EnvironmentAction
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;create&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Creates the environment variable if it does not exist, then set it during installation. This has no effect on
+        /// the value of the environment variable if it already exists.
+        /// </para>
+        /// </summary>
+        Create,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;set&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Creates the environment variable if it does not exist, and then set it during installation. If the environment
+        /// variable exists, set it during the installation.
+        /// </para>
+        /// </summary>
+        Set,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;remove&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Removes the environment variable during an installation. The installer only removes an environment variable
+        /// during an installation if the name and value of the variable match the entries in the Name and Value
+        /// attributes. If you want to remove an environment variable, regardless of its value, do not set the Value
+        /// attribute.
+        /// </para>
+        /// </summary>
+        Remove,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum EnvironmentPart
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;all&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// This value is the entire environmental variable. This is the default.
+        /// </para>
+        /// </summary>
+        All,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;first&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// This value is prefixed.
+        /// </para>
+        /// </summary>
+        First,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;last&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// This value is appended.
+        /// </para>
+        /// </summary>
+        Last,
+    }
+
+    /// <summary>
+    /// Value indicates that this action is executed if the installer returns the associated exit type. Each exit type
+    /// can be used with no more than one action. Multiple actions can have exit types assigned, but every action and
+    /// exit type must be different. Exit types are typically used with dialog boxes.
+    /// </summary>
+    public enum ExitType
+    {
+        /// <summary>
+        /// Written as &lt;c&gt;success&lt;/c&gt;.
+        /// </summary>
+        Success,
+
+        /// <summary>
+        /// Written as &lt;c&gt;cancel&lt;/c&gt;.
+        /// </summary>
+        Cancel,
+
+        /// <summary>
+        /// Written as &lt;c&gt;error&lt;/c&gt;.
+        /// </summary>
+        Error,
+
+        /// <summary>
+        /// Written as &lt;c&gt;suspend&lt;/c&gt;.
+        /// </summary>
+        Suspend,
     }
 
     /// <summary>
@@ -240,6 +515,98 @@ namespace IsWiX.WiXModel
         /// </para>
         /// </summary>
         Ia64,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum IniFileAction
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;addLine&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Creates or updates an .ini entry.
+        /// </para>
+        /// </summary>
+        AddLine,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;addTag&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Creates a new entry or appends a new comma-separated value to an existing entry.
+        /// </para>
+        /// </summary>
+        AddTag,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;createLine&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Creates an .ini entry only if the entry does no already exist.
+        /// </para>
+        /// </summary>
+        CreateLine,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;removeLine&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Removes an .ini entry.
+        /// </para>
+        /// </summary>
+        RemoveLine,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;removeTag&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Removes a tag from an .ini entry.
+        /// </para>
+        /// </summary>
+        RemoveTag,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum IniFileSearchType
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;directory&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// A directory location.
+        /// </para>
+        /// </summary>
+        Directory,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;file&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// A file location. This is the default value.
+        /// </para>
+        /// </summary>
+        File,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;raw&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// A raw .ini value.
+        /// </para>
+        /// </summary>
+        Raw,
     }
 
     /// <summary>
@@ -405,6 +772,291 @@ namespace IsWiX.WiXModel
     }
 
     /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum RegistryKeyAction
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;create&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Creates the key, if absent, when the parent component is installed.
+        /// </para>
+        /// </summary>
+        Create,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;createAndRemoveOnUninstall&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Creates the key, if absent, when the parent component is installed then remove the key with all its values and
+        /// subkeys when the parent component is uninstalled. Note that this value is useful only if your program creates
+        /// additional values or subkeys under this key and you want an uninstall to remove them. MSI already removes all
+        /// values and subkeys that it creates, so this option just adds additional overhead to uninstall.
+        /// </para>
+        /// </summary>
+        CreateAndRemoveOnUninstall,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;none&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Does nothing; this element is used merely in WiX authoring for organization and does nothing to the final
+        /// output. This is the default value.
+        /// </para>
+        /// </summary>
+        None,
+    }
+
+    /// <summary>
+    /// Values of this type represent possible registry roots.
+    /// </summary>
+    public enum RegistryRootType
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;HKMU&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// A per-user installation will make the operation occur under HKEY_CURRENT_USER. A per-machine installation will
+        /// make the operation occur under HKEY_LOCAL_MACHINE.
+        /// </para>
+        /// </summary>
+        HKMU,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;HKCR&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Operation occurs under HKEY_CLASSES_ROOT. When using Windows 2000 or later, the installer writes or removes
+        /// the value from the HKCU\Software\Classes hive during per-user installations. When using Windows 2000 or later
+        /// operating systems, the installer writes or removes the value from the HKLM\Software\Classes hive during
+        /// per-machine installations.
+        /// </para>
+        /// </summary>
+        HKCR,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;HKCU&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Operation occurs under HKEY_CURRENT_USER. It is recommended to set the KeyPath attribute to `yes` when setting
+        /// this value for writing values in order to ensure that the installer writes the necessary registry entries when
+        /// there are multiple users on the same computer.
+        /// </para>
+        /// </summary>
+        HKCU,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;HKLM&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Operation occurs under HKEY_LOCAL_MACHINE.
+        /// </para>
+        /// </summary>
+        HKLM,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;HKU&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Operation occurs under HKEY_USERS.
+        /// </para>
+        /// </summary>
+        HKU,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum RegistrySearchRoot
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;HKCR&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// HKEY_CLASSES_ROOT
+        /// </para>
+        /// </summary>
+        HKCR,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;HKCU&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// HKEY_CURRENT_USER
+        /// </para>
+        /// </summary>
+        HKCU,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;HKLM&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// HKEY_LOCAL_MACHINE
+        /// </para>
+        /// </summary>
+        HKLM,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;HKU&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// HKEY_USERS
+        /// </para>
+        /// </summary>
+        HKU,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum RegistrySearchType
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;directory&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The registry value contains the path to a directory.
+        /// </para>
+        /// </summary>
+        Directory,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;file&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The registry value contains the path to a file. To return the full file path you must add a FileSearch element
+        /// as a child of this element; otherwise, the parent directory of the file path is returned.
+        /// </para>
+        /// </summary>
+        File,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;raw&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Sets the raw value from the registry value. Please note that this value will contain a prefix as follows:
+        /// </para>
+        /// <para>
+        /// - DWORD: Starts with `#` optionally followed by `+` or `-`. - REG_BINARY: Starts with `#x` and the installer
+        /// converts and saves each hexadecimal digit (nibble) as an ASCII character prefixed by `#x`. - REG_EXPAND_SZ:
+        /// Starts with `#%`. - REG_MULTI_SZ: Starts with `[~]` and ends with `[~]`. - REG_SZ: No prefix, but if the first
+        /// character of the registry value is `#`, the installer escapes the character by prefixing it with another `#`.
+        /// </para>
+        /// </summary>
+        Raw,
+    }
+
+    /// <summary>
+    /// Values of this type represent possible registry value actions.
+    /// </summary>
+    public enum RegistryValueAction
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;append&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Appends the specified value(s) to a multiString registry value.
+        /// </para>
+        /// </summary>
+        Append,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;prepend&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Prepends the specified value(s) to a multiString registry value.
+        /// </para>
+        /// </summary>
+        Prepend,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;write&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Writes a registry value.
+        /// </para>
+        /// </summary>
+        Write,
+    }
+
+    /// <summary>
+    /// Values of this type represent possible registry value types.
+    /// </summary>
+    public enum RegistryValueType
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;string&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The value is interpreted and stored as a string (REG_SZ).
+        /// </para>
+        /// </summary>
+        String,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;integer&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The value is interpreted and stored as an integer (REG_DWORD).
+        /// </para>
+        /// </summary>
+        Integer,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;binary&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The value is interpreted and stored as a hexadecimal value (REG_BINARY).
+        /// </para>
+        /// </summary>
+        Binary,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;expandable&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The value is interpreted and stored as an expandable string (REG_EXPAND_SZ).
+        /// </para>
+        /// </summary>
+        Expandable,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;multiString&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The value is interpreted and stored as a multiple strings (REG_MULTI_SZ). Please note that this value will
+        /// only result in a multi-string value if there is more than one registry value or the Action attribute's value
+        /// is 'append' or 'prepend'. Otherwise a string value will be created.
+        /// </para>
+        /// </summary>
+        MultiString,
+    }
+
+    /// <summary>
     /// Controls which sequences the item assignment is sequenced in.
     /// </summary>
     public enum SequenceType
@@ -449,6 +1101,183 @@ namespace IsWiX.WiXModel
         /// </para>
         /// </summary>
         Ui,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum ServiceInstallErrorControl
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;ignore&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Logs the error and continues with the startup operation.
+        /// </para>
+        /// </summary>
+        Ignore,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;normal&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Logs the error, displays a message box and continues the startup operation.
+        /// </para>
+        /// </summary>
+        Normal,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;critical&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Logs the error if it is possible and the system is restarted with the last configuration known to be good. If
+        /// the last-known-good configuration is being started, the startup operation fails.
+        /// </para>
+        /// </summary>
+        Critical,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum ServiceInstallStart
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;auto&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The service will start during startup of the system.
+        /// </para>
+        /// </summary>
+        Auto,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;demand&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The service will start when the service control manager calls the StartService function.
+        /// </para>
+        /// </summary>
+        Demand,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;disabled&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The service can no longer be started.
+        /// </para>
+        /// </summary>
+        Disabled,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;boot&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The service is a device driver that will be started by the operating system boot loader. This value is not
+        /// currently supported by the Windows Installer.
+        /// </para>
+        /// </summary>
+        Boot,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;system&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The service is a device driver that will be started by the IoInitSystem function. This value is not currently
+        /// supported by the Windows Installer.
+        /// </para>
+        /// </summary>
+        System,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum ServiceInstallType
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;ownProcess&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// A Win32 service that runs its own process.
+        /// </para>
+        /// </summary>
+        OwnProcess,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;shareProcess&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// A Win32 service that shares a process.
+        /// </para>
+        /// </summary>
+        ShareProcess,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;kernelDriver&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// A kernel driver service. This value is not currently supported by the Windows Installer.
+        /// </para>
+        /// </summary>
+        KernelDriver,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;systemDriver&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// A file system driver service. This value is not currently supported by the Windows Installer.
+        /// </para>
+        /// </summary>
+        SystemDriver,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum ShortcutShow
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;normal&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The shortcut target will be displayed using the SW_SHOWNORMAL attribute.
+        /// </para>
+        /// </summary>
+        Normal,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;minimized&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The shortcut target will be displayed using the SW_SHOWMINNOACTIVE attribute.
+        /// </para>
+        /// </summary>
+        Minimized,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;maximized&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The shortcut target will be displayed using the SW_SHOWMAXIMIZED attribute.
+        /// </para>
+        /// </summary>
+        Maximized,
     }
 
     /// <summary>

@@ -23,7 +23,7 @@ public class RoundTripTests
     {
         var data = new TheoryData<string>();
         var folders = new List<string> { Path.Combine(AppContext.BaseDirectory, "Corpus") };
-        folders.AddRange((Environment.GetEnvironmentVariable("WIXMODEL_CORPUS") ?? string.Empty)
+        folders.AddRange((System.Environment.GetEnvironmentVariable("WIXMODEL_CORPUS") ?? string.Empty)
             .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
 
         foreach (var file in folders.SelectMany(f => IODirectory.EnumerateFiles(f, "*.wxs", SearchOption.AllDirectories)).Where(IsWixV4Source))

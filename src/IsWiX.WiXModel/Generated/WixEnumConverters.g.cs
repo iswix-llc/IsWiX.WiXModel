@@ -11,15 +11,34 @@ namespace IsWiX.WiXModel
     {
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BitnessType> BitnessType = new BitnessTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ComponentLocation> ComponentLocation = new ComponentLocationConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ComponentSearchType> ComponentSearchType = new ComponentSearchTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CompressionLevelType> CompressionLevelType = new CompressionLevelTypeConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionExecute> CustomActionExecute = new CustomActionExecuteConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionReturn> CustomActionReturn = new CustomActionReturnConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionScript> CustomActionScript = new CustomActionScriptConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.EnvironmentAction> EnvironmentAction = new EnvironmentActionConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.EnvironmentPart> EnvironmentPart = new EnvironmentPartConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ExitType> ExitType = new ExitTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FeatureInstallDefault> FeatureInstallDefault = new FeatureInstallDefaultConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FeatureTypicalDefault> FeatureTypicalDefault = new FeatureTypicalDefaultConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FileAssembly> FileAssembly = new FileAssemblyConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FileProcessorArchitecture> FileProcessorArchitecture = new FileProcessorArchitectureConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.IniFileAction> IniFileAction = new IniFileActionConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.IniFileSearchType> IniFileSearchType = new IniFileSearchTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.InstallUninstallType> InstallUninstallType = new InstallUninstallTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.MajorUpgradeSchedule> MajorUpgradeSchedule = new MajorUpgradeScheduleConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.PackageScopeType> PackageScopeType = new PackageScopeTypeConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryKeyAction> RegistryKeyAction = new RegistryKeyActionConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryRootType> RegistryRootType = new RegistryRootTypeConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistrySearchRoot> RegistrySearchRoot = new RegistrySearchRootConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistrySearchType> RegistrySearchType = new RegistrySearchTypeConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryValueAction> RegistryValueAction = new RegistryValueActionConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryValueType> RegistryValueType = new RegistryValueTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.SequenceType> SequenceType = new SequenceTypeConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ServiceInstallErrorControl> ServiceInstallErrorControl = new ServiceInstallErrorControlConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ServiceInstallStart> ServiceInstallStart = new ServiceInstallStartConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ServiceInstallType> ServiceInstallType = new ServiceInstallTypeConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ShortcutShow> ShortcutShow = new ShortcutShowConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.StandardDirectoryType> StandardDirectoryType = new StandardDirectoryTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.UpgradeStrategyType> UpgradeStrategyType = new UpgradeStrategyTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.YesNoDefaultType> YesNoDefaultType = new YesNoDefaultTypeConverter();
@@ -98,6 +117,38 @@ namespace IsWiX.WiXModel
             }
         }
 
+        private sealed class ComponentSearchTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ComponentSearchType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.ComponentSearchType value)
+            {
+                switch (text)
+                {
+                    case "directory":
+                        value = global::IsWiX.WiXModel.ComponentSearchType.Directory;
+                        return true;
+                    case "file":
+                        value = global::IsWiX.WiXModel.ComponentSearchType.File;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.ComponentSearchType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.ComponentSearchType.Directory:
+                        return "directory";
+                    case global::IsWiX.WiXModel.ComponentSearchType.File:
+                        return "file";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a ComponentSearchType value.");
+                }
+            }
+        }
+
         private sealed class CompressionLevelTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CompressionLevelType>
         {
             public override bool TryParse(string text, out global::IsWiX.WiXModel.CompressionLevelType value)
@@ -141,6 +192,253 @@ namespace IsWiX.WiXModel
                         return "none";
                     default:
                         throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a CompressionLevelType value.");
+                }
+            }
+        }
+
+        private sealed class CustomActionExecuteConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionExecute>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.CustomActionExecute value)
+            {
+                switch (text)
+                {
+                    case "commit":
+                        value = global::IsWiX.WiXModel.CustomActionExecute.Commit;
+                        return true;
+                    case "deferred":
+                        value = global::IsWiX.WiXModel.CustomActionExecute.Deferred;
+                        return true;
+                    case "firstSequence":
+                        value = global::IsWiX.WiXModel.CustomActionExecute.FirstSequence;
+                        return true;
+                    case "immediate":
+                        value = global::IsWiX.WiXModel.CustomActionExecute.Immediate;
+                        return true;
+                    case "oncePerProcess":
+                        value = global::IsWiX.WiXModel.CustomActionExecute.OncePerProcess;
+                        return true;
+                    case "rollback":
+                        value = global::IsWiX.WiXModel.CustomActionExecute.Rollback;
+                        return true;
+                    case "secondSequence":
+                        value = global::IsWiX.WiXModel.CustomActionExecute.SecondSequence;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.CustomActionExecute value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.CustomActionExecute.Commit:
+                        return "commit";
+                    case global::IsWiX.WiXModel.CustomActionExecute.Deferred:
+                        return "deferred";
+                    case global::IsWiX.WiXModel.CustomActionExecute.FirstSequence:
+                        return "firstSequence";
+                    case global::IsWiX.WiXModel.CustomActionExecute.Immediate:
+                        return "immediate";
+                    case global::IsWiX.WiXModel.CustomActionExecute.OncePerProcess:
+                        return "oncePerProcess";
+                    case global::IsWiX.WiXModel.CustomActionExecute.Rollback:
+                        return "rollback";
+                    case global::IsWiX.WiXModel.CustomActionExecute.SecondSequence:
+                        return "secondSequence";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a CustomActionExecute value.");
+                }
+            }
+        }
+
+        private sealed class CustomActionReturnConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionReturn>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.CustomActionReturn value)
+            {
+                switch (text)
+                {
+                    case "asyncNoWait":
+                        value = global::IsWiX.WiXModel.CustomActionReturn.AsyncNoWait;
+                        return true;
+                    case "asyncWait":
+                        value = global::IsWiX.WiXModel.CustomActionReturn.AsyncWait;
+                        return true;
+                    case "check":
+                        value = global::IsWiX.WiXModel.CustomActionReturn.Check;
+                        return true;
+                    case "ignore":
+                        value = global::IsWiX.WiXModel.CustomActionReturn.Ignore;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.CustomActionReturn value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.CustomActionReturn.AsyncNoWait:
+                        return "asyncNoWait";
+                    case global::IsWiX.WiXModel.CustomActionReturn.AsyncWait:
+                        return "asyncWait";
+                    case global::IsWiX.WiXModel.CustomActionReturn.Check:
+                        return "check";
+                    case global::IsWiX.WiXModel.CustomActionReturn.Ignore:
+                        return "ignore";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a CustomActionReturn value.");
+                }
+            }
+        }
+
+        private sealed class CustomActionScriptConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionScript>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.CustomActionScript value)
+            {
+                switch (text)
+                {
+                    case "jscript":
+                        value = global::IsWiX.WiXModel.CustomActionScript.Jscript;
+                        return true;
+                    case "vbscript":
+                        value = global::IsWiX.WiXModel.CustomActionScript.Vbscript;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.CustomActionScript value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.CustomActionScript.Jscript:
+                        return "jscript";
+                    case global::IsWiX.WiXModel.CustomActionScript.Vbscript:
+                        return "vbscript";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a CustomActionScript value.");
+                }
+            }
+        }
+
+        private sealed class EnvironmentActionConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.EnvironmentAction>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.EnvironmentAction value)
+            {
+                switch (text)
+                {
+                    case "create":
+                        value = global::IsWiX.WiXModel.EnvironmentAction.Create;
+                        return true;
+                    case "set":
+                        value = global::IsWiX.WiXModel.EnvironmentAction.Set;
+                        return true;
+                    case "remove":
+                        value = global::IsWiX.WiXModel.EnvironmentAction.Remove;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.EnvironmentAction value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.EnvironmentAction.Create:
+                        return "create";
+                    case global::IsWiX.WiXModel.EnvironmentAction.Set:
+                        return "set";
+                    case global::IsWiX.WiXModel.EnvironmentAction.Remove:
+                        return "remove";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a EnvironmentAction value.");
+                }
+            }
+        }
+
+        private sealed class EnvironmentPartConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.EnvironmentPart>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.EnvironmentPart value)
+            {
+                switch (text)
+                {
+                    case "all":
+                        value = global::IsWiX.WiXModel.EnvironmentPart.All;
+                        return true;
+                    case "first":
+                        value = global::IsWiX.WiXModel.EnvironmentPart.First;
+                        return true;
+                    case "last":
+                        value = global::IsWiX.WiXModel.EnvironmentPart.Last;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.EnvironmentPart value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.EnvironmentPart.All:
+                        return "all";
+                    case global::IsWiX.WiXModel.EnvironmentPart.First:
+                        return "first";
+                    case global::IsWiX.WiXModel.EnvironmentPart.Last:
+                        return "last";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a EnvironmentPart value.");
+                }
+            }
+        }
+
+        private sealed class ExitTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ExitType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.ExitType value)
+            {
+                switch (text)
+                {
+                    case "success":
+                        value = global::IsWiX.WiXModel.ExitType.Success;
+                        return true;
+                    case "cancel":
+                        value = global::IsWiX.WiXModel.ExitType.Cancel;
+                        return true;
+                    case "error":
+                        value = global::IsWiX.WiXModel.ExitType.Error;
+                        return true;
+                    case "suspend":
+                        value = global::IsWiX.WiXModel.ExitType.Suspend;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.ExitType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.ExitType.Success:
+                        return "success";
+                    case global::IsWiX.WiXModel.ExitType.Cancel:
+                        return "cancel";
+                    case global::IsWiX.WiXModel.ExitType.Error:
+                        return "error";
+                    case global::IsWiX.WiXModel.ExitType.Suspend:
+                        return "suspend";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a ExitType value.");
                 }
             }
         }
@@ -293,6 +591,90 @@ namespace IsWiX.WiXModel
             }
         }
 
+        private sealed class IniFileActionConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.IniFileAction>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.IniFileAction value)
+            {
+                switch (text)
+                {
+                    case "addLine":
+                        value = global::IsWiX.WiXModel.IniFileAction.AddLine;
+                        return true;
+                    case "addTag":
+                        value = global::IsWiX.WiXModel.IniFileAction.AddTag;
+                        return true;
+                    case "createLine":
+                        value = global::IsWiX.WiXModel.IniFileAction.CreateLine;
+                        return true;
+                    case "removeLine":
+                        value = global::IsWiX.WiXModel.IniFileAction.RemoveLine;
+                        return true;
+                    case "removeTag":
+                        value = global::IsWiX.WiXModel.IniFileAction.RemoveTag;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.IniFileAction value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.IniFileAction.AddLine:
+                        return "addLine";
+                    case global::IsWiX.WiXModel.IniFileAction.AddTag:
+                        return "addTag";
+                    case global::IsWiX.WiXModel.IniFileAction.CreateLine:
+                        return "createLine";
+                    case global::IsWiX.WiXModel.IniFileAction.RemoveLine:
+                        return "removeLine";
+                    case global::IsWiX.WiXModel.IniFileAction.RemoveTag:
+                        return "removeTag";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a IniFileAction value.");
+                }
+            }
+        }
+
+        private sealed class IniFileSearchTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.IniFileSearchType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.IniFileSearchType value)
+            {
+                switch (text)
+                {
+                    case "directory":
+                        value = global::IsWiX.WiXModel.IniFileSearchType.Directory;
+                        return true;
+                    case "file":
+                        value = global::IsWiX.WiXModel.IniFileSearchType.File;
+                        return true;
+                    case "raw":
+                        value = global::IsWiX.WiXModel.IniFileSearchType.Raw;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.IniFileSearchType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.IniFileSearchType.Directory:
+                        return "directory";
+                    case global::IsWiX.WiXModel.IniFileSearchType.File:
+                        return "file";
+                    case global::IsWiX.WiXModel.IniFileSearchType.Raw:
+                        return "raw";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a IniFileSearchType value.");
+                }
+            }
+        }
+
         private sealed class InstallUninstallTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.InstallUninstallType>
         {
             public override bool TryParse(string text, out global::IsWiX.WiXModel.InstallUninstallType value)
@@ -419,6 +801,253 @@ namespace IsWiX.WiXModel
             }
         }
 
+        private sealed class RegistryKeyActionConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryKeyAction>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.RegistryKeyAction value)
+            {
+                switch (text)
+                {
+                    case "create":
+                        value = global::IsWiX.WiXModel.RegistryKeyAction.Create;
+                        return true;
+                    case "createAndRemoveOnUninstall":
+                        value = global::IsWiX.WiXModel.RegistryKeyAction.CreateAndRemoveOnUninstall;
+                        return true;
+                    case "none":
+                        value = global::IsWiX.WiXModel.RegistryKeyAction.None;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.RegistryKeyAction value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.RegistryKeyAction.Create:
+                        return "create";
+                    case global::IsWiX.WiXModel.RegistryKeyAction.CreateAndRemoveOnUninstall:
+                        return "createAndRemoveOnUninstall";
+                    case global::IsWiX.WiXModel.RegistryKeyAction.None:
+                        return "none";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a RegistryKeyAction value.");
+                }
+            }
+        }
+
+        private sealed class RegistryRootTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryRootType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.RegistryRootType value)
+            {
+                switch (text)
+                {
+                    case "HKMU":
+                        value = global::IsWiX.WiXModel.RegistryRootType.HKMU;
+                        return true;
+                    case "HKCR":
+                        value = global::IsWiX.WiXModel.RegistryRootType.HKCR;
+                        return true;
+                    case "HKCU":
+                        value = global::IsWiX.WiXModel.RegistryRootType.HKCU;
+                        return true;
+                    case "HKLM":
+                        value = global::IsWiX.WiXModel.RegistryRootType.HKLM;
+                        return true;
+                    case "HKU":
+                        value = global::IsWiX.WiXModel.RegistryRootType.HKU;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.RegistryRootType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.RegistryRootType.HKMU:
+                        return "HKMU";
+                    case global::IsWiX.WiXModel.RegistryRootType.HKCR:
+                        return "HKCR";
+                    case global::IsWiX.WiXModel.RegistryRootType.HKCU:
+                        return "HKCU";
+                    case global::IsWiX.WiXModel.RegistryRootType.HKLM:
+                        return "HKLM";
+                    case global::IsWiX.WiXModel.RegistryRootType.HKU:
+                        return "HKU";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a RegistryRootType value.");
+                }
+            }
+        }
+
+        private sealed class RegistrySearchRootConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistrySearchRoot>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.RegistrySearchRoot value)
+            {
+                switch (text)
+                {
+                    case "HKCR":
+                        value = global::IsWiX.WiXModel.RegistrySearchRoot.HKCR;
+                        return true;
+                    case "HKCU":
+                        value = global::IsWiX.WiXModel.RegistrySearchRoot.HKCU;
+                        return true;
+                    case "HKLM":
+                        value = global::IsWiX.WiXModel.RegistrySearchRoot.HKLM;
+                        return true;
+                    case "HKU":
+                        value = global::IsWiX.WiXModel.RegistrySearchRoot.HKU;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.RegistrySearchRoot value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.RegistrySearchRoot.HKCR:
+                        return "HKCR";
+                    case global::IsWiX.WiXModel.RegistrySearchRoot.HKCU:
+                        return "HKCU";
+                    case global::IsWiX.WiXModel.RegistrySearchRoot.HKLM:
+                        return "HKLM";
+                    case global::IsWiX.WiXModel.RegistrySearchRoot.HKU:
+                        return "HKU";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a RegistrySearchRoot value.");
+                }
+            }
+        }
+
+        private sealed class RegistrySearchTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistrySearchType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.RegistrySearchType value)
+            {
+                switch (text)
+                {
+                    case "directory":
+                        value = global::IsWiX.WiXModel.RegistrySearchType.Directory;
+                        return true;
+                    case "file":
+                        value = global::IsWiX.WiXModel.RegistrySearchType.File;
+                        return true;
+                    case "raw":
+                        value = global::IsWiX.WiXModel.RegistrySearchType.Raw;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.RegistrySearchType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.RegistrySearchType.Directory:
+                        return "directory";
+                    case global::IsWiX.WiXModel.RegistrySearchType.File:
+                        return "file";
+                    case global::IsWiX.WiXModel.RegistrySearchType.Raw:
+                        return "raw";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a RegistrySearchType value.");
+                }
+            }
+        }
+
+        private sealed class RegistryValueActionConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryValueAction>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.RegistryValueAction value)
+            {
+                switch (text)
+                {
+                    case "append":
+                        value = global::IsWiX.WiXModel.RegistryValueAction.Append;
+                        return true;
+                    case "prepend":
+                        value = global::IsWiX.WiXModel.RegistryValueAction.Prepend;
+                        return true;
+                    case "write":
+                        value = global::IsWiX.WiXModel.RegistryValueAction.Write;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.RegistryValueAction value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.RegistryValueAction.Append:
+                        return "append";
+                    case global::IsWiX.WiXModel.RegistryValueAction.Prepend:
+                        return "prepend";
+                    case global::IsWiX.WiXModel.RegistryValueAction.Write:
+                        return "write";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a RegistryValueAction value.");
+                }
+            }
+        }
+
+        private sealed class RegistryValueTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryValueType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.RegistryValueType value)
+            {
+                switch (text)
+                {
+                    case "string":
+                        value = global::IsWiX.WiXModel.RegistryValueType.String;
+                        return true;
+                    case "integer":
+                        value = global::IsWiX.WiXModel.RegistryValueType.Integer;
+                        return true;
+                    case "binary":
+                        value = global::IsWiX.WiXModel.RegistryValueType.Binary;
+                        return true;
+                    case "expandable":
+                        value = global::IsWiX.WiXModel.RegistryValueType.Expandable;
+                        return true;
+                    case "multiString":
+                        value = global::IsWiX.WiXModel.RegistryValueType.MultiString;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.RegistryValueType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.RegistryValueType.String:
+                        return "string";
+                    case global::IsWiX.WiXModel.RegistryValueType.Integer:
+                        return "integer";
+                    case global::IsWiX.WiXModel.RegistryValueType.Binary:
+                        return "binary";
+                    case global::IsWiX.WiXModel.RegistryValueType.Expandable:
+                        return "expandable";
+                    case global::IsWiX.WiXModel.RegistryValueType.MultiString:
+                        return "multiString";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a RegistryValueType value.");
+                }
+            }
+        }
+
         private sealed class SequenceTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.SequenceType>
         {
             public override bool TryParse(string text, out global::IsWiX.WiXModel.SequenceType value)
@@ -457,6 +1086,169 @@ namespace IsWiX.WiXModel
                         return "ui";
                     default:
                         throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a SequenceType value.");
+                }
+            }
+        }
+
+        private sealed class ServiceInstallErrorControlConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ServiceInstallErrorControl>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.ServiceInstallErrorControl value)
+            {
+                switch (text)
+                {
+                    case "ignore":
+                        value = global::IsWiX.WiXModel.ServiceInstallErrorControl.Ignore;
+                        return true;
+                    case "normal":
+                        value = global::IsWiX.WiXModel.ServiceInstallErrorControl.Normal;
+                        return true;
+                    case "critical":
+                        value = global::IsWiX.WiXModel.ServiceInstallErrorControl.Critical;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.ServiceInstallErrorControl value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.ServiceInstallErrorControl.Ignore:
+                        return "ignore";
+                    case global::IsWiX.WiXModel.ServiceInstallErrorControl.Normal:
+                        return "normal";
+                    case global::IsWiX.WiXModel.ServiceInstallErrorControl.Critical:
+                        return "critical";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a ServiceInstallErrorControl value.");
+                }
+            }
+        }
+
+        private sealed class ServiceInstallStartConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ServiceInstallStart>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.ServiceInstallStart value)
+            {
+                switch (text)
+                {
+                    case "auto":
+                        value = global::IsWiX.WiXModel.ServiceInstallStart.Auto;
+                        return true;
+                    case "demand":
+                        value = global::IsWiX.WiXModel.ServiceInstallStart.Demand;
+                        return true;
+                    case "disabled":
+                        value = global::IsWiX.WiXModel.ServiceInstallStart.Disabled;
+                        return true;
+                    case "boot":
+                        value = global::IsWiX.WiXModel.ServiceInstallStart.Boot;
+                        return true;
+                    case "system":
+                        value = global::IsWiX.WiXModel.ServiceInstallStart.System;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.ServiceInstallStart value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.ServiceInstallStart.Auto:
+                        return "auto";
+                    case global::IsWiX.WiXModel.ServiceInstallStart.Demand:
+                        return "demand";
+                    case global::IsWiX.WiXModel.ServiceInstallStart.Disabled:
+                        return "disabled";
+                    case global::IsWiX.WiXModel.ServiceInstallStart.Boot:
+                        return "boot";
+                    case global::IsWiX.WiXModel.ServiceInstallStart.System:
+                        return "system";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a ServiceInstallStart value.");
+                }
+            }
+        }
+
+        private sealed class ServiceInstallTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ServiceInstallType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.ServiceInstallType value)
+            {
+                switch (text)
+                {
+                    case "ownProcess":
+                        value = global::IsWiX.WiXModel.ServiceInstallType.OwnProcess;
+                        return true;
+                    case "shareProcess":
+                        value = global::IsWiX.WiXModel.ServiceInstallType.ShareProcess;
+                        return true;
+                    case "kernelDriver":
+                        value = global::IsWiX.WiXModel.ServiceInstallType.KernelDriver;
+                        return true;
+                    case "systemDriver":
+                        value = global::IsWiX.WiXModel.ServiceInstallType.SystemDriver;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.ServiceInstallType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.ServiceInstallType.OwnProcess:
+                        return "ownProcess";
+                    case global::IsWiX.WiXModel.ServiceInstallType.ShareProcess:
+                        return "shareProcess";
+                    case global::IsWiX.WiXModel.ServiceInstallType.KernelDriver:
+                        return "kernelDriver";
+                    case global::IsWiX.WiXModel.ServiceInstallType.SystemDriver:
+                        return "systemDriver";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a ServiceInstallType value.");
+                }
+            }
+        }
+
+        private sealed class ShortcutShowConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ShortcutShow>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.ShortcutShow value)
+            {
+                switch (text)
+                {
+                    case "normal":
+                        value = global::IsWiX.WiXModel.ShortcutShow.Normal;
+                        return true;
+                    case "minimized":
+                        value = global::IsWiX.WiXModel.ShortcutShow.Minimized;
+                        return true;
+                    case "maximized":
+                        value = global::IsWiX.WiXModel.ShortcutShow.Maximized;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.ShortcutShow value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.ShortcutShow.Normal:
+                        return "normal";
+                    case global::IsWiX.WiXModel.ShortcutShow.Minimized:
+                        return "minimized";
+                    case global::IsWiX.WiXModel.ShortcutShow.Maximized:
+                        return "maximized";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a ShortcutShow value.");
                 }
             }
         }

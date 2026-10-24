@@ -75,6 +75,7 @@ internal static class SchemaLoader
         Dictionary<string, XElement> complexTypes)
     {
         var complexType = Child(element, "complexType");
+        string? sharedContentType = null;
         if (complexType is null)
         {
             switch ((string?)element.Attribute("type"))
@@ -84,6 +85,7 @@ internal static class SchemaLoader
                     return new ElementDefinition(name, Documentation(element), [], [], false, false, false);
                 case var typeName when complexTypes.TryGetValue(typeName, out var named):
                     complexType = named;
+                    sharedContentType = typeName;
                     break;
                 default:
                     // A simple type: the element holds text.
@@ -134,7 +136,8 @@ internal static class SchemaLoader
             children,
             allowsAny,
             attributeOwner.Elements().Any(e => e.Name.LocalName == "anyAttribute"),
-            hasText);
+            hasText,
+            sharedContentType);
     }
 
     private static void ReadAttributes(XElement owner, List<AttributeDefinition> attributes, Dictionary<string, XElement> attributeGroups)

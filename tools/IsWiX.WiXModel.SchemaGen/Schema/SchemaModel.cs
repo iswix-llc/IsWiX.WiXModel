@@ -14,7 +14,8 @@ internal sealed record ElementDefinition(
     IReadOnlyList<string> ChildElements,
     bool AllowsExtensionElements,
     bool AllowsExtensionAttributes,
-    bool HasTextContent);
+    bool HasTextContent,
+    string? SharedContentType = null);
 
 internal sealed record AttributeDefinition(
     string Name,

@@ -13,11 +13,9 @@ namespace IsWiX.WiXModel
     /// referred to as a Product.
     /// </summary>
     /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: AdminExecuteSequence,
-    /// AdminUISequence, AdvertiseExecuteSequence, AppId, ComplianceCheck, CustomAction, CustomActionRef, CustomTable,
-    /// CustomTableRef, EmbeddedChainer, EmbeddedChainerRef, EnsureTable, InstallExecuteSequence, InstallUISequence,
-    /// InstanceTransforms, PackageCertificates, PatchCertificates, Requires, SFPCatalog, SoftwareTag, SymbolPath, UI,
-    /// UIRef.
+    /// Child elements not yet in the typed model are available through Children and Xml: AppId, ComplianceCheck,
+    /// CustomTable, CustomTableRef, EmbeddedChainer, EmbeddedChainerRef, EnsureTable, InstanceTransforms,
+    /// PackageCertificates, PatchCertificates, Requires, SFPCatalog, SoftwareTag, SymbolPath, UI, UIRef.
     /// </remarks>
     public sealed partial class Package : global::IsWiX.WiXModel.Core.WixElement
     {
@@ -178,6 +176,30 @@ namespace IsWiX.WiXModel
             set => SetString("Version", value);
         }
 
+        /// <summary>Gets the child <c>AdminExecuteSequence</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.AdminExecuteSequence> AdminExecuteSequences => GetChildren<global::IsWiX.WiXModel.AdminExecuteSequence>(global::IsWiX.WiXModel.AdminExecuteSequence.ElementName);
+
+        /// <summary>Adds a <c>AdminExecuteSequence</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.AdminExecuteSequence Add(global::IsWiX.WiXModel.AdminExecuteSequence child) => AddChild(child);
+
+        /// <summary>Gets the child <c>AdminUISequence</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.AdminUISequence> AdminUISequences => GetChildren<global::IsWiX.WiXModel.AdminUISequence>(global::IsWiX.WiXModel.AdminUISequence.ElementName);
+
+        /// <summary>Adds a <c>AdminUISequence</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.AdminUISequence Add(global::IsWiX.WiXModel.AdminUISequence child) => AddChild(child);
+
+        /// <summary>Gets the child <c>AdvertiseExecuteSequence</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.AdvertiseExecuteSequence> AdvertiseExecuteSequences => GetChildren<global::IsWiX.WiXModel.AdvertiseExecuteSequence>(global::IsWiX.WiXModel.AdvertiseExecuteSequence.ElementName);
+
+        /// <summary>Adds a <c>AdvertiseExecuteSequence</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.AdvertiseExecuteSequence Add(global::IsWiX.WiXModel.AdvertiseExecuteSequence child) => AddChild(child);
+
         /// <summary>Gets the child <c>Binary</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Binary> Binaries => GetChildren<global::IsWiX.WiXModel.Binary>(global::IsWiX.WiXModel.Binary.ElementName);
 
@@ -217,6 +239,22 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.ComponentGroupRef Add(global::IsWiX.WiXModel.ComponentGroupRef child) => AddChild(child);
+
+        /// <summary>Gets the child <c>CustomAction</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.CustomAction> CustomActions => GetChildren<global::IsWiX.WiXModel.CustomAction>(global::IsWiX.WiXModel.CustomAction.ElementName);
+
+        /// <summary>Adds a <c>CustomAction</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.CustomAction Add(global::IsWiX.WiXModel.CustomAction child) => AddChild(child);
+
+        /// <summary>Gets the child <c>CustomActionRef</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.CustomActionRef> CustomActionRefs => GetChildren<global::IsWiX.WiXModel.CustomActionRef>(global::IsWiX.WiXModel.CustomActionRef.ElementName);
+
+        /// <summary>Adds a <c>CustomActionRef</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.CustomActionRef Add(global::IsWiX.WiXModel.CustomActionRef child) => AddChild(child);
 
         /// <summary>Gets the child <c>Directory</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Directory> Directories => GetChildren<global::IsWiX.WiXModel.Directory>(global::IsWiX.WiXModel.Directory.ElementName);
@@ -281,6 +319,22 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.Icon Add(global::IsWiX.WiXModel.Icon child) => AddChild(child);
+
+        /// <summary>Gets the child <c>InstallExecuteSequence</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.InstallExecuteSequence> InstallExecuteSequences => GetChildren<global::IsWiX.WiXModel.InstallExecuteSequence>(global::IsWiX.WiXModel.InstallExecuteSequence.ElementName);
+
+        /// <summary>Adds a <c>InstallExecuteSequence</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.InstallExecuteSequence Add(global::IsWiX.WiXModel.InstallExecuteSequence child) => AddChild(child);
+
+        /// <summary>Gets the child <c>InstallUISequence</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.InstallUISequence> InstallUISequences => GetChildren<global::IsWiX.WiXModel.InstallUISequence>(global::IsWiX.WiXModel.InstallUISequence.ElementName);
+
+        /// <summary>Adds a <c>InstallUISequence</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.InstallUISequence Add(global::IsWiX.WiXModel.InstallUISequence child) => AddChild(child);
 
         /// <summary>Gets the child <c>Launch</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Launch> Launches => GetChildren<global::IsWiX.WiXModel.Launch>(global::IsWiX.WiXModel.Launch.ElementName);

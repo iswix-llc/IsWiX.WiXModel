@@ -45,9 +45,10 @@ public class PackageBasicsTests
         Assert.Equal(["ARPNOMODIFY", "INSTALLFOLDER_FROM_REGISTRY"], package.Properties.Select(p => p.Id));
         Assert.Equal("1", package.Properties.First().Value);
 
-        // RegistrySearch is not typed yet; it is still reachable and kept.
-        var search = Assert.IsType<WixUnknownElement>(package.Properties.Last().Children.Single());
-        Assert.Equal("RegistrySearch", search.Xml.Name.LocalName);
+        var search = package.Properties.Last().RegistrySearches.Single();
+        Assert.Equal(RegistrySearchRoot.HKLM, search.Root!.Value.Value);
+        Assert.Equal(RegistrySearchType.Raw, search.Type!.Value.Value);
+        Assert.Equal("InstallDir", search.Name);
 
         Assert.Equal("WIX_IS_NETFRAMEWORK_48_OR_LATER_INSTALLED", package.PropertyRefs.Single().Id);
 

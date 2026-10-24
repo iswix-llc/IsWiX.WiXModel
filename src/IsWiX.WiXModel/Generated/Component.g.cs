@@ -12,10 +12,8 @@ namespace IsWiX.WiXModel
     /// </summary>
     /// <remarks>
     /// Child elements not yet in the typed model are available through Children and Xml: AppId, Category, Class,
-    /// CopyFile, Environment, Extension, IniFile, Interface, IsolateComponent, ODBCDataSource, ODBCDriver,
-    /// ODBCTranslator, ProgId, Provides, RegistryKey, RegistryValue, RemoveRegistryKey, RemoveRegistryValue,
-    /// ReserveCost, ServiceControl, ServiceConfig, ServiceConfigFailureActions, ServiceInstall, Shortcut, SymbolPath,
-    /// TypeLib.
+    /// CopyFile, Extension, Interface, IsolateComponent, ODBCDataSource, ODBCDriver, ODBCTranslator, ProgId,
+    /// Provides, RemoveRegistryKey, RemoveRegistryValue, ReserveCost, SymbolPath, TypeLib.
     /// </remarks>
     public sealed partial class Component : global::IsWiX.WiXModel.Core.WixElement
     {
@@ -261,6 +259,14 @@ namespace IsWiX.WiXModel
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.CreateFolder Add(global::IsWiX.WiXModel.CreateFolder child) => AddChild(child);
 
+        /// <summary>Gets the child <c>Environment</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Environment> Environments => GetChildren<global::IsWiX.WiXModel.Environment>(global::IsWiX.WiXModel.Environment.ElementName);
+
+        /// <summary>Adds a <c>Environment</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Environment Add(global::IsWiX.WiXModel.Environment child) => AddChild(child);
+
         /// <summary>Gets the child <c>File</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.File> Files => GetChildren<global::IsWiX.WiXModel.File>(global::IsWiX.WiXModel.File.ElementName);
 
@@ -268,6 +274,30 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.File Add(global::IsWiX.WiXModel.File child) => AddChild(child);
+
+        /// <summary>Gets the child <c>IniFile</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.IniFile> IniFiles => GetChildren<global::IsWiX.WiXModel.IniFile>(global::IsWiX.WiXModel.IniFile.ElementName);
+
+        /// <summary>Adds a <c>IniFile</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.IniFile Add(global::IsWiX.WiXModel.IniFile child) => AddChild(child);
+
+        /// <summary>Gets the child <c>RegistryKey</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.RegistryKey> RegistryKeys => GetChildren<global::IsWiX.WiXModel.RegistryKey>(global::IsWiX.WiXModel.RegistryKey.ElementName);
+
+        /// <summary>Adds a <c>RegistryKey</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.RegistryKey Add(global::IsWiX.WiXModel.RegistryKey child) => AddChild(child);
+
+        /// <summary>Gets the child <c>RegistryValue</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.RegistryValue> RegistryValues => GetChildren<global::IsWiX.WiXModel.RegistryValue>(global::IsWiX.WiXModel.RegistryValue.ElementName);
+
+        /// <summary>Adds a <c>RegistryValue</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.RegistryValue Add(global::IsWiX.WiXModel.RegistryValue child) => AddChild(child);
 
         /// <summary>Gets the child <c>RemoveFile</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.RemoveFile> RemoveFiles => GetChildren<global::IsWiX.WiXModel.RemoveFile>(global::IsWiX.WiXModel.RemoveFile.ElementName);
@@ -284,5 +314,45 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.RemoveFolder Add(global::IsWiX.WiXModel.RemoveFolder child) => AddChild(child);
+
+        /// <summary>Gets the child <c>ServiceControl</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ServiceControl> ServiceControls => GetChildren<global::IsWiX.WiXModel.ServiceControl>(global::IsWiX.WiXModel.ServiceControl.ElementName);
+
+        /// <summary>Adds a <c>ServiceControl</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.ServiceControl Add(global::IsWiX.WiXModel.ServiceControl child) => AddChild(child);
+
+        /// <summary>Gets the child <c>ServiceConfig</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ServiceConfig> ServiceConfigs => GetChildren<global::IsWiX.WiXModel.ServiceConfig>(global::IsWiX.WiXModel.ServiceConfig.ElementName);
+
+        /// <summary>Adds a <c>ServiceConfig</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.ServiceConfig Add(global::IsWiX.WiXModel.ServiceConfig child) => AddChild(child);
+
+        /// <summary>Gets the child <c>ServiceConfigFailureActions</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ServiceConfigFailureActions> ServiceConfigFailureActionsElements => GetChildren<global::IsWiX.WiXModel.ServiceConfigFailureActions>(global::IsWiX.WiXModel.ServiceConfigFailureActions.ElementName);
+
+        /// <summary>Adds a <c>ServiceConfigFailureActions</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.ServiceConfigFailureActions Add(global::IsWiX.WiXModel.ServiceConfigFailureActions child) => AddChild(child);
+
+        /// <summary>Gets the child <c>ServiceInstall</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ServiceInstall> ServiceInstalls => GetChildren<global::IsWiX.WiXModel.ServiceInstall>(global::IsWiX.WiXModel.ServiceInstall.ElementName);
+
+        /// <summary>Adds a <c>ServiceInstall</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.ServiceInstall Add(global::IsWiX.WiXModel.ServiceInstall child) => AddChild(child);
+
+        /// <summary>Gets the child <c>Shortcut</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Shortcut> Shortcuts => GetChildren<global::IsWiX.WiXModel.Shortcut>(global::IsWiX.WiXModel.Shortcut.ElementName);
+
+        /// <summary>Adds a <c>Shortcut</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Shortcut Add(global::IsWiX.WiXModel.Shortcut child) => AddChild(child);
     }
 }
