@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -43,6 +44,14 @@ namespace IsWiX.WiXModel
             get => WixOrdering.Get(Xml);
             set => WixOrdering.Set(Xml, value);
         }
+
+        /// <summary>
+        /// Checks this file on its own for duplicate Ids and attribute values WiX won't accept. References to other
+        /// files are not checked; use <see cref="WixDiagnostics.Validate(IEnumerable{WixSourceDocument}, bool)"/>
+        /// with all the build's files for that.
+        /// </summary>
+        /// <returns>The problems found, in document order.</returns>
+        public IReadOnlyList<WixDiagnostic> Validate() => WixDiagnostics.Validate(new[] { this }, checkReferences: false);
 
         /// <summary>
         /// Gets the document's <c>&lt;?define?&gt;</c> preprocessor instructions, such as <c>SourceDir</c>, to read,

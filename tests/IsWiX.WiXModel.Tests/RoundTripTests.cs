@@ -94,6 +94,19 @@ public class RoundTripTests
 
     [Theory]
     [MemberData(nameof(CorpusFiles))]
+    public void Validating_changes_nothing(string path)
+    {
+        var bytes = IOFile.ReadAllBytes(path);
+        var document = WixSourceDocument.Load(new MemoryStream(bytes));
+
+        var diagnostics = document.Validate();
+
+        Assert.All(diagnostics, d => Assert.NotNull(d.Line));
+        TestText.AssertSameBytes(bytes, TestText.Save(document), Path.GetFileName(path));
+    }
+
+    [Theory]
+    [MemberData(nameof(CorpusFiles))]
     public void Canonicalizing_keeps_every_node_and_is_idempotent(string path)
     {
         var document = WixSourceDocument.Load(new MemoryStream(IOFile.ReadAllBytes(path)));

@@ -40,6 +40,22 @@ foreach (var define in document.Defines) { /* Name, Value, IsConditional */ }
 A new define goes after the last unconditional one (or first in the root), on its own line. A name defined
 only inside `<?if?>` or `<?foreach?>` blocks is not changed: which branch is meant is ambiguous.
 
+## Diagnostics
+
+`document.Validate()` finds common mistakes without building, and never changes the document. Each
+`WixDiagnostic` has a code, severity, message, element, attribute, and line and column in the loaded file:
+
+| Code | Severity | Problem |
+|---|---|---|
+| `WXM001` | error | Duplicate Id among elements that share a table (two `Property Id="X"`, two `Component Id="Y"`, ...) |
+| `WXM002` | error | Attribute text that is neither a valid value nor an expression (`KeyPath="maybe"`), with the allowed values |
+| `WXM003` | warning | A `ComponentGroupRef`, `ComponentRef`, `FeatureRef`, `FeatureGroupRef` or `MergeRef` nothing defines |
+
+`WixDiagnostics.Validate(product, files, ...)` checks a build's files together: duplicates across them and
+unresolved references, which are warnings since a .wixlib or extension may define them. Elements inside
+`<?if?>`/`<?foreach?>` blocks, Ids that are expressions, and `virtual`/`override` Ids are not reported as
+duplicates; `StandardDirectory` may repeat.
+
 ## Canonical order
 
 For files that are branched and merged, an element's position should depend only on the file's content, not
