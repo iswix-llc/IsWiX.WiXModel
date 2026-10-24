@@ -91,28 +91,39 @@ namespace IsWiX.WiXModel
         private static readonly Dictionary<string, string> SymbolTables = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["Binary"] = "Binary",
+            ["BundlePackage"] = "ChainItem",
             ["Component"] = "Component",
             ["ComponentGroup"] = "ComponentGroup",
+            ["Container"] = "Container",
             ["CustomAction"] = "CustomAction",
             ["CustomTable"] = "CustomTable",
             ["Dialog"] = "Dialog",
             ["Directory"] = "Directory",
             ["Environment"] = "Environment",
+            ["ExePackage"] = "ChainItem",
             ["Feature"] = "Feature",
             ["FeatureGroup"] = "FeatureGroup",
             ["File"] = "File",
             ["Icon"] = "Icon",
             ["IniFile"] = "IniFile",
             ["Merge"] = "Merge",
+            ["MsiPackage"] = "ChainItem",
+            ["MspPackage"] = "ChainItem",
+            ["MsuPackage"] = "ChainItem",
+            ["PackageGroup"] = "PackageGroup",
+            ["Payload"] = "Payload",
+            ["PayloadGroup"] = "PayloadGroup",
             ["Property"] = "Property",
             ["RegistryValue"] = "Registry",
             ["RemoveFile"] = "RemoveFile",
+            ["RollbackBoundary"] = "ChainItem",
             ["ServiceControl"] = "ServiceControl",
             ["ServiceInstall"] = "ServiceInstall",
             ["Shortcut"] = "Shortcut",
         };
 
-        // References checked across files, and the element each one must find.
+        // References checked across files, and the element each one must find. PackageGroupRef is left out: it may
+        // name a package as well as a group.
         private static readonly Dictionary<string, string> References = new Dictionary<string, string>(StringComparer.Ordinal)
         {
             ["ComponentGroupRef"] = "ComponentGroup",
@@ -120,6 +131,7 @@ namespace IsWiX.WiXModel
             ["FeatureGroupRef"] = "FeatureGroup",
             ["FeatureRef"] = "Feature",
             ["MergeRef"] = "Merge",
+            ["PayloadGroupRef"] = "PayloadGroup",
         };
 
         private static readonly HashSet<string> Opens = new HashSet<string>(StringComparer.Ordinal) { "if", "ifdef", "ifndef", "foreach" };

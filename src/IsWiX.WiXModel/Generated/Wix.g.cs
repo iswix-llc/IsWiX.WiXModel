@@ -15,7 +15,7 @@ namespace IsWiX.WiXModel
     /// Package, Module. The Fragment can either be completely included or excluded during linking.
     /// </summary>
     /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: Bundle, Patch.
+    /// Child elements not yet in the typed model are available through Children and Xml: Patch.
     /// </remarks>
     public sealed partial class Wix : global::IsWiX.WiXModel.Core.WixElement
     {
@@ -41,6 +41,14 @@ namespace IsWiX.WiXModel
             get => GetString("RequiredVersion");
             set => SetString("RequiredVersion", value);
         }
+
+        /// <summary>Gets the child <c>Bundle</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Bundle> Bundles => GetChildren<global::IsWiX.WiXModel.Bundle>(global::IsWiX.WiXModel.Bundle.ElementName);
+
+        /// <summary>Adds a <c>Bundle</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Bundle Add(global::IsWiX.WiXModel.Bundle child) => AddChild(child);
 
         /// <summary>Gets the child <c>Package</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Package> Packages => GetChildren<global::IsWiX.WiXModel.Package>(global::IsWiX.WiXModel.Package.ElementName);

@@ -15,6 +15,21 @@ namespace IsWiX.WiXModel
         /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.BitnessType"/> values as the schema spells them.</summary>
         public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BitnessType> BitnessType { get; } = new BitnessTypeConverter();
 
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness> BootstrapperApplicationDllDpiAwareness { get; } = new BootstrapperApplicationDllDpiAwarenessConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.BundleCustomDataType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BundleCustomDataType> BundleCustomDataType { get; } = new BundleCustomDataTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.BundlePackagePayloadPayloadGeneration"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BundlePackagePayloadPayloadGeneration> BundlePackagePayloadPayloadGeneration { get; } = new BundlePackagePayloadPayloadGenerationConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.BurnContainerType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BurnContainerType> BurnContainerType { get; } = new BurnContainerTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.BurnExeProtocolType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BurnExeProtocolType> BurnExeProtocolType { get; } = new BurnExeProtocolTypeConverter();
+
         /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ClassThreadingModel"/> values as the schema spells them.</summary>
         public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ClassThreadingModel> ClassThreadingModel { get; } = new ClassThreadingModelConverter();
 
@@ -57,6 +72,9 @@ namespace IsWiX.WiXModel
         /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.EnvironmentPart"/> values as the schema spells them.</summary>
         public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.EnvironmentPart> EnvironmentPart { get; } = new EnvironmentPartConverter();
 
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ExitCodeBehavior"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ExitCodeBehavior> ExitCodeBehavior { get; } = new ExitCodeBehaviorConverter();
+
         /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.ExitType"/> values as the schema spells them.</summary>
         public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ExitType> ExitType { get; } = new ExitTypeConverter();
 
@@ -80,6 +98,9 @@ namespace IsWiX.WiXModel
 
         /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.InstallUninstallType"/> values as the schema spells them.</summary>
         public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.InstallUninstallType> InstallUninstallType { get; } = new InstallUninstallTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.KeepRemoveForceType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.KeepRemoveForceType> KeepRemoveForceType { get; } = new KeepRemoveForceTypeConverter();
 
         /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.MajorUpgradeSchedule"/> values as the schema spells them.</summary>
         public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.MajorUpgradeSchedule> MajorUpgradeSchedule { get; } = new MajorUpgradeScheduleConverter();
@@ -108,6 +129,12 @@ namespace IsWiX.WiXModel
         /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.RegistryValueType"/> values as the schema spells them.</summary>
         public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RegistryValueType> RegistryValueType { get; } = new RegistryValueTypeConverter();
 
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.RelatedBundleAction"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RelatedBundleAction> RelatedBundleAction { get; } = new RelatedBundleActionConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.RemoteRelatedBundleAction"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RemoteRelatedBundleAction> RemoteRelatedBundleAction { get; } = new RemoteRelatedBundleActionConverter();
+
         /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.RemoveRegistryKeyAction"/> values as the schema spells them.</summary>
         public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RemoveRegistryKeyAction> RemoveRegistryKeyAction { get; } = new RemoveRegistryKeyActionConverter();
 
@@ -131,6 +158,12 @@ namespace IsWiX.WiXModel
 
         /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.UpgradeStrategyType"/> values as the schema spells them.</summary>
         public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.UpgradeStrategyType> UpgradeStrategyType { get; } = new UpgradeStrategyTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.VariableType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.VariableType> VariableType { get; } = new VariableTypeConverter();
+
+        /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.YesNoButtonType"/> values as the schema spells them.</summary>
+        public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.YesNoButtonType> YesNoButtonType { get; } = new YesNoButtonTypeConverter();
 
         /// <summary>Reads and writes <see cref="global::IsWiX.WiXModel.YesNoDefaultType"/> values as the schema spells them.</summary>
         public static global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.YesNoDefaultType> YesNoDefaultType { get; } = new YesNoDefaultTypeConverter();
@@ -168,6 +201,201 @@ namespace IsWiX.WiXModel
                         return "always64";
                     default:
                         throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a BitnessType value.");
+                }
+            }
+        }
+
+        private sealed class BootstrapperApplicationDllDpiAwarenessConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness value)
+            {
+                switch (text)
+                {
+                    case "gdiScaled":
+                        value = global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness.GdiScaled;
+                        return true;
+                    case "perMonitor":
+                        value = global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness.PerMonitor;
+                        return true;
+                    case "perMonitorV2":
+                        value = global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness.PerMonitorV2;
+                        return true;
+                    case "system":
+                        value = global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness.System;
+                        return true;
+                    case "unaware":
+                        value = global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness.Unaware;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness.GdiScaled:
+                        return "gdiScaled";
+                    case global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness.PerMonitor:
+                        return "perMonitor";
+                    case global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness.PerMonitorV2:
+                        return "perMonitorV2";
+                    case global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness.System:
+                        return "system";
+                    case global::IsWiX.WiXModel.BootstrapperApplicationDllDpiAwareness.Unaware:
+                        return "unaware";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a BootstrapperApplicationDllDpiAwareness value.");
+                }
+            }
+        }
+
+        private sealed class BundleCustomDataTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BundleCustomDataType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.BundleCustomDataType value)
+            {
+                switch (text)
+                {
+                    case "BootstrapperApplication":
+                        value = global::IsWiX.WiXModel.BundleCustomDataType.BootstrapperApplication;
+                        return true;
+                    case "BootstrapperExtension":
+                        value = global::IsWiX.WiXModel.BundleCustomDataType.BootstrapperExtension;
+                        return true;
+                    case "BundleExtension":
+                        value = global::IsWiX.WiXModel.BundleCustomDataType.BundleExtension;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.BundleCustomDataType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.BundleCustomDataType.BootstrapperApplication:
+                        return "BootstrapperApplication";
+                    case global::IsWiX.WiXModel.BundleCustomDataType.BootstrapperExtension:
+                        return "BootstrapperExtension";
+                    case global::IsWiX.WiXModel.BundleCustomDataType.BundleExtension:
+                        return "BundleExtension";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a BundleCustomDataType value.");
+                }
+            }
+        }
+
+        private sealed class BundlePackagePayloadPayloadGenerationConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BundlePackagePayloadPayloadGeneration>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.BundlePackagePayloadPayloadGeneration value)
+            {
+                switch (text)
+                {
+                    case "none":
+                        value = global::IsWiX.WiXModel.BundlePackagePayloadPayloadGeneration.None;
+                        return true;
+                    case "externalWithoutDownloadUrl":
+                        value = global::IsWiX.WiXModel.BundlePackagePayloadPayloadGeneration.ExternalWithoutDownloadUrl;
+                        return true;
+                    case "external":
+                        value = global::IsWiX.WiXModel.BundlePackagePayloadPayloadGeneration.External;
+                        return true;
+                    case "all":
+                        value = global::IsWiX.WiXModel.BundlePackagePayloadPayloadGeneration.All;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.BundlePackagePayloadPayloadGeneration value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.BundlePackagePayloadPayloadGeneration.None:
+                        return "none";
+                    case global::IsWiX.WiXModel.BundlePackagePayloadPayloadGeneration.ExternalWithoutDownloadUrl:
+                        return "externalWithoutDownloadUrl";
+                    case global::IsWiX.WiXModel.BundlePackagePayloadPayloadGeneration.External:
+                        return "external";
+                    case global::IsWiX.WiXModel.BundlePackagePayloadPayloadGeneration.All:
+                        return "all";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a BundlePackagePayloadPayloadGeneration value.");
+                }
+            }
+        }
+
+        private sealed class BurnContainerTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BurnContainerType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.BurnContainerType value)
+            {
+                switch (text)
+                {
+                    case "attached":
+                        value = global::IsWiX.WiXModel.BurnContainerType.Attached;
+                        return true;
+                    case "detached":
+                        value = global::IsWiX.WiXModel.BurnContainerType.Detached;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.BurnContainerType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.BurnContainerType.Attached:
+                        return "attached";
+                    case global::IsWiX.WiXModel.BurnContainerType.Detached:
+                        return "detached";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a BurnContainerType value.");
+                }
+            }
+        }
+
+        private sealed class BurnExeProtocolTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BurnExeProtocolType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.BurnExeProtocolType value)
+            {
+                switch (text)
+                {
+                    case "none":
+                        value = global::IsWiX.WiXModel.BurnExeProtocolType.None;
+                        return true;
+                    case "burn":
+                        value = global::IsWiX.WiXModel.BurnExeProtocolType.Burn;
+                        return true;
+                    case "netfx4":
+                        value = global::IsWiX.WiXModel.BurnExeProtocolType.Netfx4;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.BurnExeProtocolType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.BurnExeProtocolType.None:
+                        return "none";
+                    case global::IsWiX.WiXModel.BurnExeProtocolType.Burn:
+                        return "burn";
+                    case global::IsWiX.WiXModel.BurnExeProtocolType.Netfx4:
+                        return "netfx4";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a BurnExeProtocolType value.");
                 }
             }
         }
@@ -865,6 +1093,58 @@ namespace IsWiX.WiXModel
             }
         }
 
+        private sealed class ExitCodeBehaviorConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ExitCodeBehavior>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.ExitCodeBehavior value)
+            {
+                switch (text)
+                {
+                    case "success":
+                        value = global::IsWiX.WiXModel.ExitCodeBehavior.Success;
+                        return true;
+                    case "error":
+                        value = global::IsWiX.WiXModel.ExitCodeBehavior.Error;
+                        return true;
+                    case "scheduleReboot":
+                        value = global::IsWiX.WiXModel.ExitCodeBehavior.ScheduleReboot;
+                        return true;
+                    case "forceReboot":
+                        value = global::IsWiX.WiXModel.ExitCodeBehavior.ForceReboot;
+                        return true;
+                    case "errorScheduleReboot":
+                        value = global::IsWiX.WiXModel.ExitCodeBehavior.ErrorScheduleReboot;
+                        return true;
+                    case "errorForceReboot":
+                        value = global::IsWiX.WiXModel.ExitCodeBehavior.ErrorForceReboot;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.ExitCodeBehavior value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.ExitCodeBehavior.Success:
+                        return "success";
+                    case global::IsWiX.WiXModel.ExitCodeBehavior.Error:
+                        return "error";
+                    case global::IsWiX.WiXModel.ExitCodeBehavior.ScheduleReboot:
+                        return "scheduleReboot";
+                    case global::IsWiX.WiXModel.ExitCodeBehavior.ForceReboot:
+                        return "forceReboot";
+                    case global::IsWiX.WiXModel.ExitCodeBehavior.ErrorScheduleReboot:
+                        return "errorScheduleReboot";
+                    case global::IsWiX.WiXModel.ExitCodeBehavior.ErrorForceReboot:
+                        return "errorForceReboot";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a ExitCodeBehavior value.");
+                }
+            }
+        }
+
         private sealed class ExitTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ExitType>
         {
             public override bool TryParse(string text, out global::IsWiX.WiXModel.ExitType value)
@@ -1172,6 +1452,43 @@ namespace IsWiX.WiXModel
                         return "both";
                     default:
                         throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a InstallUninstallType value.");
+                }
+            }
+        }
+
+        private sealed class KeepRemoveForceTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.KeepRemoveForceType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.KeepRemoveForceType value)
+            {
+                switch (text)
+                {
+                    case "force":
+                        value = global::IsWiX.WiXModel.KeepRemoveForceType.Force;
+                        return true;
+                    case "keep":
+                        value = global::IsWiX.WiXModel.KeepRemoveForceType.Keep;
+                        return true;
+                    case "remove":
+                        value = global::IsWiX.WiXModel.KeepRemoveForceType.Remove;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.KeepRemoveForceType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.KeepRemoveForceType.Force:
+                        return "force";
+                    case global::IsWiX.WiXModel.KeepRemoveForceType.Keep:
+                        return "keep";
+                    case global::IsWiX.WiXModel.KeepRemoveForceType.Remove:
+                        return "remove";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a KeepRemoveForceType value.");
                 }
             }
         }
@@ -1540,6 +1857,90 @@ namespace IsWiX.WiXModel
                         return "multiString";
                     default:
                         throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a RegistryValueType value.");
+                }
+            }
+        }
+
+        private sealed class RelatedBundleActionConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RelatedBundleAction>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.RelatedBundleAction value)
+            {
+                switch (text)
+                {
+                    case "detect":
+                        value = global::IsWiX.WiXModel.RelatedBundleAction.Detect;
+                        return true;
+                    case "upgrade":
+                        value = global::IsWiX.WiXModel.RelatedBundleAction.Upgrade;
+                        return true;
+                    case "addon":
+                        value = global::IsWiX.WiXModel.RelatedBundleAction.Addon;
+                        return true;
+                    case "patch":
+                        value = global::IsWiX.WiXModel.RelatedBundleAction.Patch;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.RelatedBundleAction value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.RelatedBundleAction.Detect:
+                        return "detect";
+                    case global::IsWiX.WiXModel.RelatedBundleAction.Upgrade:
+                        return "upgrade";
+                    case global::IsWiX.WiXModel.RelatedBundleAction.Addon:
+                        return "addon";
+                    case global::IsWiX.WiXModel.RelatedBundleAction.Patch:
+                        return "patch";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a RelatedBundleAction value.");
+                }
+            }
+        }
+
+        private sealed class RemoteRelatedBundleActionConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.RemoteRelatedBundleAction>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.RemoteRelatedBundleAction value)
+            {
+                switch (text)
+                {
+                    case "detect":
+                        value = global::IsWiX.WiXModel.RemoteRelatedBundleAction.Detect;
+                        return true;
+                    case "upgrade":
+                        value = global::IsWiX.WiXModel.RemoteRelatedBundleAction.Upgrade;
+                        return true;
+                    case "addon":
+                        value = global::IsWiX.WiXModel.RemoteRelatedBundleAction.Addon;
+                        return true;
+                    case "patch":
+                        value = global::IsWiX.WiXModel.RemoteRelatedBundleAction.Patch;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.RemoteRelatedBundleAction value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.RemoteRelatedBundleAction.Detect:
+                        return "detect";
+                    case global::IsWiX.WiXModel.RemoteRelatedBundleAction.Upgrade:
+                        return "upgrade";
+                    case global::IsWiX.WiXModel.RemoteRelatedBundleAction.Addon:
+                        return "addon";
+                    case global::IsWiX.WiXModel.RemoteRelatedBundleAction.Patch:
+                        return "patch";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a RemoteRelatedBundleAction value.");
                 }
             }
         }
@@ -1986,6 +2387,87 @@ namespace IsWiX.WiXModel
                         return "none";
                     default:
                         throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a UpgradeStrategyType value.");
+                }
+            }
+        }
+
+        private sealed class VariableTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.VariableType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.VariableType value)
+            {
+                switch (text)
+                {
+                    case "string":
+                        value = global::IsWiX.WiXModel.VariableType.String;
+                        return true;
+                    case "formatted":
+                        value = global::IsWiX.WiXModel.VariableType.Formatted;
+                        return true;
+                    case "numeric":
+                        value = global::IsWiX.WiXModel.VariableType.Numeric;
+                        return true;
+                    case "version":
+                        value = global::IsWiX.WiXModel.VariableType.Version;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.VariableType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.VariableType.String:
+                        return "string";
+                    case global::IsWiX.WiXModel.VariableType.Formatted:
+                        return "formatted";
+                    case global::IsWiX.WiXModel.VariableType.Numeric:
+                        return "numeric";
+                    case global::IsWiX.WiXModel.VariableType.Version:
+                        return "version";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a VariableType value.");
+                }
+            }
+        }
+
+        private sealed class YesNoButtonTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.YesNoButtonType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.YesNoButtonType value)
+            {
+                switch (text)
+                {
+                    case "no":
+                    case "false":
+                        value = global::IsWiX.WiXModel.YesNoButtonType.No;
+                        return true;
+                    case "yes":
+                    case "true":
+                        value = global::IsWiX.WiXModel.YesNoButtonType.Yes;
+                        return true;
+                    case "button":
+                        value = global::IsWiX.WiXModel.YesNoButtonType.Button;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.YesNoButtonType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.YesNoButtonType.No:
+                        return "no";
+                    case global::IsWiX.WiXModel.YesNoButtonType.Yes:
+                        return "yes";
+                    case global::IsWiX.WiXModel.YesNoButtonType.Button:
+                        return "button";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a YesNoButtonType value.");
                 }
             }
         }

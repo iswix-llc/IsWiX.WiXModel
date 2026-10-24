@@ -73,9 +73,23 @@ package.Add(new UIExtension.WixUI { Id = "WixUI_InstallDir", InstallDirectory = 
 ```
 
 Extension attributes typed with core WiX types use the core enums (`Util.RegistrySearch.Bitness` is a
-`WixValue<BitnessType>?`). `Bundle` is not in the typed model yet, so extension elements that only go in a
-bundle (most NetFx searches) are added to a `Fragment`. Elements of other extensions are still read and kept
-as `WixUnknownElement`.
+`WixValue<BitnessType>?`). Elements of other extensions are still read and kept as `WixUnknownElement`.
+
+## Bundles
+
+`Bundle` and the Burn elements under it are typed: `Chain` and its packages, `Variable`, `Container`,
+`Payload`/`PayloadGroup`, `PackageGroup`, `BootstrapperApplication`, `RelatedBundle` and the rest. Bundle-only
+extension elements get their accessors there:
+
+```csharp
+var bundle = document.Root.Bundles.Single();
+bundle.Add(new NetFx.DotNetCoreSearch { Id = "Runtime", Variable = "RuntimeVersion", MajorVersion = 8 });
+bundle.Chains.Single().Add(new ExePackage { Id = "Prereq", SourceFile = "prereq.exe", Permanent = true });
+foreach (var search in bundle.UtilRegistrySearches) { /* Root, Key, Value, Bitness, ... */ }
+```
+
+The bootstrapper application's own elements (`bal:WixStandardBootstrapperApplication`, ...) are in the Bal
+extension, which is not typed yet. Patch authoring (`Patch`, `PatchFamily`, ...) isn't typed yet either.
 
 ## Diagnostics
 
@@ -84,9 +98,9 @@ as `WixUnknownElement`.
 
 | Code | Severity | Problem |
 |---|---|---|
-| `WXM001` | error | Duplicate Id among elements that share a table (two `Property Id="X"`, two `Component Id="Y"`, ...) |
+| `WXM001` | error | Duplicate Id among elements that share a table (two `Property Id="X"`, two `Component Id="Y"`, an `ExePackage` and an `MsiPackage` with one Id, ...) |
 | `WXM002` | error | Attribute text that is neither a valid value nor an expression (`KeyPath="maybe"`), with the allowed values |
-| `WXM003` | warning | A `ComponentGroupRef`, `ComponentRef`, `FeatureRef`, `FeatureGroupRef` or `MergeRef` nothing defines |
+| `WXM003` | warning | A `ComponentGroupRef`, `ComponentRef`, `FeatureRef`, `FeatureGroupRef`, `MergeRef` or `PayloadGroupRef` nothing defines |
 
 Attribute values are checked on extension elements too; Ids and references only among core elements.
 `WixDiagnostics.Validate(product, files, ...)` checks a build's files together: duplicates across them and

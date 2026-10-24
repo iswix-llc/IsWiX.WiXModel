@@ -31,6 +31,182 @@ namespace IsWiX.WiXModel
     /// <summary>
     /// Not documented in the WiX schema.
     /// </summary>
+    public enum BootstrapperApplicationDllDpiAwareness
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;gdiScaled&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Corresponds to the .exe manifest element 'gdiScaling' with content of 'true'. Windows does not support
+        /// combining this with other DPI awareness modes.
+        /// </para>
+        /// </summary>
+        GdiScaled,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;perMonitor&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Corresponds to the .exe manifest element 'dpiAware' with content of 'true/pm'.
+        /// </para>
+        /// </summary>
+        PerMonitor,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;perMonitorV2&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Corresponds to the .exe manifest element 'dpiAwareness' with content of 'PerMonitorV2, PerMonitor' and the
+        /// manifest element 'dpiAware' with content of 'true/pm'.
+        /// </para>
+        /// </summary>
+        PerMonitorV2,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;system&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Corresponds to the .exe manifest element 'dpiAware' with content of 'true'.
+        /// </para>
+        /// </summary>
+        System,
+
+        /// <summary>
+        /// Written as &lt;c&gt;unaware&lt;/c&gt;.
+        /// </summary>
+        Unaware,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum BundleCustomDataType
+    {
+        /// <summary>
+        /// Written as &lt;c&gt;BootstrapperApplication&lt;/c&gt;.
+        /// </summary>
+        BootstrapperApplication,
+
+        /// <summary>
+        /// Written as &lt;c&gt;BootstrapperExtension&lt;/c&gt;.
+        /// </summary>
+        BootstrapperExtension,
+
+        /// <summary>
+        /// Written as &lt;c&gt;BundleExtension&lt;/c&gt;.
+        /// </summary>
+        BundleExtension,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum BundlePackagePayloadPayloadGeneration
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;none&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// None of the bundle's payloads or containers are automatically included as payloads for the package.
+        /// </para>
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;externalWithoutDownloadUrl&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// All detached containers from the bundle that have no download url are included as payloads for the package, as
+        /// well as all external payloads from the bundle that have no download url.
+        /// </para>
+        /// </summary>
+        ExternalWithoutDownloadUrl,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;external&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// All detached containers from the bundle are included as payloads for the package, as well as all external
+        /// payloads from the bundle.
+        /// </para>
+        /// </summary>
+        External,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;all&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// All detached containers from the bundle are included as payloads for the package, as well as all other
+        /// payloads that are not compressed into the detached containers. This option normally requires extra work to use
+        /// since it requires all attached containers to have been extracted.
+        /// </para>
+        /// </summary>
+        All,
+    }
+
+    /// <summary>
+    /// Values of this type will either be "attached" or "detached".
+    /// </summary>
+    public enum BurnContainerType
+    {
+        /// <summary>
+        /// Written as &lt;c&gt;attached&lt;/c&gt;.
+        /// </summary>
+        Attached,
+
+        /// <summary>
+        /// Written as &lt;c&gt;detached&lt;/c&gt;.
+        /// </summary>
+        Detached,
+    }
+
+    /// <summary>
+    /// The list of communcation protocols with executable packages Burn supports.
+    /// </summary>
+    public enum BurnExeProtocolType
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;none&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The executable package does not support a communication protocol.
+        /// </para>
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;burn&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The executable package implements the Burn communication protocol.
+        /// </para>
+        /// </summary>
+        Burn,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;netfx4&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The executable package implements the .NET Framework v4.0 communication protocol.
+        /// </para>
+        /// </summary>
+        Netfx4,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
     public enum ClassThreadingModel
     {
         /// <summary>
@@ -666,6 +842,72 @@ namespace IsWiX.WiXModel
     }
 
     /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum ExitCodeBehavior
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;success&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The process completed successfully.
+        /// </para>
+        /// </summary>
+        Success,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;error&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The process failed.
+        /// </para>
+        /// </summary>
+        Error,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;scheduleReboot&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The process completed successfully and requires the machine to be restarted.
+        /// </para>
+        /// </summary>
+        ScheduleReboot,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;forceReboot&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The process completed successfully and initiated a restart.
+        /// </para>
+        /// </summary>
+        ForceReboot,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;errorScheduleReboot&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The process failed and requires the machine to be restarted.
+        /// </para>
+        /// </summary>
+        ErrorScheduleReboot,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;errorForceReboot&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The process failed and initiated a restart.
+        /// </para>
+        /// </summary>
+        ErrorForceReboot,
+    }
+
+    /// <summary>
     /// Value indicates that this action is executed if the installer returns the associated exit type. Each exit type
     /// can be used with no more than one action. Multiple actions can have exit types assigned, but every action and
     /// exit type must be different. Exit types are typically used with dialog boxes.
@@ -965,6 +1207,42 @@ namespace IsWiX.WiXModel
         /// </para>
         /// </summary>
         Both,
+    }
+
+    /// <summary>
+    /// Values of this type will either be "force", "keep", or "remove".
+    /// </summary>
+    public enum KeepRemoveForceType
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;force&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Always cache the package during Cache, Install, Modify, Repair, and Layout.
+        /// </para>
+        /// </summary>
+        Force,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;keep&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Keep the package cached when the package is requested to be present.
+        /// </para>
+        /// </summary>
+        Keep,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;remove&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Always uncache the package after Cache, Install, Modify, Repair, Uninstall, and Layout.
+        /// </para>
+        /// </summary>
+        Remove,
     }
 
     /// <summary>
@@ -1407,6 +1685,58 @@ namespace IsWiX.WiXModel
     /// <summary>
     /// Not documented in the WiX schema.
     /// </summary>
+    public enum RelatedBundleAction
+    {
+        /// <summary>
+        /// Written as &lt;c&gt;detect&lt;/c&gt;.
+        /// </summary>
+        Detect,
+
+        /// <summary>
+        /// Written as &lt;c&gt;upgrade&lt;/c&gt;.
+        /// </summary>
+        Upgrade,
+
+        /// <summary>
+        /// Written as &lt;c&gt;addon&lt;/c&gt;.
+        /// </summary>
+        Addon,
+
+        /// <summary>
+        /// Written as &lt;c&gt;patch&lt;/c&gt;.
+        /// </summary>
+        Patch,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum RemoteRelatedBundleAction
+    {
+        /// <summary>
+        /// Written as &lt;c&gt;detect&lt;/c&gt;.
+        /// </summary>
+        Detect,
+
+        /// <summary>
+        /// Written as &lt;c&gt;upgrade&lt;/c&gt;.
+        /// </summary>
+        Upgrade,
+
+        /// <summary>
+        /// Written as &lt;c&gt;addon&lt;/c&gt;.
+        /// </summary>
+        Addon,
+
+        /// <summary>
+        /// Written as &lt;c&gt;patch&lt;/c&gt;.
+        /// </summary>
+        Patch,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
     public enum RemoveRegistryKeyAction
     {
         /// <summary>
@@ -1842,6 +2172,63 @@ namespace IsWiX.WiXModel
         /// </para>
         /// </summary>
         None,
+    }
+
+    /// <summary>
+    /// Indicates the type of a Variable.
+    /// </summary>
+    public enum VariableType
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;string&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// A literal string.
+        /// </para>
+        /// </summary>
+        String,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;formatted&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// A string that may contain Variables.
+        /// </para>
+        /// </summary>
+        Formatted,
+
+        /// <summary>
+        /// Written as &lt;c&gt;numeric&lt;/c&gt;.
+        /// </summary>
+        Numeric,
+
+        /// <summary>
+        /// Written as &lt;c&gt;version&lt;/c&gt;.
+        /// </summary>
+        Version,
+    }
+
+    /// <summary>
+    /// Values of this type will either be "button", "yes"/"true", or "no"/"false".
+    /// </summary>
+    public enum YesNoButtonType
+    {
+        /// <summary>
+        /// Written as &lt;c&gt;no&lt;/c&gt; or &lt;c&gt;false&lt;/c&gt;.
+        /// </summary>
+        No,
+
+        /// <summary>
+        /// Written as &lt;c&gt;yes&lt;/c&gt; or &lt;c&gt;true&lt;/c&gt;.
+        /// </summary>
+        Yes,
+
+        /// <summary>
+        /// Written as &lt;c&gt;button&lt;/c&gt;.
+        /// </summary>
+        Button,
     }
 
     /// <summary>
