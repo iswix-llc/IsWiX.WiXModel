@@ -28,6 +28,7 @@ namespace IsWiX.WiXModel
         /// <remarks>
         /// Requires WiX v4 or later.
         /// </remarks>
+        [global::IsWiX.WiXModel.Core.WixAttribute("http://wixtoolset.org/schemas/v4/wxs/bal", "BAFactoryAssembly")]
         public global::IsWiX.WiXModel.Core.WixValue<bool>? BalBAFactoryAssembly
         {
             get => GetValue(global::System.Xml.Linq.XNamespace.Get("http://wixtoolset.org/schemas/v4/wxs/bal") + "BAFactoryAssembly", global::IsWiX.WiXModel.Core.WixConverters.YesNo);
@@ -43,6 +44,7 @@ namespace IsWiX.WiXModel
         /// marked with this attribute set to "yes".
         /// </para>
         /// </summary>
+        [global::IsWiX.WiXModel.Core.WixAttribute("http://wixtoolset.org/schemas/v4/wxs/bal", "BAFunctions")]
         public global::IsWiX.WiXModel.Core.WixValue<bool>? BalBAFunctions
         {
             get => GetValue(global::System.Xml.Linq.XNamespace.Get("http://wixtoolset.org/schemas/v4/wxs/bal") + "BAFunctions", global::IsWiX.WiXModel.Core.WixConverters.YesNo);

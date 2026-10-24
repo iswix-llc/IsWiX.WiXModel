@@ -44,6 +44,7 @@ namespace IsWiX.WiXModel.Bal
         /// <remarks>
         /// This attribute is required.
         /// </remarks>
+        [global::IsWiX.WiXModel.Core.WixAttribute("", "Condition")]
         public string? ConditionAttribute
         {
             get => GetString("Condition");

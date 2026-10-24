@@ -75,8 +75,8 @@ package.Add(new UIExtension.WixUI { Id = "WixUI_InstallDir", InstallDirectory = 
 
 Attributes an extension adds to core elements are typed properties of those elements, with the same prefix:
 `variable.BalOverridable`, `msiPackage.BalPrereqPackage`, `bundle.BalCommandLineVariables`. Setting one declares
-its namespace too, or keeps the prefix the file already uses. (Diagnostics don't check these attributes'
-values yet.)
+its namespace too, or keeps the prefix the file already uses. Each such property carries
+`[WixAttribute(namespace, name)]`, which diagnostics use to check its value (`bal:Overridable="maybe"`).
 
 Extension attributes typed with core WiX types use the core enums (`Util.RegistrySearch.Bitness` is a
 `WixValue<BitnessType>?`). Elements of other extensions are still read and kept as `WixUnknownElement`.
@@ -118,7 +118,7 @@ Patch authoring (`Patch`, `PatchFamily`, ...) isn't typed yet either.
 | `WXM002` | error | Attribute text that is neither a valid value nor an expression (`KeyPath="maybe"`), with the allowed values |
 | `WXM003` | warning | A `ComponentGroupRef`, `ComponentRef`, `FeatureRef`, `FeatureGroupRef`, `MergeRef` or `PayloadGroupRef` nothing defines |
 
-Attribute values are checked on extension elements too; Ids and references only among core elements.
+Attribute values are checked on extension elements and on extension attributes of core elements too; Ids and references only among core elements.
 `WixDiagnostics.Validate(product, files, ...)` checks a build's files together: duplicates across them and
 unresolved references, which are warnings since a .wixlib or extension may define them. Elements inside
 `<?if?>`/`<?foreach?>` blocks, Ids that are expressions, and `virtual`/`override` Ids are not reported as

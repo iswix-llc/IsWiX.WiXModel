@@ -43,6 +43,7 @@ namespace IsWiX.WiXModel
         /// line. The default is "caseSensitive".
         /// </para>
         /// </summary>
+        [global::IsWiX.WiXModel.Core.WixAttribute("http://wixtoolset.org/schemas/v4/wxs/bal", "CommandLineVariables")]
         public global::IsWiX.WiXModel.Core.WixValue<global::IsWiX.WiXModel.Bal.CommandLineVariables>? BalCommandLineVariables
         {
             get => GetValue(global::System.Xml.Linq.XNamespace.Get("http://wixtoolset.org/schemas/v4/wxs/bal") + "CommandLineVariables", global::IsWiX.WiXModel.Bal.WixEnumConverters.CommandLineVariables);

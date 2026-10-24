@@ -44,6 +44,7 @@ namespace IsWiX.WiXModel
         /// user's system are searched by using the Path. This field is a key into one of the following tables: the
         /// RegLocator, the IniLocator, the CompLocator, or the DrLocator tables.
         /// </summary>
+        [global::IsWiX.WiXModel.Core.WixAttribute("", "Parent")]
         public string? ParentAttribute
         {
             get => GetString("Parent");

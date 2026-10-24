@@ -146,12 +146,13 @@ internal sealed class ModelEmitter
     private void EmitAttribute(CodeWriter code, ElementDefinition element, AttributeDefinition attribute, HashSet<string> used)
     {
         var propertyName = Naming.Unique(attribute.Name, used, "Attribute");
-        EmitProperty(code, attribute, propertyName, _types.Map(element, attribute), Naming.Literal(attribute.Name), null);
+        EmitProperty(code, attribute, propertyName, _types.Map(element, attribute), Naming.Literal(attribute.Name), null, null);
     }
 
     /// <param name="name">A C# expression for the attribute's XName.</param>
+    /// <param name="namespaceName">The attribute's namespace, or <see langword="null"/> for none.</param>
     /// <param name="summary">The summary, or <see langword="null"/> for the attribute's own documentation.</param>
-    private static void EmitProperty(CodeWriter code, AttributeDefinition attribute, string propertyName, AttributeType type, string name, string? summary)
+    private static void EmitProperty(CodeWriter code, AttributeDefinition attribute, string propertyName, AttributeType type, string name, string? summary, string? namespaceName)
     {
         var remarks = new List<string>();
         if (attribute.Required)
@@ -165,6 +166,12 @@ internal sealed class ModelEmitter
         }
 
         code.Documentation(summary is null ? Naming.Paragraphs(attribute.Documentation) : [summary, .. Naming.Paragraphs(attribute.Documentation)], remarks);
+        if (namespaceName != null || propertyName != attribute.Name)
+        {
+            // Diagnostics find the attribute through this when the property is not simply named after it.
+            code.Line($"[global::IsWiX.WiXModel.Core.WixAttribute({Naming.Literal(namespaceName ?? string.Empty)}, {Naming.Literal(attribute.Name)})]");
+        }
+
         if (type.IsString)
         {
             code.Line($"public string? {propertyName}");
@@ -375,7 +382,8 @@ internal sealed class ModelEmitter
                     prefix + attribute.Name,
                     _types.MapGlobal(attribute),
                     $"{XmlNamespace} + {Naming.Literal(attribute.Name)}",
-                    $"The <c>{xmlPrefix}:{attribute.Name}</c> attribute. Setting it declares its namespace on the root if needed.");
+                    $"The <c>{xmlPrefix}:{attribute.Name}</c> attribute. Setting it declares its namespace on the root if needed.",
+                    _schema.TargetNamespace);
             }
 
             code.Close();

@@ -19,6 +19,7 @@ namespace IsWiX.WiXModel
         /// "Ignoring attempt to set non-overridable variable: 'BAR'."
         /// </para>
         /// </summary>
+        [global::IsWiX.WiXModel.Core.WixAttribute("http://wixtoolset.org/schemas/v4/wxs/bal", "Overridable")]
         public global::IsWiX.WiXModel.Core.WixValue<bool>? BalOverridable
         {
             get => GetValue(global::System.Xml.Linq.XNamespace.Get("http://wixtoolset.org/schemas/v4/wxs/bal") + "Overridable", global::IsWiX.WiXModel.Core.WixConverters.YesNo);

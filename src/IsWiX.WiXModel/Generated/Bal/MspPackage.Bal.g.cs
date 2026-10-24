@@ -21,6 +21,7 @@ namespace IsWiX.WiXModel
         /// package might require a restart when files are in use.
         /// </para>
         /// </summary>
+        [global::IsWiX.WiXModel.Core.WixAttribute("http://wixtoolset.org/schemas/v4/wxs/bal", "DisplayFilesInUseDialogCondition")]
         public string? BalDisplayFilesInUseDialogCondition
         {
             get => GetString(global::System.Xml.Linq.XNamespace.Get("http://wixtoolset.org/schemas/v4/wxs/bal") + "DisplayFilesInUseDialogCondition");
@@ -39,6 +40,7 @@ namespace IsWiX.WiXModel
         /// bootstrapper application UI. WixStdBA doesn't support EmbeddedUI.
         /// </para>
         /// </summary>
+        [global::IsWiX.WiXModel.Core.WixAttribute("http://wixtoolset.org/schemas/v4/wxs/bal", "DisplayInternalUICondition")]
         public string? BalDisplayInternalUICondition
         {
             get => GetString(global::System.Xml.Linq.XNamespace.Get("http://wixtoolset.org/schemas/v4/wxs/bal") + "DisplayInternalUICondition");
@@ -55,6 +57,7 @@ namespace IsWiX.WiXModel
         /// PrereqLicenseFile attribute or the PrereqLicenseUrl attribute.
         /// </para>
         /// </summary>
+        [global::IsWiX.WiXModel.Core.WixAttribute("http://wixtoolset.org/schemas/v4/wxs/bal", "PrereqLicenseFile")]
         public string? BalPrereqLicenseFile
         {
             get => GetString(global::System.Xml.Linq.XNamespace.Get("http://wixtoolset.org/schemas/v4/wxs/bal") + "PrereqLicenseFile");
@@ -71,6 +74,7 @@ namespace IsWiX.WiXModel
         /// PrereqLicenseFile attribute or the PrereqLicenseUrl attribute.
         /// </para>
         /// </summary>
+        [global::IsWiX.WiXModel.Core.WixAttribute("http://wixtoolset.org/schemas/v4/wxs/bal", "PrereqLicenseUrl")]
         public string? BalPrereqLicenseUrl
         {
             get => GetString(global::System.Xml.Linq.XNamespace.Get("http://wixtoolset.org/schemas/v4/wxs/bal") + "PrereqLicenseUrl");
@@ -86,6 +90,7 @@ namespace IsWiX.WiXModel
         /// empty.
         /// </para>
         /// </summary>
+        [global::IsWiX.WiXModel.Core.WixAttribute("http://wixtoolset.org/schemas/v4/wxs/bal", "PrereqPackage")]
         public global::IsWiX.WiXModel.Core.WixValue<bool>? BalPrereqPackage
         {
             get => GetValue(global::System.Xml.Linq.XNamespace.Get("http://wixtoolset.org/schemas/v4/wxs/bal") + "PrereqPackage", global::IsWiX.WiXModel.Core.WixConverters.YesNo);
@@ -102,6 +107,7 @@ namespace IsWiX.WiXModel
         /// value is "default".
         /// </para>
         /// </summary>
+        [global::IsWiX.WiXModel.Core.WixAttribute("http://wixtoolset.org/schemas/v4/wxs/bal", "PrimaryPackageType")]
         public global::IsWiX.WiXModel.Core.WixValue<global::IsWiX.WiXModel.Bal.PrimaryPackageType>? BalPrimaryPackageType
         {
             get => GetValue(global::System.Xml.Linq.XNamespace.Get("http://wixtoolset.org/schemas/v4/wxs/bal") + "PrimaryPackageType", global::IsWiX.WiXModel.Bal.WixEnumConverters.PrimaryPackageType);

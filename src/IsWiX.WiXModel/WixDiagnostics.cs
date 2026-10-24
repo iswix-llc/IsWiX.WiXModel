@@ -136,7 +136,8 @@ namespace IsWiX.WiXModel
 
         private static readonly HashSet<string> Opens = new HashSet<string>(StringComparer.Ordinal) { "if", "ifdef", "ifndef", "foreach" };
         private static readonly HashSet<string> Closes = new HashSet<string>(StringComparer.Ordinal) { "endif", "endforeach" };
-        private static readonly ConcurrentDictionary<Type, IReadOnlyList<PropertyInfo>> TypedProperties = new ConcurrentDictionary<Type, IReadOnlyList<PropertyInfo>>();
+        private static readonly ConcurrentDictionary<Type, IReadOnlyList<(PropertyInfo Property, XName Name)>> TypedProperties =
+            new ConcurrentDictionary<Type, IReadOnlyList<(PropertyInfo Property, XName Name)>>();
 
         /// <summary>
         /// Checks the files of one build together: duplicate Ids within and across them, invalid attribute values,
@@ -271,10 +272,10 @@ namespace IsWiX.WiXModel
         private static IEnumerable<WixDiagnostic> InvalidValues(WixSourceDocument document, XElement element)
         {
             var wrapper = WixElement.Wrap(element);
-            foreach (var property in TypedProperties.GetOrAdd(wrapper.GetType(), FindTypedProperties))
+            foreach (var (property, name) in TypedProperties.GetOrAdd(wrapper.GetType(), FindTypedProperties))
             {
-                // Generated properties are named after their attribute.
-                if (element.Attribute(property.Name) is null)
+                var attribute = element.Attribute(name);
+                if (attribute is null)
                 {
                     continue;
                 }
@@ -293,17 +294,28 @@ namespace IsWiX.WiXModel
 
                 var text = (string?)valueType.GetProperty(nameof(WixValue<int>.Text))!.GetValue(value);
                 yield return new WixDiagnostic(InvalidValue, WixDiagnosticSeverity.Error,
-                    $"'{text}' is not a valid {element.Name.LocalName}/@{property.Name}; expected {Expected(valueType.GetGenericArguments()[0])}.",
-                    document, element, property.Name);
+                    $"'{text}' is not a valid {element.Name.LocalName}/@{DisplayName(attribute)}; expected {Expected(valueType.GetGenericArguments()[0])}.",
+                    document, element, name);
             }
         }
 
-        private static IReadOnlyList<PropertyInfo> FindTypedProperties(Type type) =>
+        // Generated properties are named after their attribute, or name it with [WixAttribute] (extension attributes
+        // on core elements such as Variable.BalOverridable, and properties renamed to avoid a clash).
+        private static IReadOnlyList<(PropertyInfo Property, XName Name)> FindTypedProperties(Type type) =>
             type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .Where(p => p.CanRead && p.GetIndexParameters().Length == 0 &&
                     Nullable.GetUnderlyingType(p.PropertyType) is Type underlying &&
                     underlying.IsGenericType && underlying.GetGenericTypeDefinition() == typeof(WixValue<>))
+                .Select(p => (p, p.GetCustomAttribute<WixAttributeAttribute>()?.Name ?? (XName)p.Name))
                 .ToList();
+
+        // bal:Overridable, with the prefix the file uses.
+        private static string DisplayName(XAttribute attribute)
+        {
+            var ns = attribute.Name.Namespace;
+            var prefix = ns == XNamespace.None ? null : attribute.Parent?.GetPrefixOfNamespace(ns);
+            return string.IsNullOrEmpty(prefix) ? attribute.Name.LocalName : prefix + ":" + attribute.Name.LocalName;
+        }
 
         private static string Expected(Type literal)
         {

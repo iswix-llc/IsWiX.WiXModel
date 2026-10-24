@@ -81,6 +81,41 @@ public class BalTests
             StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void Invalid_bal_attribute_values_on_core_elements_are_reported()
+    {
+        var document = Parse("""
+            <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:b="http://wixtoolset.org/schemas/v4/wxs/bal">
+              <Bundle Name="Acme" Manufacturer="Acme" Version="1.0.0.0" UpgradeCode="6f330b47-2577-43ad-9095-1861ba25889b" b:CommandLineVariables="$(var.Matching)">
+                <Variable Name="InstallFolder" b:Overridable="maybe" />
+                <Chain>
+                  <MsiPackage SourceFile="Acme.msi" b:PrimaryPackageType="arm" b:PrereqPackage="yes" />
+                </Chain>
+              </Bundle>
+            </Wix>
+            """);
+
+        var diagnostics = document.Validate();
+
+        Assert.All(diagnostics, d => Assert.Equal(WixDiagnostics.InvalidValue, d.Code));
+        Assert.Equal([Bal("Overridable"), Bal("PrimaryPackageType")], diagnostics.Select(d => d.Attribute));
+        Assert.Contains("'maybe' is not a valid Variable/@b:Overridable; expected yes or no.", diagnostics[0].Message, StringComparison.Ordinal);
+        Assert.Contains("expected default, x86, x64 or arm64", diagnostics[1].Message, StringComparison.Ordinal);
+        Assert.Equal(5, diagnostics[1].Line);
+
+        static System.Xml.Linq.XName Bal(string name) => WixNamespaces.Extension("bal") + name;
+    }
+
+    [Fact]
+    public void Renamed_properties_name_their_attribute()
+    {
+        // DirectorySearchRef/@Parent clashes with WixElement.Parent; diagnostics would find it through this if it were typed.
+        Assert.Equal(
+            "Parent",
+            typeof(DirectorySearchRef).GetProperty("ParentAttribute")!.GetCustomAttributes(typeof(WixAttributeAttribute), false)
+                .Cast<WixAttributeAttribute>().Single().LocalName);
+    }
+
     [Theory]
     [InlineData(typeof(Bal.WixStandardBootstrapperApplication), nameof(Bal.WixStandardBootstrapperApplication.ShowVersion), typeof(WixValue<bool>?))]
     [InlineData(typeof(Bal.Condition), nameof(Bal.Condition.ConditionAttribute), typeof(string))]
