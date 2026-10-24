@@ -311,7 +311,10 @@ internal sealed class ModelEmitter
             yield break;
         }
 
-        var prefix = _config.MemberPrefix ?? throw new InvalidOperationException("An extension config needs a \"memberPrefix\" for the members it adds to core classes.");
+        var prefix = _config.MemberPrefix ?? throw new InvalidOperationException("An extension config needs a \"memberPrefix\" (possibly empty) for the members it adds to core classes.");
+
+        // WiX's usual prefix for the namespace: its last segment (util, netfx, ui).
+        var xmlPrefix = _schema.TargetNamespace[(_schema.TargetNamespace.LastIndexOf('/') + 1)..];
         var byParent = elements
             .SelectMany(e => (e.Parents ?? []).Where(p => p.Namespace == _baseSchema.TargetNamespace && _baseConfig.Elements.Contains(p.Name)).Select(p => (Parent: p.Name, Child: e.Name)))
             .GroupBy(p => p.Parent, p => p.Child, StringComparer.Ordinal)
@@ -331,10 +334,10 @@ internal sealed class ModelEmitter
                 }
 
                 first = false;
-                code.Line($"/// <summary>Gets the child <c>{prefix.ToLowerInvariant()}:{child}</c> elements.</summary>");
+                code.Line($"/// <summary>Gets the child <c>{xmlPrefix}:{child}</c> elements.</summary>");
                 code.Line($"public global::System.Collections.Generic.IEnumerable<{childRef}> {prefix}{Naming.Plural(child)} => GetChildren<{childRef}>({childRef}.ElementName);");
                 code.Line();
-                code.Line($"/// <summary>Adds a <c>{prefix.ToLowerInvariant()}:{child}</c> element, declaring its namespace on the root if needed.</summary>");
+                code.Line($"/// <summary>Adds a <c>{xmlPrefix}:{child}</c> element, declaring its namespace on the root if needed.</summary>");
                 code.Line("/// <param name=\"child\">A detached element.</param>");
                 code.Line("/// <returns><paramref name=\"child\"/>, for chaining.</returns>");
                 code.Line($"public {childRef} Add({childRef} child) => AddChild(child);");
@@ -342,7 +345,7 @@ internal sealed class ModelEmitter
 
             code.Close();
             code.Close();
-            yield return new GeneratedFile($"{group.Key}.{prefix}.g.cs", code.ToString());
+            yield return new GeneratedFile($"{group.Key}.{_config.Namespace[(_config.Namespace.LastIndexOf('.') + 1)..]}.g.cs", code.ToString());
         }
     }
 

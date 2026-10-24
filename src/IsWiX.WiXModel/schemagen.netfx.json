@@ -1,0 +1,19 @@
+{
+  "schemaDirectory": "../../schemas/netfx",
+  "schemaVersion": "v7.0.0",
+  "outputDirectory": "Generated/NetFx",
+  "namespace": "IsWiX.WiXModel.NetFx",
+  "base": "schemagen.json",
+  "memberPrefix": "NetFx",
+  "elements": [
+    "DotNetCompatibilityCheck",
+    "DotNetCompatibilityCheckRef",
+    "DotNetCoreSdkFeatureBandSearch",
+    "DotNetCoreSdkFeatureBandSearchRef",
+    "DotNetCoreSdkSearch",
+    "DotNetCoreSdkSearchRef",
+    "DotNetCoreSearch",
+    "DotNetCoreSearchRef",
+    "NativeImage"
+  ]
+}

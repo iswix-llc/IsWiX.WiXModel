@@ -14,6 +14,8 @@ public class GeneratorTests
     [Theory]
     [InlineData("schemagen.json")]
     [InlineData("schemagen.util.json")]
+    [InlineData("schemagen.netfx.json")]
+    [InlineData("schemagen.ui.json")]
     public void Generated_code_is_up_to_date(string configFile)
     {
         var config = GeneratorConfig.Load(Path.Combine(RepositoryRoot(), "src", "IsWiX.WiXModel", configFile));

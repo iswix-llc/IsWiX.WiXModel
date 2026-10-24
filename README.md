@@ -54,21 +54,28 @@ feature.AddComponentGroupRef("Files");                            // no-op when 
 package.SetPropertyValue("ARPNOMODIFY", "1");                     // adds the property or changes only its Value
 ```
 
-## Util extension elements
+## Extension elements
 
-The WiX Util extension's elements are typed too, in `IsWiX.WiXModel.Util`. The core elements they nest in
-get `Util`-prefixed collections and `Add` overloads, and adding one declares `xmlns:util` on the root:
+The elements of three WiX extensions are typed too. The core elements they nest in get collections and
+`Add` overloads, and adding one declares the extension's namespace on the root (`xmlns:util`, ...):
+
+| Extension | Namespace | Core members |
+|---|---|---|
+| Util | `IsWiX.WiXModel.Util` | `Util`-prefixed: `component.UtilUsers`, `component.UtilXmlFiles` |
+| NetFx | `IsWiX.WiXModel.NetFx` | `NetFx`-prefixed: `file.NetFxNativeImages`, `fragment.NetFxDotNetCoreSearches` |
+| UI | `IsWiX.WiXModel.UIExtension` (`UI` is the core element) | `package.WixUIs`, `ui.WixUIs` |
 
 ```csharp
-using Util = IsWiX.WiXModel.Util;
-
 var user = component.Add(new Util.User { Id = "SvcUser", Name = "svc", LogonAsService = true });
 user.Add(new Util.GroupRef { Id = "Users" });
-foreach (var xmlFile in component.UtilXmlFiles) { /* ElementPath, Action, Value, ... */ }
+file.Add(new NetFx.NativeImage { Id = "AppNgen", Platform = NetFx.NativeImagePlatformType.All });
+package.Add(new UIExtension.WixUI { Id = "WixUI_InstallDir", InstallDirectory = "INSTALLFOLDER" });
 ```
 
-Util attributes typed with core WiX types use the core enums (`Util.RegistrySearch.Bitness` is a
-`WixValue<BitnessType>?`). Elements of other extensions are still read and kept as `WixUnknownElement`.
+Extension attributes typed with core WiX types use the core enums (`Util.RegistrySearch.Bitness` is a
+`WixValue<BitnessType>?`). `Bundle` is not in the typed model yet, so extension elements that only go in a
+bundle (most NetFx searches) are added to a `Fragment`. Elements of other extensions are still read and kept
+as `WixUnknownElement`.
 
 ## Diagnostics
 
@@ -81,7 +88,7 @@ Util attributes typed with core WiX types use the core enums (`Util.RegistrySear
 | `WXM002` | error | Attribute text that is neither a valid value nor an expression (`KeyPath="maybe"`), with the allowed values |
 | `WXM003` | warning | A `ComponentGroupRef`, `ComponentRef`, `FeatureRef`, `FeatureGroupRef` or `MergeRef` nothing defines |
 
-Attribute values are checked on Util elements too; Ids and references only among core elements.
+Attribute values are checked on extension elements too; Ids and references only among core elements.
 `WixDiagnostics.Validate(product, files, ...)` checks a build's files together: duplicates across them and
 unresolved references, which are warnings since a .wixlib or extension may define them. Elements inside
 `<?if?>`/`<?foreach?>` blocks, Ids that are expressions, and `virtual`/`override` Ids are not reported as
@@ -118,7 +125,7 @@ package.Add(new Property { Id = "ARPNOMODIFY", Value = "1" });   // lands in Id 
 | `src/IsWiX.WiXModel.Core` | Infrastructure: lossless XML load/save (`LosslessXml`), `WixValue<T>` and converters, the `WixElement` base class and wrapper registry. No WiX element types. |
 | `src/IsWiX.WiXModel` | `WixDocument` plus the generated element wrappers in `Generated/` (checked in, never hand-edited). |
 | `tools/IsWiX.WiXModel.SchemaGen` | Reads the WiX schema fragments and emits `src/IsWiX.WiXModel/Generated`. |
-| `schemas/wix`, `schemas/util` | The WiX core and Util extension schemas, vendored from the `v7.0.0` tag (see `schemas/README.md`). |
+| `schemas/wix`, `schemas/util`, `schemas/netfx`, `schemas/ui` | The WiX core and extension schemas, vendored from the `v7.0.0` tag (see `schemas/README.md`). |
 | `tests/IsWiX.WiXModel.Tests` | Round-trip, editing and generator tests. |
 
 ## Design rules
@@ -186,8 +193,8 @@ silently wins, so the .NET type must always be qualified or aliased there.
 
 ## Regenerating the model
 
-Add element names to `src/IsWiX.WiXModel/schemagen.json` (or `schemagen.util.json` for the Util
-extension), then run the generator on that config:
+Add element names to `src/IsWiX.WiXModel/schemagen.json` (or `schemagen.<extension>.json` for an
+extension: util, netfx, ui), then run the generator on that config:
 
 ```bash
 dotnet run --project tools/IsWiX.WiXModel.SchemaGen -- src/IsWiX.WiXModel/schemagen.json
@@ -198,7 +205,8 @@ dotnet run --project tools/IsWiX.WiXModel.SchemaGen -- src/IsWiX.WiXModel/schema
 ```
 
 An extension config names the core config as its `base` (for core types such as `wxs:YesNoTypeUnion`) and a
-`memberPrefix` for the collections it adds to core parents. `Generated_code_is_up_to_date` fails if the checked-in output doesn't match the generator.
+`memberPrefix` for the collections it adds to core parents (empty for UI, whose `WixUI` needs none).
+`Generated_code_is_up_to_date` fails if the checked-in output doesn't match the generator.
 
 ## Testing
 

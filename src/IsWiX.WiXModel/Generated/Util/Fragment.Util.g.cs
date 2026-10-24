@@ -9,6 +9,30 @@ namespace IsWiX.WiXModel
 {
     public sealed partial class Fragment
     {
+        /// <summary>Gets the child <c>util:BroadcastEnvironmentChange</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.BroadcastEnvironmentChange> UtilBroadcastEnvironmentChanges => GetChildren<global::IsWiX.WiXModel.Util.BroadcastEnvironmentChange>(global::IsWiX.WiXModel.Util.BroadcastEnvironmentChange.ElementName);
+
+        /// <summary>Adds a <c>util:BroadcastEnvironmentChange</c> element, declaring its namespace on the root if needed.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Util.BroadcastEnvironmentChange Add(global::IsWiX.WiXModel.Util.BroadcastEnvironmentChange child) => AddChild(child);
+
+        /// <summary>Gets the child <c>util:BroadcastSettingChange</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.BroadcastSettingChange> UtilBroadcastSettingChanges => GetChildren<global::IsWiX.WiXModel.Util.BroadcastSettingChange>(global::IsWiX.WiXModel.Util.BroadcastSettingChange.ElementName);
+
+        /// <summary>Adds a <c>util:BroadcastSettingChange</c> element, declaring its namespace on the root if needed.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Util.BroadcastSettingChange Add(global::IsWiX.WiXModel.Util.BroadcastSettingChange child) => AddChild(child);
+
+        /// <summary>Gets the child <c>util:CheckRebootRequired</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.CheckRebootRequired> UtilCheckRebootRequireds => GetChildren<global::IsWiX.WiXModel.Util.CheckRebootRequired>(global::IsWiX.WiXModel.Util.CheckRebootRequired.ElementName);
+
+        /// <summary>Adds a <c>util:CheckRebootRequired</c> element, declaring its namespace on the root if needed.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Util.CheckRebootRequired Add(global::IsWiX.WiXModel.Util.CheckRebootRequired child) => AddChild(child);
+
         /// <summary>Gets the child <c>util:CloseApplication</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.CloseApplication> UtilCloseApplications => GetChildren<global::IsWiX.WiXModel.Util.CloseApplication>(global::IsWiX.WiXModel.Util.CloseApplication.ElementName);
 
@@ -48,6 +72,22 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.Util.DirectorySearchRef Add(global::IsWiX.WiXModel.Util.DirectorySearchRef child) => AddChild(child);
+
+        /// <summary>Gets the child <c>util:ExitEarlyWithSuccess</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.ExitEarlyWithSuccess> UtilExitEarlyWithSuccesses => GetChildren<global::IsWiX.WiXModel.Util.ExitEarlyWithSuccess>(global::IsWiX.WiXModel.Util.ExitEarlyWithSuccess.ElementName);
+
+        /// <summary>Adds a <c>util:ExitEarlyWithSuccess</c> element, declaring its namespace on the root if needed.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Util.ExitEarlyWithSuccess Add(global::IsWiX.WiXModel.Util.ExitEarlyWithSuccess child) => AddChild(child);
+
+        /// <summary>Gets the child <c>util:FailWhenDeferred</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.FailWhenDeferred> UtilFailWhenDeferreds => GetChildren<global::IsWiX.WiXModel.Util.FailWhenDeferred>(global::IsWiX.WiXModel.Util.FailWhenDeferred.ElementName);
+
+        /// <summary>Adds a <c>util:FailWhenDeferred</c> element, declaring its namespace on the root if needed.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Util.FailWhenDeferred Add(global::IsWiX.WiXModel.Util.FailWhenDeferred child) => AddChild(child);
 
         /// <summary>Gets the child <c>util:FileSearch</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.FileSearch> UtilFileSearches => GetChildren<global::IsWiX.WiXModel.Util.FileSearch>(global::IsWiX.WiXModel.Util.FileSearch.ElementName);
@@ -89,6 +129,46 @@ namespace IsWiX.WiXModel
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.Util.ProductSearchRef Add(global::IsWiX.WiXModel.Util.ProductSearchRef child) => AddChild(child);
 
+        /// <summary>Gets the child <c>util:QueryNativeMachine</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.QueryNativeMachine> UtilQueryNativeMachines => GetChildren<global::IsWiX.WiXModel.Util.QueryNativeMachine>(global::IsWiX.WiXModel.Util.QueryNativeMachine.ElementName);
+
+        /// <summary>Adds a <c>util:QueryNativeMachine</c> element, declaring its namespace on the root if needed.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Util.QueryNativeMachine Add(global::IsWiX.WiXModel.Util.QueryNativeMachine child) => AddChild(child);
+
+        /// <summary>Gets the child <c>util:QueryWindowsDirectories</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.QueryWindowsDirectories> UtilQueryWindowsDirectoriesElements => GetChildren<global::IsWiX.WiXModel.Util.QueryWindowsDirectories>(global::IsWiX.WiXModel.Util.QueryWindowsDirectories.ElementName);
+
+        /// <summary>Adds a <c>util:QueryWindowsDirectories</c> element, declaring its namespace on the root if needed.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Util.QueryWindowsDirectories Add(global::IsWiX.WiXModel.Util.QueryWindowsDirectories child) => AddChild(child);
+
+        /// <summary>Gets the child <c>util:QueryWindowsDriverInfo</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.QueryWindowsDriverInfo> UtilQueryWindowsDriverInfos => GetChildren<global::IsWiX.WiXModel.Util.QueryWindowsDriverInfo>(global::IsWiX.WiXModel.Util.QueryWindowsDriverInfo.ElementName);
+
+        /// <summary>Adds a <c>util:QueryWindowsDriverInfo</c> element, declaring its namespace on the root if needed.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Util.QueryWindowsDriverInfo Add(global::IsWiX.WiXModel.Util.QueryWindowsDriverInfo child) => AddChild(child);
+
+        /// <summary>Gets the child <c>util:QueryWindowsSuiteInfo</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.QueryWindowsSuiteInfo> UtilQueryWindowsSuiteInfos => GetChildren<global::IsWiX.WiXModel.Util.QueryWindowsSuiteInfo>(global::IsWiX.WiXModel.Util.QueryWindowsSuiteInfo.ElementName);
+
+        /// <summary>Adds a <c>util:QueryWindowsSuiteInfo</c> element, declaring its namespace on the root if needed.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Util.QueryWindowsSuiteInfo Add(global::IsWiX.WiXModel.Util.QueryWindowsSuiteInfo child) => AddChild(child);
+
+        /// <summary>Gets the child <c>util:QueryWindowsWellKnownSIDs</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.QueryWindowsWellKnownSIDs> UtilQueryWindowsWellKnownSIDsElements => GetChildren<global::IsWiX.WiXModel.Util.QueryWindowsWellKnownSIDs>(global::IsWiX.WiXModel.Util.QueryWindowsWellKnownSIDs.ElementName);
+
+        /// <summary>Adds a <c>util:QueryWindowsWellKnownSIDs</c> element, declaring its namespace on the root if needed.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Util.QueryWindowsWellKnownSIDs Add(global::IsWiX.WiXModel.Util.QueryWindowsWellKnownSIDs child) => AddChild(child);
+
         /// <summary>Gets the child <c>util:RegistrySearch</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.RegistrySearch> UtilRegistrySearches => GetChildren<global::IsWiX.WiXModel.Util.RegistrySearch>(global::IsWiX.WiXModel.Util.RegistrySearch.ElementName);
 
@@ -120,6 +200,22 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.Util.User Add(global::IsWiX.WiXModel.Util.User child) => AddChild(child);
+
+        /// <summary>Gets the child <c>util:WaitForEvent</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.WaitForEvent> UtilWaitForEvents => GetChildren<global::IsWiX.WiXModel.Util.WaitForEvent>(global::IsWiX.WiXModel.Util.WaitForEvent.ElementName);
+
+        /// <summary>Adds a <c>util:WaitForEvent</c> element, declaring its namespace on the root if needed.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Util.WaitForEvent Add(global::IsWiX.WiXModel.Util.WaitForEvent child) => AddChild(child);
+
+        /// <summary>Gets the child <c>util:WaitForEventDeferred</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.WaitForEventDeferred> UtilWaitForEventDeferreds => GetChildren<global::IsWiX.WiXModel.Util.WaitForEventDeferred>(global::IsWiX.WiXModel.Util.WaitForEventDeferred.ElementName);
+
+        /// <summary>Adds a <c>util:WaitForEventDeferred</c> element, declaring its namespace on the root if needed.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Util.WaitForEventDeferred Add(global::IsWiX.WiXModel.Util.WaitForEventDeferred child) => AddChild(child);
 
         /// <summary>Gets the child <c>util:WindowsFeatureSearch</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Util.WindowsFeatureSearch> UtilWindowsFeatureSearches => GetChildren<global::IsWiX.WiXModel.Util.WindowsFeatureSearch>(global::IsWiX.WiXModel.Util.WindowsFeatureSearch.ElementName);

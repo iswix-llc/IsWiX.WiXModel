@@ -82,14 +82,14 @@ internal static class SchemaLoader
             {
                 case null:
                     // <element name="X"/> with no content model: an empty element with no attributes.
-                    return new ElementDefinition(name, Documentation(element), [], [], false, false, false);
+                    return new ElementDefinition(name, Documentation(element), [], [], false, false, false, Parents: Parents(element));
                 case var typeName when complexTypes.TryGetValue(typeName, out var named):
                     complexType = named;
                     sharedContentType = typeName;
                     break;
                 default:
                     // A simple type: the element holds text.
-                    return new ElementDefinition(name, Documentation(element), [], [], false, false, true);
+                    return new ElementDefinition(name, Documentation(element), [], [], false, false, true, Parents: Parents(element));
             }
         }
 

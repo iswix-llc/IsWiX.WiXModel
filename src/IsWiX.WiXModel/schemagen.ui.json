@@ -1,0 +1,11 @@
+{
+  "schemaDirectory": "../../schemas/ui",
+  "schemaVersion": "v7.0.0",
+  "outputDirectory": "Generated/UIExtension",
+  "namespace": "IsWiX.WiXModel.UIExtension",
+  "base": "schemagen.json",
+  "memberPrefix": "",
+  "elements": [
+    "WixUI"
+  ]
+}
