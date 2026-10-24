@@ -1,0 +1,58 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <UI Id="AcmeUI">
+      <TextStyle Id="AcmeTitle" FaceName="Tahoma" Size="12" Bold="yes" Red="0" Green="0" Blue="128" />
+      <UIText Id="bytes" Value="bytes" />
+      <ProgressText Action="ConfigureService" Message="Configuring the Acme service" Template="Service: [1]" />
+      <Error Id="25001" Message="Acme setup failed: [2]" />
+
+      <Dialog Id="AcmeSettingsDlg" Width="370" Height="270" Title="!(loc.SettingsDlg_Title)" NoMinimize="yes">
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes" Text="{\AcmeTitle}Settings" />
+        <Control Id="Mode" Type="ComboBox" X="20" Y="60" Width="200" Height="16" Property="ACMEMODE" ComboList="yes">
+          <ComboBox Property="ACMEMODE">
+            <ListItem Value="test" Text="Test" />
+            <ListItem Value="production" Text="Production" />
+          </ComboBox>
+        </Control>
+        <Control Id="Scope" Type="RadioButtonGroup" X="20" Y="90" Width="200" Height="40" Property="ACMESCOPE">
+          <RadioButtonGroup Property="ACMESCOPE">
+            <RadioButton Value="machine" X="0" Y="0" Width="200" Height="15" Text="Everyone who uses this computer" />
+            <RadioButton Value="user" X="0" Y="20" Width="200" Height="15" Text="Only for me" />
+          </RadioButtonGroup>
+        </Control>
+        <Control Id="Logo" Type="Icon" X="320" Y="6" Width="32" Height="32" IconSize="32" FixedSize="yes" Text="AcmeIcon" />
+        <Control Id="Progress" Type="ProgressBar" X="20" Y="140" Width="330" Height="10" ProgressBlocks="yes">
+          <Subscribe Event="SetProgress" Attribute="Progress" />
+        </Control>
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="!(loc.WixUINext)">
+          <Publish Event="SpawnDialog" Value="InvalidModeDlg" Condition="NOT ACMEMODE" />
+          <Publish Event="NewDialog" Value="VerifyReadyDlg" Condition="ACMEMODE" />
+        </Control>
+      </Dialog>
+      <DialogRef Id="VerifyReadyDlg" />
+      <Publish Dialog="InstallDirDlg" Control="Next" Event="NewDialog" Value="AcmeSettingsDlg" Order="5" />
+
+      <ListBox Property="ACMEFEATURES">
+        <ListItem Value="docs" Text="Documentation" />
+      </ListBox>
+      <ListView Property="ACMEVIEWS">
+        <ListItem Value="grid" Text="Grid" Icon="GridIcon" />
+      </ListView>
+
+      <BillboardAction Id="InstallFiles">
+        <Billboard Id="Welcome" Feature="Main">
+          <Control Id="Thanks" Type="Text" X="0" Y="0" Width="150" Height="20" Text="Thanks for installing Acme" />
+        </Billboard>
+      </BillboardAction>
+
+      <EmbeddedUI Id="AcmeEmbeddedUI" SourceFile="AcmeEmbeddedUI.dll" IgnoreFatalExit="no" SupportBasicUI="yes">
+        <EmbeddedUIResource Id="AcmeEmbeddedUIStrings" Name="strings.xml" SourceFile="strings.xml" />
+      </EmbeddedUI>
+
+      <InstallUISequence>
+        <Show Dialog="AcmeSettingsDlg" After="CostFinalize" Condition="NOT Installed" />
+      </InstallUISequence>
+    </UI>
+    <UIRef Id="WixUI_InstallDir" />
+  </Fragment>
+</Wix>

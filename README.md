@@ -42,16 +42,18 @@ document.Save("Package.wxs");
 
 ## Names that match .NET types
 
-Element classes keep their exact WiX names, so code reads like the `.wxs` it edits. Seven of them share a
-name with a type in a namespace .NET projects commonly import:
+Element classes keep their exact WiX names, so code reads like the `.wxs` it edits. Thirteen of them share
+a name with a type in a namespace .NET projects commonly import, most of them in UI frameworks:
 
 | WiX class | Same name as | Usually imported by |
 |---|---|---|
 | `Environment` | `System.Environment` | `using System;` (every project) |
 | `File`, `Directory` | `System.IO.File`, `System.IO.Directory` | `using System.IO;` (SDK implicit usings) |
+| `Module`, `AssemblyName` | `System.Reflection.Module`, `System.Reflection.AssemblyName` | `using System.Reflection;` |
 | `Icon` | `System.Drawing.Icon` | WinForms implicit usings |
 | `Shortcut` | `System.Windows.Forms.Shortcut` | WinForms implicit usings |
-| `Module`, `AssemblyName` | `System.Reflection.Module`, `System.Reflection.AssemblyName` | `using System.Reflection;` |
+| `Control`, `ComboBox`, `ListBox`, `ListView`, `RadioButton` | the WinForms and WPF controls of the same name | `System.Windows.Forms` (WinForms implicit usings), `System.Windows.Controls` |
+| `ListItem` | `System.Windows.Documents.ListItem` | `System.Windows.Documents` (WPF) |
 
 When a file imports both namespaces, the short name is ambiguous (error CS0104). Resolve it with using
 aliases, either at the top of the file or once per project in a `GlobalUsings.cs`:
@@ -64,9 +66,24 @@ using SysEnvironment = System.Environment;        // and a short name for the .N
 using IOFile = System.IO.File;
 ```
 
-or by writing the .NET type out in full (`System.Environment.GetEnvironmentVariable("PATH")`). Code in a
-namespace under `IsWiX.WiXModel` (such as `IsWiX.WiXModel.Tests`) gets no error: the WiX type silently
-wins, so the .NET type must always be qualified or aliased there.
+or by writing the .NET type out in full (`System.Environment.GetEnvironmentVariable("PATH")`).
+
+In WinForms or WPF code that uses many of these, alias the namespace instead of each type, so WiX elements
+read as `Wxs.Control` next to the framework's `Control`:
+
+```csharp
+using System.Windows.Controls;
+using Wxs = IsWiX.WiXModel;
+
+var dialog = document.Root.Fragments.Single().UIs.Single().Dialogs.Single();
+foreach (Wxs.Control control in dialog.Controls)
+{
+    var button = new Button { Content = control.Text };   // a WPF control
+}
+```
+
+Code in a namespace under `IsWiX.WiXModel` (such as `IsWiX.WiXModel.Tests`) gets no error: the WiX type
+silently wins, so the .NET type must always be qualified or aliased there.
 
 ## Regenerating the model
 

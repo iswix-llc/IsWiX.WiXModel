@@ -10,9 +10,6 @@ namespace IsWiX.WiXModel
     /// <summary>
     /// Not documented in the WiX schema.
     /// </summary>
-    /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: Show.
-    /// </remarks>
     public sealed partial class InstallUISequence : global::IsWiX.WiXModel.Core.WixElement
     {
         /// <summary>The XML name of the <c>InstallUISequence</c> element.</summary>
@@ -36,6 +33,14 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.Custom Add(global::IsWiX.WiXModel.Custom child) => AddChild(child);
+
+        /// <summary>Gets the child <c>Show</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Show> ShowElements => GetChildren<global::IsWiX.WiXModel.Show>(global::IsWiX.WiXModel.Show.ElementName);
+
+        /// <summary>Adds a <c>Show</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Show Add(global::IsWiX.WiXModel.Show child) => AddChild(child);
 
         /// <summary>Gets the child <c>ScheduleReboot</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ScheduleReboot> ScheduleRebootElements => GetChildren<global::IsWiX.WiXModel.ScheduleReboot>(global::IsWiX.WiXModel.ScheduleReboot.ElementName);

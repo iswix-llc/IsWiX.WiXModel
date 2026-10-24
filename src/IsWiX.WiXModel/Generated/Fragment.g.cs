@@ -19,9 +19,8 @@ namespace IsWiX.WiXModel
     /// <remarks>
     /// Child elements not yet in the typed model are available through Children and Xml: BootstrapperApplication,
     /// BootstrapperApplicationRef, BootstrapperExtension, BootstrapperExtensionRef, BundleCustomData,
-    /// BundleCustomDataRef, BundleExtension, BundleExtensionRef, Container, EmbeddedChainer, EmbeddedChainerRef,
-    /// PackageGroup, PatchFamily, PatchFamilyGroup, PatchFamilyGroupRef, PayloadGroup, RelatedBundle, SetVariable,
-    /// SetVariableRef, UI, Variable.
+    /// BundleCustomDataRef, BundleExtension, BundleExtensionRef, Container, PackageGroup, PatchFamily,
+    /// PatchFamilyGroup, PatchFamilyGroupRef, PayloadGroup, RelatedBundle, SetVariable, SetVariableRef, Variable.
     /// </remarks>
     public sealed partial class Fragment : global::IsWiX.WiXModel.Core.WixElement
     {
@@ -159,6 +158,22 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.DirectoryRef Add(global::IsWiX.WiXModel.DirectoryRef child) => AddChild(child);
+
+        /// <summary>Gets the child <c>EmbeddedChainer</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.EmbeddedChainer> EmbeddedChainers => GetChildren<global::IsWiX.WiXModel.EmbeddedChainer>(global::IsWiX.WiXModel.EmbeddedChainer.ElementName);
+
+        /// <summary>Adds a <c>EmbeddedChainer</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.EmbeddedChainer Add(global::IsWiX.WiXModel.EmbeddedChainer child) => AddChild(child);
+
+        /// <summary>Gets the child <c>EmbeddedChainerRef</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.EmbeddedChainerRef> EmbeddedChainerRefs => GetChildren<global::IsWiX.WiXModel.EmbeddedChainerRef>(global::IsWiX.WiXModel.EmbeddedChainerRef.ElementName);
+
+        /// <summary>Adds a <c>EmbeddedChainerRef</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.EmbeddedChainerRef Add(global::IsWiX.WiXModel.EmbeddedChainerRef child) => AddChild(child);
 
         /// <summary>Gets the child <c>EnsureTable</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.EnsureTable> EnsureTables => GetChildren<global::IsWiX.WiXModel.EnsureTable>(global::IsWiX.WiXModel.EnsureTable.ElementName);
@@ -327,6 +342,14 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.StandardDirectory Add(global::IsWiX.WiXModel.StandardDirectory child) => AddChild(child);
+
+        /// <summary>Gets the child <c>UI</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.UI> UIs => GetChildren<global::IsWiX.WiXModel.UI>(global::IsWiX.WiXModel.UI.ElementName);
+
+        /// <summary>Adds a <c>UI</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.UI Add(global::IsWiX.WiXModel.UI child) => AddChild(child);
 
         /// <summary>Gets the child <c>UIRef</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.UIRef> UIRefs => GetChildren<global::IsWiX.WiXModel.UIRef>(global::IsWiX.WiXModel.UIRef.ElementName);

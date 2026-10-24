@@ -208,6 +208,32 @@ namespace IsWiX.WiXModel
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.SFPFile.ElementName, xml => new global::IsWiX.WiXModel.SFPFile(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.ComplianceCheck.ElementName, xml => new global::IsWiX.WiXModel.ComplianceCheck(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.ComplianceDrive.ElementName, xml => new global::IsWiX.WiXModel.ComplianceDrive(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.UI.ElementName, xml => new global::IsWiX.WiXModel.UI(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Dialog.ElementName, xml => new global::IsWiX.WiXModel.Dialog(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.DialogRef.ElementName, xml => new global::IsWiX.WiXModel.DialogRef(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Control.ElementName, xml => new global::IsWiX.WiXModel.Control(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Publish.ElementName, xml => new global::IsWiX.WiXModel.Publish(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Subscribe.ElementName, xml => new global::IsWiX.WiXModel.Subscribe(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Text.ElementName, xml => new global::IsWiX.WiXModel.Text(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.TextStyle.ElementName, xml => new global::IsWiX.WiXModel.TextStyle(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.UIText.ElementName, xml => new global::IsWiX.WiXModel.UIText(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.ProgressText.ElementName, xml => new global::IsWiX.WiXModel.ProgressText(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Billboard.ElementName, xml => new global::IsWiX.WiXModel.Billboard(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.BillboardAction.ElementName, xml => new global::IsWiX.WiXModel.BillboardAction(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.ComboBox.ElementName, xml => new global::IsWiX.WiXModel.ComboBox(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.ListBox.ElementName, xml => new global::IsWiX.WiXModel.ListBox(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.ListItem.ElementName, xml => new global::IsWiX.WiXModel.ListItem(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.ListView.ElementName, xml => new global::IsWiX.WiXModel.ListView(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.RadioButton.ElementName, xml => new global::IsWiX.WiXModel.RadioButton(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.RadioButtonGroup.ElementName, xml => new global::IsWiX.WiXModel.RadioButtonGroup(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Show.ElementName, xml => new global::IsWiX.WiXModel.Show(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Error.ElementName, xml => new global::IsWiX.WiXModel.Error(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.EmbeddedUI.ElementName, xml => new global::IsWiX.WiXModel.EmbeddedUI(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.EmbeddedUIResource.ElementName, xml => new global::IsWiX.WiXModel.EmbeddedUIResource(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.EmbeddedChainer.ElementName, xml => new global::IsWiX.WiXModel.EmbeddedChainer(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.EmbeddedChainerRef.ElementName, xml => new global::IsWiX.WiXModel.EmbeddedChainerRef(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.InstanceTransforms.ElementName, xml => new global::IsWiX.WiXModel.InstanceTransforms(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Instance.ElementName, xml => new global::IsWiX.WiXModel.Instance(xml));
         }
     }
 }

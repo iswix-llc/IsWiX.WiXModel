@@ -426,6 +426,27 @@ namespace IsWiX.WiXModel
     /// <summary>
     /// Not documented in the WiX schema.
     /// </summary>
+    public enum ControlIconSize
+    {
+        /// <summary>
+        /// Written as &lt;c&gt;16&lt;/c&gt;.
+        /// </summary>
+        Size16,
+
+        /// <summary>
+        /// Written as &lt;c&gt;32&lt;/c&gt;.
+        /// </summary>
+        Size32,
+
+        /// <summary>
+        /// Written as &lt;c&gt;48&lt;/c&gt;.
+        /// </summary>
+        Size48,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
     public enum CustomActionExecute
     {
         /// <summary>

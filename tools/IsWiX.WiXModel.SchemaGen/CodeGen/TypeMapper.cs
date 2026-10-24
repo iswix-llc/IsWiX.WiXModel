@@ -130,7 +130,7 @@ internal sealed class TypeMapper
                 _ => Array.Empty<string>(),
             };
 
-            var memberName = Naming.Unique(Naming.Pascal(value.Value), used);
+            var memberName = Naming.Unique(Naming.EnumMember(value.Value, name), used);
             members.Add(new EnumMember(memberName, value.Value, aliases, value.Documentation));
         }
 

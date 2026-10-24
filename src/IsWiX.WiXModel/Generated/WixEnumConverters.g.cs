@@ -18,6 +18,7 @@ namespace IsWiX.WiXModel
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ComponentSearchType> ComponentSearchType = new ComponentSearchTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CompressionLevelType> CompressionLevelType = new CompressionLevelTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ConfigurationFormat> ConfigurationFormat = new ConfigurationFormatConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ControlIconSize> ControlIconSize = new ControlIconSizeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionExecute> CustomActionExecute = new CustomActionExecuteConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionReturn> CustomActionReturn = new CustomActionReturnConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CustomActionScript> CustomActionScript = new CustomActionScriptConverter();
@@ -534,6 +535,43 @@ namespace IsWiX.WiXModel
                         return "Bitfield";
                     default:
                         throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a ConfigurationFormat value.");
+                }
+            }
+        }
+
+        private sealed class ControlIconSizeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ControlIconSize>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.ControlIconSize value)
+            {
+                switch (text)
+                {
+                    case "16":
+                        value = global::IsWiX.WiXModel.ControlIconSize.Size16;
+                        return true;
+                    case "32":
+                        value = global::IsWiX.WiXModel.ControlIconSize.Size32;
+                        return true;
+                    case "48":
+                        value = global::IsWiX.WiXModel.ControlIconSize.Size48;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.ControlIconSize value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.ControlIconSize.Size16:
+                        return "16";
+                    case global::IsWiX.WiXModel.ControlIconSize.Size32:
+                        return "32";
+                    case global::IsWiX.WiXModel.ControlIconSize.Size48:
+                        return "48";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a ControlIconSize value.");
                 }
             }
         }

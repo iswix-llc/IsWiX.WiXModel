@@ -9,8 +9,12 @@ internal static class Naming
 {
     private static readonly string[] UncountableEndings = ["Media", "Information", "Data"];
 
-    // Names whose regular plural reads as a different word ("Customs") or not as a word ("PermissionExes").
-    private static readonly HashSet<string> NoPlural = new(StringComparer.Ordinal) { "Custom", "PermissionEx" };
+    // Names whose regular plural reads as a different word ("Customs"), not as a word ("PermissionExes"),
+    // or as a verb ("Publishes": UI events are verbs, like the standard actions).
+    private static readonly HashSet<string> NoPlural = new(StringComparer.Ordinal)
+    {
+        "Custom", "PermissionEx", "Publish", "Show", "Subscribe",
+    };
 
     /// <summary>Turns a schema value such as <c>perMachine</c>, <c>always64</c> or <c>.net</c> into a C# identifier.</summary>
     public static string Pascal(string value)
@@ -35,6 +39,27 @@ internal static class Naming
         }
 
         return result.ToString();
+    }
+
+    /// <summary>
+    /// Names an enum member. Numeric values are prefixed with the last word of the enum's name, so
+    /// <c>ControlIconSize</c>'s <c>16</c> becomes <c>Size16</c> rather than <c>_16</c>.
+    /// </summary>
+    public static string EnumMember(string value, string enumName)
+    {
+        var member = Pascal(value);
+        if (member[0] != '_')
+        {
+            return member;
+        }
+
+        var lastWord = enumName.Length - 1;
+        while (lastWord > 0 && !char.IsUpper(enumName[lastWord]))
+        {
+            lastWord--;
+        }
+
+        return enumName[lastWord..] + member[1..];
     }
 
     /// <summary>

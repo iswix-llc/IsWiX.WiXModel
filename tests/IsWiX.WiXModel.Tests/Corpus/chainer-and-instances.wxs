@@ -1,0 +1,10 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="Multi Instance" Manufacturer="Acme" Version="1.0.0.0">
+    <EmbeddedChainer Id="AcmeChainer" BinarySource="AcmeChainerBinary" CommandLine="/quiet" Condition="NOT Installed" />
+    <EmbeddedChainerRef Id="SharedChainer" />
+    <InstanceTransforms Property="ACMEINSTANCE">
+      <Instance Id="Blue" ProductCode="*" ProductName="Acme (Blue)" />
+      <Instance Id="Green" ProductCode="4C3B2A19-0807-4655-A443-3322110FFEDD" ProductName="Acme (Green)" UpgradeCode="5D4C3B2A-1908-4766-B554-4433221100FF" />
+    </InstanceTransforms>
+  </Package>
+</Wix>
