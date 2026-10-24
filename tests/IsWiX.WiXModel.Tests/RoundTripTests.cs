@@ -68,6 +68,30 @@ public class RoundTripTests
         TestText.AssertSameBytes(source, TestText.Save(document), Path.GetFileName(path));
     }
 
+    /// <summary>
+    /// Guards the corpus run against passing vacuously: if the loader started rejecting real files, they would
+    /// drop out of <see cref="CorpusFiles"/> instead of failing. WiX's own tests include a few v3 and malformed
+    /// files on purpose, so the bar is 95% (v7.0.0: 913 of 924).
+    /// </summary>
+    [Fact]
+    public void External_corpus_files_are_almost_all_loadable()
+    {
+        var folders = (System.Environment.GetEnvironmentVariable("WIXMODEL_CORPUS") ?? string.Empty)
+            .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+        if (folders.Length == 0)
+        {
+            return;
+        }
+
+        var candidates = folders.SelectMany(f => IODirectory.EnumerateFiles(f, "*.*", SearchOption.AllDirectories).Where(IsWixSourceName)).ToList();
+        var loadable = candidates.Count(IsWixV4Source);
+
+        Assert.NotEmpty(candidates);
+        Assert.True(
+            loadable >= candidates.Count * 0.95,
+            $"Only {loadable} of {candidates.Count} corpus files loaded as WiX v4+ sources.");
+    }
+
     [Fact]
     public void Utf16_document_round_trips()
     {

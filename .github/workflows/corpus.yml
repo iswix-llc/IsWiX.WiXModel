@@ -1,0 +1,76 @@
+name: Corpus
+
+# Round-trips every .wxs and .wxi file in the wixtoolset/wix repository through the model:
+# each must save back byte-for-byte, before and after reading every typed property.
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      wix-ref:
+        description: wixtoolset/wix tag or branch to test against (default is schemaVersion in src/IsWiX.WiXModel/schemagen.json)
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: corpus-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  round-trip:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out the pull request
+        uses: actions/checkout@v4
+
+      # The SDK comes from global.json; the tests run on the .NET 8 runtime.
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+          dotnet-version: 8.0.x
+
+      # Defaults to the WiX release the vendored schema was taken from, so the corpus and the model match.
+      - name: Choose the WiX version
+        id: wix
+        shell: pwsh
+        env:
+          WIX_REF_INPUT: ${{ inputs.wix-ref }}
+        run: |
+          $ref = $env:WIX_REF_INPUT
+          if (-not $ref) { $ref = (Get-Content src/IsWiX.WiXModel/schemagen.json -Raw | ConvertFrom-Json).schemaVersion }
+          if (-not $ref) { throw 'No schemaVersion in src/IsWiX.WiXModel/schemagen.json.' }
+          "ref=$ref" >> $env:GITHUB_OUTPUT
+          Write-Host "Testing against wixtoolset/wix $ref"
+
+      # Sparse, blobless and shallow: only the source files are downloaded. Some test paths
+      # exceed 260 characters, hence core.longpaths.
+      - name: Fetch the WiX sources (.wxs and .wxi only)
+        shell: pwsh
+        env:
+          WIX_REF: ${{ steps.wix.outputs.ref }}
+        run: |
+          $corpus = Join-Path $env:RUNNER_TEMP 'wix'
+          git -c core.longpaths=true clone --quiet --depth 1 --branch $env:WIX_REF --filter=blob:none --sparse https://github.com/wixtoolset/wix.git $corpus
+          if ($LASTEXITCODE -ne 0) { throw "Cloning wixtoolset/wix $env:WIX_REF failed." }
+          git -C $corpus config core.longpaths true
+          git -C $corpus sparse-checkout set --no-cone '/**/*.wxs' '/**/*.wxi'
+          if ($LASTEXITCODE -ne 0) { throw 'The sparse checkout failed.' }
+
+          $count = (Get-ChildItem $corpus -Recurse -File -Include *.wxs, *.wxi).Count
+          Write-Host "$count .wxs/.wxi files checked out"
+          # An empty or truncated checkout would let the tests pass without testing anything.
+          if ($count -lt 500) { throw "Only $count source files were checked out; expected several hundred." }
+          "WIXMODEL_CORPUS=$corpus" >> $env:GITHUB_ENV
+
+      - name: Build
+        run: dotnet build IsWiX.WiXModel.slnx -c Release
+
+      # WIXMODEL_CORPUS adds every WiX v4+ file under the clone to the round-trip theories.
+      - name: Round-trip the corpus
+        run: dotnet test IsWiX.WiXModel.slnx -c Release --no-build

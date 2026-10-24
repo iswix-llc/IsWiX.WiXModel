@@ -116,7 +116,8 @@ dotnet test
 
 To run the round-trip tests over a larger corpus (for example a clone of
 [wixtoolset/wix](https://github.com/wixtoolset/wix)), point `WIXMODEL_CORPUS` at one or more folders,
-separated by `;`. Every WiX v4+ `.wxs` under them must save back byte-for-byte.
+separated by `;`. Every WiX v4+ `.wxs` and `.wxi` under them must save back byte-for-byte, and at least
+95% of the files found must load (WiX's own tests deliberately include a few v3 and malformed files).
 
 ## Packages and releases
 
@@ -124,6 +125,10 @@ Two NuGet packages ship from this repository with the same version: `IsWiX.WiXMo
 `IsWiX.WiXModel` (which depends on it). The version lives in `src/Directory.Build.props`.
 
 - **CI** (`.github/workflows/ci.yml`) builds, tests and packs every pull request to `main`.
+- **Corpus** (`.github/workflows/corpus.yml`) runs the tests on every pull request with `WIXMODEL_CORPUS` set
+  to a sparse clone of [wixtoolset/wix](https://github.com/wixtoolset/wix) (only its `.wxs` and `.wxi`
+  files) at the tag in `schemaVersion` of `src/IsWiX.WiXModel/schemagen.json`. Run it by hand to test
+  against another tag or branch.
 - **Publish** (`.github/workflows/publish.yml`) is run by hand from the Actions tab: choose `patch`,
   `minor` or `major`. It increments the version, builds and tests, signs the assemblies with Azure
   Artifact Signing, packs, pushes both packages (with symbols) to nuget.org using trusted publishing,
