@@ -70,7 +70,7 @@ namespace IsWiX.WiXModel.Core.Xml
 
     internal sealed class RawElement
     {
-        public RawElement(XName name, string rawName, IReadOnlyList<RawAttribute> attributes, string tail, bool selfClosing, bool hadNodes)
+        public RawElement(XName name, string rawName, IReadOnlyList<RawAttribute> attributes, string tail, bool selfClosing, bool hadNodes, XNode? previousAtLoad)
         {
             Name = name;
             RawName = rawName;
@@ -78,6 +78,7 @@ namespace IsWiX.WiXModel.Core.Xml
             Tail = tail;
             SelfClosing = selfClosing;
             HadNodes = hadNodes;
+            PreviousAtLoad = previousAtLoad;
         }
 
         public XName Name { get; }
@@ -92,6 +93,13 @@ namespace IsWiX.WiXModel.Core.Xml
         public bool SelfClosing { get; }
 
         public bool HadNodes { get; }
+
+        /// <summary>
+        /// Gets the node that preceded the element when it was loaded. If the element's previous node is no longer
+        /// this one, the element was moved (or something was inserted in front of it), and the writer lays it out
+        /// like new content instead of trusting the whitespace around it.
+        /// </summary>
+        public XNode? PreviousAtLoad { get; }
 
         public string? EndTag { get; set; }
     }

@@ -204,7 +204,7 @@ namespace IsWiX.WiXModel.Core.Xml
                 throw Fail($"attributes of <{rawName}>");
             }
 
-            var raw = new RawElement(element.Name, rawName, tokens, tail, selfClosing, element.FirstNode != null);
+            var raw = new RawElement(element.Name, rawName, tokens, tail, selfClosing, element.FirstNode != null, element.PreviousNode);
             element.AddAnnotation(raw);
             if (selfClosing)
             {

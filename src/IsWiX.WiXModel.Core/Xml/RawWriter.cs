@@ -11,10 +11,12 @@ namespace IsWiX.WiXModel.Core.Xml
     /// attributes keep their exact text and the whitespace before them, so multi-line attribute layouts survive edits.
     /// </summary>
     /// <remarks>
-    /// Elements added with plain LINQ to XML (<c>XElement.Add</c> and friends, as older code does) carry no
-    /// whitespace. The writer lays those out as it writes, without changing the tree: a new element goes on its
-    /// own line, indented like its siblings, and a parent whose last child is new gets its end tag back on its
-    /// own line. Parents whose existing children are inline, or that contain text, are written as they are.
+    /// Elements added or moved with plain LINQ to XML (<c>XElement.Add</c>, <c>Remove</c> and re-add to sort, as
+    /// older code does) carry no whitespace that fits their new place. The writer lays those out as it writes,
+    /// without changing the tree: a new or moved element goes on its own line, indented like its siblings; the
+    /// whitespace a removed element leaves behind collapses into one line break; and a parent whose last child is
+    /// new gets its end tag back on its own line. Parents whose existing children are inline, or that contain text,
+    /// are written as they are, and elements still where they were loaded keep their exact source text.
     /// </remarks>
     internal sealed class RawWriter
     {
@@ -212,14 +214,21 @@ namespace IsWiX.WiXModel.Core.Xml
                 return;
             }
 
-            var childIndent = SiblingIndent(nodes) ?? indent + _indent;
+            var childIndent = ChildIndent(nodes, indent);
             for (var i = 0; i < nodes.Count; i++)
             {
                 var node = nodes[i];
-                if (IsWhitespace(node) && i + 1 < nodes.Count && nodes[i + 1] is XElement next && IsNew(next))
+                if (IsWhitespace(node) && i + 1 < nodes.Count && IsWhitespace(nodes[i + 1]))
                 {
-                    // Whitespace in front of a new element (often the parent's closing whitespace, when the element
-                    // was appended): keep its line breaks, but line the element up with its siblings.
+                    // A run of whitespace nodes is what removing an element with plain LINQ to XML leaves behind
+                    // (its own leading whitespace next to the following one). Only the last of the run is kept.
+                    continue;
+                }
+
+                if (IsWhitespace(node) && i + 1 < nodes.Count && nodes[i + 1] is XElement next && NeedsPlacement(next))
+                {
+                    // Whitespace in front of a new or moved element (often the parent's closing whitespace, when
+                    // the element was appended): keep its line breaks, but line the element up with its siblings.
                     var lineBreaks = Math.Max(1, ((XText)node).Value.Count(c => c == '\n'));
                     for (var line = 0; line < lineBreaks; line++)
                     {
@@ -232,7 +241,7 @@ namespace IsWiX.WiXModel.Core.Xml
 
                 if (node is XElement child)
                 {
-                    if (IsNew(child))
+                    if (NeedsPlacement(child))
                     {
                         if (i == 0 || !IsWhitespace(nodes[i - 1]))
                         {
@@ -260,41 +269,52 @@ namespace IsWiX.WiXModel.Core.Xml
         }
 
         /// <summary>
-        /// Gets whether the element has new children to lay out, and content that layout cannot disturb: its
-        /// existing children are already one per line (or it has none), and it holds no text.
+        /// Gets whether the element's children changed in a way that needs layout (a new or moved child, or the
+        /// whitespace a removed child left behind), with content that layout cannot disturb: its existing children
+        /// are already one per line (or it has none), and it holds no text.
         /// </summary>
         private static bool NeedsLayout(XElement element, System.Collections.Generic.List<XNode> nodes)
         {
-            if (!nodes.Any(n => n is XElement e && IsNew(e)) ||
+            var changed = nodes.Any(n => n is XElement e && NeedsPlacement(e)) ||
+                nodes.Where((n, i) => i > 0 && IsWhitespace(n) && IsWhitespace(nodes[i - 1])).Any();
+            if (!changed ||
                 nodes.Any(n => n is XText && !IsWhitespace(n)) ||
                 element.AncestorsAndSelf().Any(e => (string?)e.Attribute(XNamespace.Xml + "space") == "preserve"))
             {
                 return false;
             }
 
-            var hasExistingContent = nodes.Any(n => !IsWhitespace(n) && !(n is XElement e && IsNew(e)));
+            var hasExistingContent = nodes.Any(n => !IsWhitespace(n) && !(n is XElement e && NeedsPlacement(e)));
             var isLaidOut = nodes.Any(n => IsWhitespace(n) && ((XText)n).Value.IndexOf('\n') >= 0);
             return isLaidOut || !hasExistingContent;
         }
 
-        /// <summary>Gets the indentation existing children use, preferring children that came from the source.</summary>
-        private static string? SiblingIndent(System.Collections.Generic.List<XNode> nodes)
+        /// <summary>
+        /// Gets the indentation for new and moved children: the parent's indentation plus one level, unless at least
+        /// two children still where they were loaded agree on something else (a file consistently laid out its own
+        /// way). A single oddly indented sibling, or the parent's closing whitespace, never decides it.
+        /// </summary>
+        private string ChildIndent(System.Collections.Generic.List<XNode> nodes, string parentIndent)
         {
-            string? any = null;
-            for (var i = 1; i < nodes.Count; i++)
+            var standard = parentIndent + _indent;
+            var siblingIndents = nodes
+                .OfType<XElement>()
+                .Where(e => !NeedsPlacement(e))
+                .Select(IndentBefore)
+                .Where(i => i != null)
+                .Select(i => i!)
+                .ToList();
+            if (siblingIndents.Contains(standard))
             {
-                if (nodes[i] is XElement element && IndentBefore(element) is { } indent)
-                {
-                    if (!IsNew(element))
-                    {
-                        return indent;
-                    }
-
-                    any ??= indent;
-                }
+                return standard;
             }
 
-            return any;
+            var agreed = siblingIndents
+                .GroupBy(i => i, StringComparer.Ordinal)
+                .Where(g => g.Count() >= 2)
+                .OrderByDescending(g => g.Count())
+                .FirstOrDefault();
+            return agreed?.Key ?? standard;
         }
 
         private static string? IndentBefore(XNode node)
@@ -311,7 +331,13 @@ namespace IsWiX.WiXModel.Core.Xml
             return null;
         }
 
-        private static bool IsNew(XElement element) => element.Annotation<RawElement>() is null;
+        /// <summary>
+        /// Gets whether an element must be laid out rather than trusted to the whitespace around it: it is new (no
+        /// source text), or it no longer follows the node it followed when loaded (it was moved or re-sorted, or
+        /// something was inserted in front of it).
+        /// </summary>
+        private static bool NeedsPlacement(XElement element) =>
+            element.Annotation<RawElement>() is not { } raw || !ReferenceEquals(element.PreviousNode, raw.PreviousAtLoad);
 
         private static bool IsWhitespace(XNode node) =>
             node is XText text && !(node is XCData) && text.Value.Trim(' ', '\t', '\r', '\n').Length == 0;
