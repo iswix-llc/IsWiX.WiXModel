@@ -11,12 +11,15 @@ namespace IsWiX.WiXModel
     {
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BitnessType> BitnessType = new BitnessTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ComponentLocation> ComponentLocation = new ComponentLocationConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CompressionLevelType> CompressionLevelType = new CompressionLevelTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FeatureInstallDefault> FeatureInstallDefault = new FeatureInstallDefaultConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FeatureTypicalDefault> FeatureTypicalDefault = new FeatureTypicalDefaultConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FileAssembly> FileAssembly = new FileAssemblyConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FileProcessorArchitecture> FileProcessorArchitecture = new FileProcessorArchitectureConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.InstallUninstallType> InstallUninstallType = new InstallUninstallTypeConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.MajorUpgradeSchedule> MajorUpgradeSchedule = new MajorUpgradeScheduleConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.PackageScopeType> PackageScopeType = new PackageScopeTypeConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.SequenceType> SequenceType = new SequenceTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.StandardDirectoryType> StandardDirectoryType = new StandardDirectoryTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.UpgradeStrategyType> UpgradeStrategyType = new UpgradeStrategyTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.YesNoDefaultType> YesNoDefaultType = new YesNoDefaultTypeConverter();
@@ -91,6 +94,53 @@ namespace IsWiX.WiXModel
                         return "either";
                     default:
                         throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a ComponentLocation value.");
+                }
+            }
+        }
+
+        private sealed class CompressionLevelTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.CompressionLevelType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.CompressionLevelType value)
+            {
+                switch (text)
+                {
+                    case "high":
+                        value = global::IsWiX.WiXModel.CompressionLevelType.High;
+                        return true;
+                    case "low":
+                        value = global::IsWiX.WiXModel.CompressionLevelType.Low;
+                        return true;
+                    case "medium":
+                        value = global::IsWiX.WiXModel.CompressionLevelType.Medium;
+                        return true;
+                    case "mszip":
+                        value = global::IsWiX.WiXModel.CompressionLevelType.Mszip;
+                        return true;
+                    case "none":
+                        value = global::IsWiX.WiXModel.CompressionLevelType.None;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.CompressionLevelType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.CompressionLevelType.High:
+                        return "high";
+                    case global::IsWiX.WiXModel.CompressionLevelType.Low:
+                        return "low";
+                    case global::IsWiX.WiXModel.CompressionLevelType.Medium:
+                        return "medium";
+                    case global::IsWiX.WiXModel.CompressionLevelType.Mszip:
+                        return "mszip";
+                    case global::IsWiX.WiXModel.CompressionLevelType.None:
+                        return "none";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a CompressionLevelType value.");
                 }
             }
         }
@@ -280,6 +330,53 @@ namespace IsWiX.WiXModel
             }
         }
 
+        private sealed class MajorUpgradeScheduleConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.MajorUpgradeSchedule>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.MajorUpgradeSchedule value)
+            {
+                switch (text)
+                {
+                    case "afterInstallValidate":
+                        value = global::IsWiX.WiXModel.MajorUpgradeSchedule.AfterInstallValidate;
+                        return true;
+                    case "afterInstallInitialize":
+                        value = global::IsWiX.WiXModel.MajorUpgradeSchedule.AfterInstallInitialize;
+                        return true;
+                    case "afterInstallExecute":
+                        value = global::IsWiX.WiXModel.MajorUpgradeSchedule.AfterInstallExecute;
+                        return true;
+                    case "afterInstallExecuteAgain":
+                        value = global::IsWiX.WiXModel.MajorUpgradeSchedule.AfterInstallExecuteAgain;
+                        return true;
+                    case "afterInstallFinalize":
+                        value = global::IsWiX.WiXModel.MajorUpgradeSchedule.AfterInstallFinalize;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.MajorUpgradeSchedule value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.MajorUpgradeSchedule.AfterInstallValidate:
+                        return "afterInstallValidate";
+                    case global::IsWiX.WiXModel.MajorUpgradeSchedule.AfterInstallInitialize:
+                        return "afterInstallInitialize";
+                    case global::IsWiX.WiXModel.MajorUpgradeSchedule.AfterInstallExecute:
+                        return "afterInstallExecute";
+                    case global::IsWiX.WiXModel.MajorUpgradeSchedule.AfterInstallExecuteAgain:
+                        return "afterInstallExecuteAgain";
+                    case global::IsWiX.WiXModel.MajorUpgradeSchedule.AfterInstallFinalize:
+                        return "afterInstallFinalize";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a MajorUpgradeSchedule value.");
+                }
+            }
+        }
+
         private sealed class PackageScopeTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.PackageScopeType>
         {
             public override bool TryParse(string text, out global::IsWiX.WiXModel.PackageScopeType value)
@@ -318,6 +415,48 @@ namespace IsWiX.WiXModel
                         return "perUserOrMachine";
                     default:
                         throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a PackageScopeType value.");
+                }
+            }
+        }
+
+        private sealed class SequenceTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.SequenceType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.SequenceType value)
+            {
+                switch (text)
+                {
+                    case "both":
+                        value = global::IsWiX.WiXModel.SequenceType.Both;
+                        return true;
+                    case "first":
+                        value = global::IsWiX.WiXModel.SequenceType.First;
+                        return true;
+                    case "execute":
+                        value = global::IsWiX.WiXModel.SequenceType.Execute;
+                        return true;
+                    case "ui":
+                        value = global::IsWiX.WiXModel.SequenceType.Ui;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.SequenceType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.SequenceType.Both:
+                        return "both";
+                    case global::IsWiX.WiXModel.SequenceType.First:
+                        return "first";
+                    case global::IsWiX.WiXModel.SequenceType.Execute:
+                        return "execute";
+                    case global::IsWiX.WiXModel.SequenceType.Ui:
+                        return "ui";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a SequenceType value.");
                 }
             }
         }

@@ -12,7 +12,7 @@ namespace IsWiX.WiXModel
     /// information on the myriad installation options for a feature.
     /// </summary>
     /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: Level, MergeRef.
+    /// Child elements not yet in the typed model are available through Children and Xml: Level.
     /// </remarks>
     public sealed partial class Feature : global::IsWiX.WiXModel.Core.WixElement
     {
@@ -202,5 +202,13 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.FeatureRef Add(global::IsWiX.WiXModel.FeatureRef child) => AddChild(child);
+
+        /// <summary>Gets the child <c>MergeRef</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.MergeRef> MergeRefs => GetChildren<global::IsWiX.WiXModel.MergeRef>(global::IsWiX.WiXModel.MergeRef.ElementName);
+
+        /// <summary>Adds a <c>MergeRef</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.MergeRef Add(global::IsWiX.WiXModel.MergeRef child) => AddChild(child);
     }
 }

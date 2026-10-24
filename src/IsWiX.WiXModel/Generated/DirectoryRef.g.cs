@@ -10,9 +10,6 @@ namespace IsWiX.WiXModel
     /// <summary>
     /// Create a reference to a Directory element in another Fragment.
     /// </summary>
-    /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: Merge.
-    /// </remarks>
     public sealed partial class DirectoryRef : global::IsWiX.WiXModel.Core.WixElement
     {
         /// <summary>The XML name of the <c>DirectoryRef</c> element.</summary>
@@ -93,5 +90,13 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.Files Add(global::IsWiX.WiXModel.Files child) => AddChild(child);
+
+        /// <summary>Gets the child <c>Merge</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Merge> Merges => GetChildren<global::IsWiX.WiXModel.Merge>(global::IsWiX.WiXModel.Merge.ElementName);
+
+        /// <summary>Adds a <c>Merge</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Merge Add(global::IsWiX.WiXModel.Merge child) => AddChild(child);
     }
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="Basics" Manufacturer="Acme" Version="$(var.Version)" UpgradeCode="5E4C2B1A-7D3F-4A6B-8C9D-0E1F2A3B4C5D" Language="1033">
+    <SummaryInformation Description="Acme Basics installer" Keywords="Installer, Acme" Comments="Built by IsWiX" />
+    <MajorUpgrade Schedule="afterInstallInitialize" AllowSameVersionUpgrades="yes" DowngradeErrorMessage="!(loc.NewerVersionInstalled)" />
+    <Upgrade Id="9A8B7C6D-5E4F-4321-ABCD-EF0123456789">
+      <UpgradeVersion Minimum="1.0.0" Maximum="2.0.0" IncludeMaximum="no" Property="LEGACYFOUND" OnlyDetect="yes" />
+      <Property Id="LEGACYFOUND" Secure="yes" />
+    </Upgrade>
+    <Media Id="1" Cabinet="basics.cab" EmbedCab="yes" CompressionLevel="high" />
+
+    <Property Id="ARPNOMODIFY" Value="1" />
+    <Property Id="INSTALLFOLDER_FROM_REGISTRY" Secure="yes">
+      <RegistrySearch Root="HKLM" Key="Software\Acme\Basics" Name="InstallDir" Type="raw" />
+    </Property>
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_48_OR_LATER_INSTALLED" />
+    <SetProperty Id="ARPINSTALLLOCATION" Value="[INSTALLFOLDER]" After="CostFinalize" Sequence="execute" />
+    <SetDirectory Id="INSTALLFOLDER" Value="[INSTALLFOLDER_FROM_REGISTRY]" Condition="INSTALLFOLDER_FROM_REGISTRY" Sequence="both" />
+    <Launch Condition="Installed OR VersionNT64" Message="!(loc.Requires64Bit)" />
+
+    <Icon Id="App.ico" SourceFile="Assets\App.ico" />
+    <Binary Id="CustomActions" SourceFile="$(var.CustomActions.TargetDir)CustomActions.CA.dll" />
+    <WixVariable Id="WixUILicenseRtf" Value="Assets\License.rtf" Overridable="yes" />
+
+    <StandardDirectory Id="ProgramFiles6432Folder">
+      <Directory Id="INSTALLFOLDER" Name="Basics">
+        <Merge Id="VCRedist" SourceFile="Microsoft_VC143_CRT_x64.msm" Language="0" DiskId="1" />
+      </Directory>
+    </StandardDirectory>
+
+    <Feature Id="Main">
+      <MergeRef Id="VCRedist" Primary="yes" />
+    </Feature>
+  </Package>
+</Wix>

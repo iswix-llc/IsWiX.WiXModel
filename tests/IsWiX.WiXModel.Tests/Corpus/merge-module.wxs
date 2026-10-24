@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A merge module in the shape the IsWiX merge module project template writes. -->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Module Id="AcmeRuntime" Language="1033" Version="1.2.3.0" Guid="0F1E2D3C-4B5A-6978-8796-A5B4C3D2E1F0">
+    <SummaryInformation Manufacturer="Acme" Description="Acme runtime merge module" />
+    <Property Id="ACMERUNTIMEDIR" Value="[INSTALLDIR]" />
+    <StandardDirectory Id="CommonFiles6432Folder">
+      <Directory Id="AcmeRuntimeDir" Name="Acme Runtime">
+        <Component Id="Runtime" Guid="1A2B3C4D-5E6F-4071-8293-A4B5C6D7E8F9">
+          <File Source="AcmeRuntime.dll" KeyPath="yes" />
+        </Component>
+      </Directory>
+    </StandardDirectory>
+  </Module>
+</Wix>

@@ -16,7 +16,24 @@ namespace IsWiX.WiXModel
         {
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Wix.ElementName, xml => new global::IsWiX.WiXModel.Wix(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Package.ElementName, xml => new global::IsWiX.WiXModel.Package(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Module.ElementName, xml => new global::IsWiX.WiXModel.Module(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Fragment.ElementName, xml => new global::IsWiX.WiXModel.Fragment(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.SummaryInformation.ElementName, xml => new global::IsWiX.WiXModel.SummaryInformation(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.MajorUpgrade.ElementName, xml => new global::IsWiX.WiXModel.MajorUpgrade(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Upgrade.ElementName, xml => new global::IsWiX.WiXModel.Upgrade(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.UpgradeVersion.ElementName, xml => new global::IsWiX.WiXModel.UpgradeVersion(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.MediaTemplate.ElementName, xml => new global::IsWiX.WiXModel.MediaTemplate(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Media.ElementName, xml => new global::IsWiX.WiXModel.Media(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Property.ElementName, xml => new global::IsWiX.WiXModel.Property(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.PropertyRef.ElementName, xml => new global::IsWiX.WiXModel.PropertyRef(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.SetProperty.ElementName, xml => new global::IsWiX.WiXModel.SetProperty(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.SetDirectory.ElementName, xml => new global::IsWiX.WiXModel.SetDirectory(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Icon.ElementName, xml => new global::IsWiX.WiXModel.Icon(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Binary.ElementName, xml => new global::IsWiX.WiXModel.Binary(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.WixVariable.ElementName, xml => new global::IsWiX.WiXModel.WixVariable(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Launch.ElementName, xml => new global::IsWiX.WiXModel.Launch(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Merge.ElementName, xml => new global::IsWiX.WiXModel.Merge(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.MergeRef.ElementName, xml => new global::IsWiX.WiXModel.MergeRef(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.StandardDirectory.ElementName, xml => new global::IsWiX.WiXModel.StandardDirectory(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Directory.ElementName, xml => new global::IsWiX.WiXModel.Directory(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.DirectoryRef.ElementName, xml => new global::IsWiX.WiXModel.DirectoryRef(xml));

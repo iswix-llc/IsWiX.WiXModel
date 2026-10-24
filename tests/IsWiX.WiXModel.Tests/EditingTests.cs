@@ -204,8 +204,13 @@ public class EditingTests
         Assert.Same(package, document.Root.Packages.Single());
         Assert.Same(package, package.Children.First().Parent);
 
-        var unknown = package.Children.OfType<WixUnknownElement>().Select(e => e.Xml.Name.LocalName).ToList();
-        Assert.Equal(["MajorUpgrade", "MediaTemplate"], unknown);
+        Assert.DoesNotContain(package.Children, e => e is WixUnknownElement);
+
+        // Extension elements with no registered wrapper are still exposed, and kept.
+        var crlf = WixDocument.Load(System.IO.Path.Combine(AppContext.BaseDirectory, "Corpus", "crlf-bom-tabs.wxs"));
+        var component = crlf.Root.Packages.Single().Directories.Single().Directories.Single().Components.First();
+        var unknown = component.Children.OfType<WixUnknownElement>().Select(e => e.Xml.Name.LocalName).ToList();
+        Assert.Equal(["RemoveFolderEx"], unknown);
     }
 
     [Fact]

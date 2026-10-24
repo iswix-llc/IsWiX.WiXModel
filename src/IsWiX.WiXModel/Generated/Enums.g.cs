@@ -66,6 +66,37 @@ namespace IsWiX.WiXModel
     }
 
     /// <summary>
+    /// Indicates the compression level for a cabinet.
+    /// </summary>
+    public enum CompressionLevelType
+    {
+        /// <summary>
+        /// Written as &lt;c&gt;high&lt;/c&gt;.
+        /// </summary>
+        High,
+
+        /// <summary>
+        /// Written as &lt;c&gt;low&lt;/c&gt;.
+        /// </summary>
+        Low,
+
+        /// <summary>
+        /// Written as &lt;c&gt;medium&lt;/c&gt;.
+        /// </summary>
+        Medium,
+
+        /// <summary>
+        /// Written as &lt;c&gt;mszip&lt;/c&gt;.
+        /// </summary>
+        Mszip,
+
+        /// <summary>
+        /// Written as &lt;c&gt;none&lt;/c&gt;.
+        /// </summary>
+        None,
+    }
+
+    /// <summary>
     /// Not documented in the WiX schema.
     /// </summary>
     public enum FeatureInstallDefault
@@ -248,6 +279,78 @@ namespace IsWiX.WiXModel
     }
 
     /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum MajorUpgradeSchedule
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;afterInstallValidate&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// (Default) Schedules RemoveExistingProducts after the InstallValidate standard action. This scheduling removes
+        /// the installed product entirely before installing the upgrade product. It's slowest but gives the most
+        /// flexibility in changing components and features in the upgrade product. Note that if the installation of the
+        /// upgrade product fails, the machine will have neither version installed.
+        /// </para>
+        /// </summary>
+        AfterInstallValidate,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;afterInstallInitialize&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Schedules RemoveExistingProducts after the InstallInitialize standard action. This is similar to the
+        /// afterInstallValidate scheduling, but if the installation of the upgrade product fails, Windows Installer also
+        /// rolls back the removal of the installed product -- in other words, reinstalls it.
+        /// </para>
+        /// </summary>
+        AfterInstallInitialize,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;afterInstallExecute&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Schedules RemoveExistingProducts between the InstallExecute and InstallFinalize standard actions. This
+        /// scheduling installs the upgrade product "on top of" the installed product then lets RemoveExistingProducts
+        /// uninstall any components that don't also exist in the upgrade product. Note that this scheduling requires
+        /// strict adherence to the component rules because it relies on component reference counts to be accurate during
+        /// installation of the upgrade product and removal of the installed product. For more information, see Bob
+        /// Arnson's blog post "Paying for Upgrades" for details. If installation of the upgrade product fails, Windows
+        /// Installer also rolls back the removal of the installed product -- in other words, reinstalls it.
+        /// </para>
+        /// </summary>
+        AfterInstallExecute,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;afterInstallExecuteAgain&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Schedules RemoveExistingProducts between the InstallExecuteAgain and InstallFinalize standard actions. This is
+        /// identical to the afterInstallExecute scheduling but after the InstallExecuteAgain standard action instead of
+        /// InstallExecute.
+        /// </para>
+        /// </summary>
+        AfterInstallExecuteAgain,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;afterInstallFinalize&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Schedules RemoveExistingProducts after the InstallFinalize standard action. This is similar to the
+        /// afterInstallExecute and afterInstallExecuteAgain schedulings but takes place outside the installation
+        /// transaction so if installation of the upgrade product fails, Windows Installer does not roll back the removal
+        /// of the installed product, so the machine will have both versions installed.
+        /// </para>
+        /// </summary>
+        AfterInstallFinalize,
+    }
+
+    /// <summary>
     /// Use this attribute to specify the installation scope of this package: per-machine, per-user, or a choice of
     /// either.
     /// </summary>
@@ -299,6 +402,53 @@ namespace IsWiX.WiXModel
         /// </para>
         /// </summary>
         PerUserOrMachine,
+    }
+
+    /// <summary>
+    /// Controls which sequences the item assignment is sequenced in.
+    /// </summary>
+    public enum SequenceType
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;both&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Schedules the assignment in the InstallUISequence and the InstallExecuteSequence.
+        /// </para>
+        /// </summary>
+        Both,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;first&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Schedules the assignment to run in the InstallUISequence or the InstallExecuteSequence if the
+        /// InstallUISequence is skipped.
+        /// </para>
+        /// </summary>
+        First,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;execute&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Schedules the assignment only in the the InstallExecuteSequence.
+        /// </para>
+        /// </summary>
+        Execute,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;ui&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Schedules the assignment only in the the InstallUISequence.
+        /// </para>
+        /// </summary>
+        Ui,
     }
 
     /// <summary>

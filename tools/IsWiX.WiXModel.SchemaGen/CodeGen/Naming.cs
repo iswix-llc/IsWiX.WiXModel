@@ -7,6 +7,8 @@ namespace IsWiX.WiXModel.SchemaGen.CodeGen;
 
 internal static class Naming
 {
+    private static readonly string[] UncountableEndings = ["Media", "Information", "Data"];
+
     /// <summary>Turns a schema value such as <c>perMachine</c>, <c>always64</c> or <c>.net</c> into a C# identifier.</summary>
     public static string Pascal(string value)
     {
@@ -34,12 +36,14 @@ internal static class Naming
 
     /// <summary>
     /// Gets the collection property name for a child element: <c>Directory</c> becomes <c>Directories</c>.
-    /// Names that are already plural (<c>Files</c>, <c>PackageCertificates</c>) become <c>FilesElements</c>, so
-    /// they never take the name a singular sibling (<c>File</c> becomes <c>Files</c>) needs.
+    /// Names that are already plural or uncountable (<c>Files</c>, <c>Media</c>, <c>SummaryInformation</c>,
+    /// <c>ConfigurationData</c>) become <c>FilesElements</c> and so on, so they never take the name a singular
+    /// sibling (<c>File</c> becomes <c>Files</c>) needs.
     /// </summary>
     public static string Plural(string name)
     {
-        if (name.EndsWith('s') && !name.EndsWith("ss", StringComparison.Ordinal) && !name.EndsWith("us", StringComparison.Ordinal))
+        if ((name.EndsWith('s') && !name.EndsWith("ss", StringComparison.Ordinal) && !name.EndsWith("us", StringComparison.Ordinal)) ||
+            UncountableEndings.Any(ending => name.EndsWith(ending, StringComparison.Ordinal)))
         {
             return name + "Elements";
         }

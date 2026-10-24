@@ -10,9 +10,6 @@ namespace IsWiX.WiXModel
     /// <summary>
     /// Groups together multiple components, features, and merges to be used in other locations.
     /// </summary>
-    /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: MergeRef.
-    /// </remarks>
     public sealed partial class FeatureGroup : global::IsWiX.WiXModel.Core.WixElement
     {
         /// <summary>The XML name of the <c>FeatureGroup</c> element.</summary>
@@ -104,5 +101,13 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.Files Add(global::IsWiX.WiXModel.Files child) => AddChild(child);
+
+        /// <summary>Gets the child <c>MergeRef</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.MergeRef> MergeRefs => GetChildren<global::IsWiX.WiXModel.MergeRef>(global::IsWiX.WiXModel.MergeRef.ElementName);
+
+        /// <summary>Adds a <c>MergeRef</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.MergeRef Add(global::IsWiX.WiXModel.MergeRef child) => AddChild(child);
     }
 }
