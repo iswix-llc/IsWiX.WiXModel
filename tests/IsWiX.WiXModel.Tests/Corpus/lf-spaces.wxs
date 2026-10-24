@@ -1,0 +1,22 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+    <!-- A typical WiX v4+ package, as produced by the HeatWave project template. -->
+    <Package Name="Sample App" Manufacturer="Acme" Version="1.0.0.0" UpgradeCode="7C1E8A43-0D2B-4E8B-9A57-3F6B2C1D0E9F">
+        <MajorUpgrade DowngradeErrorMessage="A newer version is already installed." />
+        <MediaTemplate EmbedCab="yes" />
+
+        <Feature Id="Main">
+            <ComponentGroupRef Id="AppComponents" />
+        </Feature>
+
+        <StandardDirectory Id="ProgramFiles6432Folder">
+            <Directory Id="INSTALLFOLDER" Name="!(bind.Property.Manufacturer) !(bind.Property.ProductName)">
+                <Component Id="MainExecutable" Bitness="always64">
+                    <File Id="AppExe" Source="App.exe" KeyPath="yes" />
+                </Component>
+                <Component Id="Settings" Guid="*">
+                    <File Source="appsettings.json" Vital="no" />
+                </Component>
+            </Directory>
+        </StandardDirectory>
+    </Package>
+</Wix>

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>IsWiX.WiXModel</RootNamespace>
+    <Description>Typed object model for WiX v4+ source (.wxs) files, generated from the WiX schema.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IsWiX.WiXModel.Core\IsWiX.WiXModel.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="schemagen.json" />
+  </ItemGroup>
+
+</Project>

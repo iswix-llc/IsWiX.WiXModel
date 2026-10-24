@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>IsWiX.WiXModel.Core</RootNamespace>
+    <Description>Infrastructure for the IsWiX.WiXModel object model: lossless XML load/save, typed attribute values, and the element wrapper base class.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="IsWiX.WiXModel.Tests" />
+  </ItemGroup>
+
+</Project>

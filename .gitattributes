@@ -1,0 +1,7 @@
+* text=auto
+
+# Round-trip fixtures must reach the tests byte-for-byte (BOMs, CRLF vs LF, tabs).
+tests/**/Corpus/** -text
+
+# The vendored WiX schema is kept exactly as published.
+schemas/** -text

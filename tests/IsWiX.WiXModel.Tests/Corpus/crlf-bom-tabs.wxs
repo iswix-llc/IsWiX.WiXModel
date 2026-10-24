@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?define SourceDir = "..\bin\Release" ?>
+<?define ComponentRules="OneToOne"?>
+<!--
+	Hand-edited file: tabs, CRLF line endings, a UTF-8 byte order mark,
+	single-quoted and multi-line attributes, entity and character references.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+	 xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
+	<Package Name='Sample &amp; "Friends"'
+			 Manufacturer="Acme &#169; 2026"
+			 Version="$(var.ProductVersion)"
+			 Scope="perMachine"
+			 Compressed  =  "yes" >
+		<?if $(var.Platform) = x64 ?>
+		<StandardDirectory Id="ProgramFiles64Folder" />
+		<?else?>
+		<StandardDirectory Id="ProgramFilesFolder" />
+		<?endif?>
+		<Directory Id="TARGETDIR" Name="SourceDir" >
+			<Directory Id="INSTALLFOLDER" Name="Sample" FileSource="$(var.SourceDir)">
+				<Component Id="Core" Guid="{0B6E3A1F-5C2D-4E8A-9B7F-1D2C3E4F5A6B}" KeyPath="$(var.KeyPathIsDirectory)">
+					<File Source="core.dll"/>
+					<File Source='notes.txt' Hidden="true" ReadOnly="no" Compressed="default"></File>
+					<CreateFolder></CreateFolder>
+					<util:RemoveFolderEx On="uninstall" Property="INSTALLFOLDER" />
+				</Component>
+				<Component Id="Empty"></Component>
+			</Directory>
+		</Directory>
+	</Package>
+</Wix>

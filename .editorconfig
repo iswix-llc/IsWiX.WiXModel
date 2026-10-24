@@ -1,0 +1,27 @@
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{cs,csproj,props,targets,json}]
+indent_size = 4
+
+[*.json]
+indent_size = 2
+
+[*.cs]
+# The libraries target netstandard2.0, where these rules' suggested APIs
+# (ArgumentNullException.ThrowIfNull, span overloads, string.Contains(char)) do not exist.
+dotnet_diagnostic.CA1510.severity = none
+dotnet_diagnostic.CA1846.severity = none
+dotnet_diagnostic.CA1865.severity = none
+dotnet_diagnostic.CA1866.severity = none
+dotnet_diagnostic.CA2249.severity = none
+
+[tests/**/*.cs]
+# xUnit test names use underscores; test classes are not public API.
+dotnet_diagnostic.CA1707.severity = none
+dotnet_diagnostic.CA1515.severity = none

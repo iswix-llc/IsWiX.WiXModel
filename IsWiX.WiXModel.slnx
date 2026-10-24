@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/IsWiX.WiXModel.Core/IsWiX.WiXModel.Core.csproj" />
+    <Project Path="src/IsWiX.WiXModel/IsWiX.WiXModel.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/IsWiX.WiXModel.Tests/IsWiX.WiXModel.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/IsWiX.WiXModel.SchemaGen/IsWiX.WiXModel.SchemaGen.csproj" />
+  </Folder>
+</Solution>

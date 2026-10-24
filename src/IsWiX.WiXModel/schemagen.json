@@ -1,0 +1,13 @@
+{
+  "schemaDirectory": "../../schemas/wix",
+  "schemaVersion": "v7.0.0",
+  "outputDirectory": "Generated",
+  "namespace": "IsWiX.WiXModel",
+  "elements": [
+    "Wix",
+    "Package",
+    "Directory",
+    "Component",
+    "File"
+  ]
+}

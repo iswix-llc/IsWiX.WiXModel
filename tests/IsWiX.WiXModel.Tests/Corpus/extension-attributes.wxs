@@ -1,0 +1,12 @@
+<?xml version='1.0'?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:custom="urn:example:custom" RequiredVersion="5.0">
+  <Package Name="Ext" Manufacturer="Acme" Version="1.0" custom:Owner="setup-team">
+    <Directory Id="Data" Name="Data" custom:Tag="data">
+      <Component custom:Tag="c1" Location="local" DiskId="1">
+        <File Source="data.bin" custom:Hash="sha256" ProcessorArchitecture="x64" Assembly="no" />
+      </Component>
+    </Directory>
+    <custom:Note><![CDATA[Free-form <text> & markup]]></custom:Note>
+  </Package>
+</Wix>
+
