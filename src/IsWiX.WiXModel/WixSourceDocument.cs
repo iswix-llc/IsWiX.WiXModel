@@ -45,6 +45,12 @@ namespace IsWiX.WiXModel
         }
 
         /// <summary>
+        /// Gets the document's <c>&lt;?define?&gt;</c> preprocessor instructions, such as <c>SourceDir</c>, to read,
+        /// change, add or remove. Changing a value rewrites only that value.
+        /// </summary>
+        public WixDefines Defines => new WixDefines(Xml);
+
+        /// <summary>
         /// Re-sorts every element's children into canonical order using <see cref="Ordering"/>. Parents already in
         /// order are untouched, so an already-canonical document still saves byte-for-byte.
         /// </summary>

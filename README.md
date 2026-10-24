@@ -29,6 +29,17 @@ The schema lets `<Include>` hold any element, so its contents are read through `
 and other preprocessor instructions are kept exactly as written. Loading a file with the wrong class fails
 with a message naming the right one.
 
+Either kind of file exposes its `<?define?>` instructions as `document.Defines`:
+
+```csharp
+var sourceDir = document.Defines["SourceDir"];      // null when not defined
+document.Defines["SourceDir"] = @"..\Deploy";        // changes only the value, or adds <?define SourceDir="..\Deploy"?>
+foreach (var define in document.Defines) { /* Name, Value, IsConditional */ }
+```
+
+A new define goes after the last unconditional one (or first in the root), on its own line. A name defined
+only inside `<?if?>` or `<?foreach?>` blocks is not changed: which branch is meant is ambiguous.
+
 ## Canonical order
 
 For files that are branched and merged, an element's position should depend only on the file's content, not
