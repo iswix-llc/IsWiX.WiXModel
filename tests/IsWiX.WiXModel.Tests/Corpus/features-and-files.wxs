@@ -1,0 +1,27 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+    <Package Name="Features" Manufacturer="Acme" Version="1.0.0.0">
+        <Feature Id="Complete" Title="Acme App" Display="expand" ConfigurableDirectory="INSTALLFOLDER" InstallDefault="local">
+            <ComponentGroupRef Id="Product" />
+            <Feature Id="Docs" Title="Documentation" Level="2" AllowAbsent="yes">
+                <Files Include="docs\**" Directory="INSTALLFOLDER" Subdirectory="docs">
+                    <Exclude Files="docs\**\*.tmp" />
+                    <Exclude Files="docs\drafts\**" />
+                </Files>
+            </Feature>
+            <FeatureRef Id="Plugins" IgnoreParent="no" />
+            <FeatureGroupRef Id="Optional" />
+        </Feature>
+
+        <DirectoryRef Id="INSTALLFOLDER">
+            <Component Id="Readme">
+                <File Source="readme.txt" />
+            </Component>
+        </DirectoryRef>
+    </Package>
+
+    <Fragment Id="OptionalFeatures">
+        <FeatureGroup Id="Optional">
+            <Feature Id="Samples" Title="Samples" Level="1000" TypicalDefault="install" />
+        </FeatureGroup>
+    </Fragment>
+</Wix>

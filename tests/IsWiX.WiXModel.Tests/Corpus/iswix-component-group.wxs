@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?define SourceDir="..\Deploy" ?>
+<?define ComponentRules="OneToOne"?>
+<!-- A component group fragment in the shape the IsWiX Files & Folders designer writes. -->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <StandardDirectory Id="ProgramFiles6432Folder">
+      <Directory Id="INSTALLLOCATION" Name="Acme App" />
+    </StandardDirectory>
+    <ComponentGroup Id="Product" Directory="INSTALLLOCATION">
+      <Component Id="owf1A2B3C4D5E6F" Guid="3F2504E0-4F89-11D3-9A0C-0305E82C3301">
+        <File Id="owf1A2B3C4D5E6F" Source="$(var.SourceDir)\App.exe" KeyPath="yes" />
+      </Component>
+      <Component Id="owd9F8E7D6C5B4A" Subdirectory="Data" Guid="3F2504E0-4F89-11D3-9A0C-0305E82C3302" KeyPath="yes">
+        <CreateFolder />
+        <RemoveFolder Id="RemoveData" On="uninstall" />
+        <RemoveFile Id="RemoveLogs" Name="*.log" On="both" />
+      </Component>
+      <ComponentRef Id="SharedRuntime" />
+      <ComponentGroupRef Id="Plugins" />
+    </ComponentGroup>
+  </Fragment>
+</Wix>

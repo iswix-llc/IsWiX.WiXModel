@@ -100,9 +100,7 @@ internal sealed class ModelEmitter
         foreach (var child in typedChildren)
         {
             var childRef = $"global::{Namespace}.{child}";
-            var plural = Naming.Plural(child);
-            var propertyName = used.Contains(plural) || typedChildren.Contains(plural) ? child + "Elements" : plural;
-            used.Add(propertyName);
+            var propertyName = Naming.Unique(Naming.Plural(child), used, "Elements");
 
             code.Line();
             code.Line($"/// <summary>Gets the child <c>{child}</c> elements.</summary>");

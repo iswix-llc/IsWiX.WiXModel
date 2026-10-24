@@ -15,8 +15,7 @@ namespace IsWiX.WiXModel
     /// Package, Module. The Fragment can either be completely included or excluded during linking.
     /// </summary>
     /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: Bundle, Module, Patch,
-    /// Fragment.
+    /// Child elements not yet in the typed model are available through Children and Xml: Bundle, Module, Patch.
     /// </remarks>
     public sealed partial class Wix : global::IsWiX.WiXModel.Core.WixElement
     {
@@ -50,5 +49,13 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.Package Add(global::IsWiX.WiXModel.Package child) => AddChild(child);
+
+        /// <summary>Gets the child <c>Fragment</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Fragment> Fragments => GetChildren<global::IsWiX.WiXModel.Fragment>(global::IsWiX.WiXModel.Fragment.ElementName);
+
+        /// <summary>Adds a <c>Fragment</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Fragment Add(global::IsWiX.WiXModel.Fragment child) => AddChild(child);
     }
 }

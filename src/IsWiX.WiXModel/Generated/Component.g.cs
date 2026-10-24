@@ -12,10 +12,10 @@ namespace IsWiX.WiXModel
     /// </summary>
     /// <remarks>
     /// Child elements not yet in the typed model are available through Children and Xml: AppId, Category, Class,
-    /// CopyFile, CreateFolder, Environment, Extension, IniFile, Interface, IsolateComponent, ODBCDataSource,
-    /// ODBCDriver, ODBCTranslator, ProgId, Provides, RegistryKey, RegistryValue, RemoveFile, RemoveFolder,
-    /// RemoveRegistryKey, RemoveRegistryValue, ReserveCost, ServiceControl, ServiceConfig,
-    /// ServiceConfigFailureActions, ServiceInstall, Shortcut, SymbolPath, TypeLib.
+    /// CopyFile, Environment, Extension, IniFile, Interface, IsolateComponent, ODBCDataSource, ODBCDriver,
+    /// ODBCTranslator, ProgId, Provides, RegistryKey, RegistryValue, RemoveRegistryKey, RemoveRegistryValue,
+    /// ReserveCost, ServiceControl, ServiceConfig, ServiceConfigFailureActions, ServiceInstall, Shortcut, SymbolPath,
+    /// TypeLib.
     /// </remarks>
     public sealed partial class Component : global::IsWiX.WiXModel.Core.WixElement
     {
@@ -253,6 +253,14 @@ namespace IsWiX.WiXModel
             set => SetValue("Bitness", global::IsWiX.WiXModel.WixEnumConverters.BitnessType, value);
         }
 
+        /// <summary>Gets the child <c>CreateFolder</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.CreateFolder> CreateFolders => GetChildren<global::IsWiX.WiXModel.CreateFolder>(global::IsWiX.WiXModel.CreateFolder.ElementName);
+
+        /// <summary>Adds a <c>CreateFolder</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.CreateFolder Add(global::IsWiX.WiXModel.CreateFolder child) => AddChild(child);
+
         /// <summary>Gets the child <c>File</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.File> Files => GetChildren<global::IsWiX.WiXModel.File>(global::IsWiX.WiXModel.File.ElementName);
 
@@ -260,5 +268,21 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.File Add(global::IsWiX.WiXModel.File child) => AddChild(child);
+
+        /// <summary>Gets the child <c>RemoveFile</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.RemoveFile> RemoveFiles => GetChildren<global::IsWiX.WiXModel.RemoveFile>(global::IsWiX.WiXModel.RemoveFile.ElementName);
+
+        /// <summary>Adds a <c>RemoveFile</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.RemoveFile Add(global::IsWiX.WiXModel.RemoveFile child) => AddChild(child);
+
+        /// <summary>Gets the child <c>RemoveFolder</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.RemoveFolder> RemoveFolders => GetChildren<global::IsWiX.WiXModel.RemoveFolder>(global::IsWiX.WiXModel.RemoveFolder.ElementName);
+
+        /// <summary>Adds a <c>RemoveFolder</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.RemoveFolder Add(global::IsWiX.WiXModel.RemoveFolder child) => AddChild(child);
     }
 }

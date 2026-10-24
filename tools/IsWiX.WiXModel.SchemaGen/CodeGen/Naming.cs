@@ -32,9 +32,18 @@ internal static class Naming
         return result.ToString();
     }
 
-    /// <summary>Gets the collection property name for a child element: <c>Directory</c> becomes <c>Directories</c>.</summary>
+    /// <summary>
+    /// Gets the collection property name for a child element: <c>Directory</c> becomes <c>Directories</c>.
+    /// Names that are already plural (<c>Files</c>, <c>PackageCertificates</c>) become <c>FilesElements</c>, so
+    /// they never take the name a singular sibling (<c>File</c> becomes <c>Files</c>) needs.
+    /// </summary>
     public static string Plural(string name)
     {
+        if (name.EndsWith('s') && !name.EndsWith("ss", StringComparison.Ordinal) && !name.EndsWith("us", StringComparison.Ordinal))
+        {
+            return name + "Elements";
+        }
+
         if (name.EndsWith('y') && name.Length > 1 && !"aeiou".Contains(char.ToLowerInvariant(name[^2])))
         {
             return name[..^1] + "ies";

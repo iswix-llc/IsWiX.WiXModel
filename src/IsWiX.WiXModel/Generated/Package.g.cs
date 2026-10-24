@@ -14,12 +14,11 @@ namespace IsWiX.WiXModel
     /// </summary>
     /// <remarks>
     /// Child elements not yet in the typed model are available through Children and Xml: AdminExecuteSequence,
-    /// AdminUISequence, AdvertiseExecuteSequence, AppId, Binary, ComplianceCheck, ComponentRef, ComponentGroup,
-    /// ComponentGroupRef, CustomAction, CustomActionRef, CustomTable, CustomTableRef, DirectoryRef, EmbeddedChainer,
-    /// EmbeddedChainerRef, EnsureTable, Feature, FeatureRef, FeatureGroupRef, Files, Icon, InstallExecuteSequence,
+    /// AdminUISequence, AdvertiseExecuteSequence, AppId, Binary, ComplianceCheck, CustomAction, CustomActionRef,
+    /// CustomTable, CustomTableRef, EmbeddedChainer, EmbeddedChainerRef, EnsureTable, Icon, InstallExecuteSequence,
     /// InstallUISequence, InstanceTransforms, Launch, MajorUpgrade, Media, MediaTemplate, PackageCertificates,
     /// PatchCertificates, Property, PropertyRef, Requires, SetDirectory, SetProperty, SFPCatalog, SoftwareTag,
-    /// StandardDirectory, SummaryInformation, SymbolPath, UI, UIRef, Upgrade, WixVariable.
+    /// SummaryInformation, SymbolPath, UI, UIRef, Upgrade, WixVariable.
     /// </remarks>
     public sealed partial class Package : global::IsWiX.WiXModel.Core.WixElement
     {
@@ -188,6 +187,30 @@ namespace IsWiX.WiXModel
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.Component Add(global::IsWiX.WiXModel.Component child) => AddChild(child);
 
+        /// <summary>Gets the child <c>ComponentRef</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ComponentRef> ComponentRefs => GetChildren<global::IsWiX.WiXModel.ComponentRef>(global::IsWiX.WiXModel.ComponentRef.ElementName);
+
+        /// <summary>Adds a <c>ComponentRef</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.ComponentRef Add(global::IsWiX.WiXModel.ComponentRef child) => AddChild(child);
+
+        /// <summary>Gets the child <c>ComponentGroup</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ComponentGroup> ComponentGroups => GetChildren<global::IsWiX.WiXModel.ComponentGroup>(global::IsWiX.WiXModel.ComponentGroup.ElementName);
+
+        /// <summary>Adds a <c>ComponentGroup</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.ComponentGroup Add(global::IsWiX.WiXModel.ComponentGroup child) => AddChild(child);
+
+        /// <summary>Gets the child <c>ComponentGroupRef</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ComponentGroupRef> ComponentGroupRefs => GetChildren<global::IsWiX.WiXModel.ComponentGroupRef>(global::IsWiX.WiXModel.ComponentGroupRef.ElementName);
+
+        /// <summary>Adds a <c>ComponentGroupRef</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.ComponentGroupRef Add(global::IsWiX.WiXModel.ComponentGroupRef child) => AddChild(child);
+
         /// <summary>Gets the child <c>Directory</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Directory> Directories => GetChildren<global::IsWiX.WiXModel.Directory>(global::IsWiX.WiXModel.Directory.ElementName);
 
@@ -196,6 +219,38 @@ namespace IsWiX.WiXModel
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.Directory Add(global::IsWiX.WiXModel.Directory child) => AddChild(child);
 
+        /// <summary>Gets the child <c>DirectoryRef</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.DirectoryRef> DirectoryRefs => GetChildren<global::IsWiX.WiXModel.DirectoryRef>(global::IsWiX.WiXModel.DirectoryRef.ElementName);
+
+        /// <summary>Adds a <c>DirectoryRef</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.DirectoryRef Add(global::IsWiX.WiXModel.DirectoryRef child) => AddChild(child);
+
+        /// <summary>Gets the child <c>Feature</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Feature> Features => GetChildren<global::IsWiX.WiXModel.Feature>(global::IsWiX.WiXModel.Feature.ElementName);
+
+        /// <summary>Adds a <c>Feature</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Feature Add(global::IsWiX.WiXModel.Feature child) => AddChild(child);
+
+        /// <summary>Gets the child <c>FeatureRef</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.FeatureRef> FeatureRefs => GetChildren<global::IsWiX.WiXModel.FeatureRef>(global::IsWiX.WiXModel.FeatureRef.ElementName);
+
+        /// <summary>Adds a <c>FeatureRef</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.FeatureRef Add(global::IsWiX.WiXModel.FeatureRef child) => AddChild(child);
+
+        /// <summary>Gets the child <c>FeatureGroupRef</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.FeatureGroupRef> FeatureGroupRefs => GetChildren<global::IsWiX.WiXModel.FeatureGroupRef>(global::IsWiX.WiXModel.FeatureGroupRef.ElementName);
+
+        /// <summary>Adds a <c>FeatureGroupRef</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.FeatureGroupRef Add(global::IsWiX.WiXModel.FeatureGroupRef child) => AddChild(child);
+
         /// <summary>Gets the child <c>File</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.File> Files => GetChildren<global::IsWiX.WiXModel.File>(global::IsWiX.WiXModel.File.ElementName);
 
@@ -203,5 +258,21 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.File Add(global::IsWiX.WiXModel.File child) => AddChild(child);
+
+        /// <summary>Gets the child <c>Files</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Files> FilesElements => GetChildren<global::IsWiX.WiXModel.Files>(global::IsWiX.WiXModel.Files.ElementName);
+
+        /// <summary>Adds a <c>Files</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Files Add(global::IsWiX.WiXModel.Files child) => AddChild(child);
+
+        /// <summary>Gets the child <c>StandardDirectory</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.StandardDirectory> StandardDirectories => GetChildren<global::IsWiX.WiXModel.StandardDirectory>(global::IsWiX.WiXModel.StandardDirectory.ElementName);
+
+        /// <summary>Adds a <c>StandardDirectory</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.StandardDirectory Add(global::IsWiX.WiXModel.StandardDirectory child) => AddChild(child);
     }
 }

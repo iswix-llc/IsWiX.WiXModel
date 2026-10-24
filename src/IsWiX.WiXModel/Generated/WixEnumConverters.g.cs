@@ -11,9 +11,13 @@ namespace IsWiX.WiXModel
     {
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.BitnessType> BitnessType = new BitnessTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.ComponentLocation> ComponentLocation = new ComponentLocationConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FeatureInstallDefault> FeatureInstallDefault = new FeatureInstallDefaultConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FeatureTypicalDefault> FeatureTypicalDefault = new FeatureTypicalDefaultConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FileAssembly> FileAssembly = new FileAssemblyConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FileProcessorArchitecture> FileProcessorArchitecture = new FileProcessorArchitectureConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.InstallUninstallType> InstallUninstallType = new InstallUninstallTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.PackageScopeType> PackageScopeType = new PackageScopeTypeConverter();
+        public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.StandardDirectoryType> StandardDirectoryType = new StandardDirectoryTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.UpgradeStrategyType> UpgradeStrategyType = new UpgradeStrategyTypeConverter();
         public static readonly global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.YesNoDefaultType> YesNoDefaultType = new YesNoDefaultTypeConverter();
 
@@ -87,6 +91,75 @@ namespace IsWiX.WiXModel
                         return "either";
                     default:
                         throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a ComponentLocation value.");
+                }
+            }
+        }
+
+        private sealed class FeatureInstallDefaultConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FeatureInstallDefault>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.FeatureInstallDefault value)
+            {
+                switch (text)
+                {
+                    case "followParent":
+                        value = global::IsWiX.WiXModel.FeatureInstallDefault.FollowParent;
+                        return true;
+                    case "local":
+                        value = global::IsWiX.WiXModel.FeatureInstallDefault.Local;
+                        return true;
+                    case "source":
+                        value = global::IsWiX.WiXModel.FeatureInstallDefault.Source;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.FeatureInstallDefault value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.FeatureInstallDefault.FollowParent:
+                        return "followParent";
+                    case global::IsWiX.WiXModel.FeatureInstallDefault.Local:
+                        return "local";
+                    case global::IsWiX.WiXModel.FeatureInstallDefault.Source:
+                        return "source";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a FeatureInstallDefault value.");
+                }
+            }
+        }
+
+        private sealed class FeatureTypicalDefaultConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.FeatureTypicalDefault>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.FeatureTypicalDefault value)
+            {
+                switch (text)
+                {
+                    case "advertise":
+                        value = global::IsWiX.WiXModel.FeatureTypicalDefault.Advertise;
+                        return true;
+                    case "install":
+                        value = global::IsWiX.WiXModel.FeatureTypicalDefault.Install;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.FeatureTypicalDefault value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.FeatureTypicalDefault.Advertise:
+                        return "advertise";
+                    case global::IsWiX.WiXModel.FeatureTypicalDefault.Install:
+                        return "install";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a FeatureTypicalDefault value.");
                 }
             }
         }
@@ -170,6 +243,43 @@ namespace IsWiX.WiXModel
             }
         }
 
+        private sealed class InstallUninstallTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.InstallUninstallType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.InstallUninstallType value)
+            {
+                switch (text)
+                {
+                    case "install":
+                        value = global::IsWiX.WiXModel.InstallUninstallType.Install;
+                        return true;
+                    case "uninstall":
+                        value = global::IsWiX.WiXModel.InstallUninstallType.Uninstall;
+                        return true;
+                    case "both":
+                        value = global::IsWiX.WiXModel.InstallUninstallType.Both;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.InstallUninstallType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.InstallUninstallType.Install:
+                        return "install";
+                    case global::IsWiX.WiXModel.InstallUninstallType.Uninstall:
+                        return "uninstall";
+                    case global::IsWiX.WiXModel.InstallUninstallType.Both:
+                        return "both";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a InstallUninstallType value.");
+                }
+            }
+        }
+
         private sealed class PackageScopeTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.PackageScopeType>
         {
             public override bool TryParse(string text, out global::IsWiX.WiXModel.PackageScopeType value)
@@ -208,6 +318,183 @@ namespace IsWiX.WiXModel
                         return "perUserOrMachine";
                     default:
                         throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a PackageScopeType value.");
+                }
+            }
+        }
+
+        private sealed class StandardDirectoryTypeConverter : global::IsWiX.WiXModel.Core.WixValueConverter<global::IsWiX.WiXModel.StandardDirectoryType>
+        {
+            public override bool TryParse(string text, out global::IsWiX.WiXModel.StandardDirectoryType value)
+            {
+                switch (text)
+                {
+                    case "TARGETDIR":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.TARGETDIR;
+                        return true;
+                    case "AdminToolsFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.AdminToolsFolder;
+                        return true;
+                    case "AppDataFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.AppDataFolder;
+                        return true;
+                    case "CommonAppDataFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.CommonAppDataFolder;
+                        return true;
+                    case "CommonFilesFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.CommonFilesFolder;
+                        return true;
+                    case "CommonFiles64Folder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.CommonFiles64Folder;
+                        return true;
+                    case "CommonFiles6432Folder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.CommonFiles6432Folder;
+                        return true;
+                    case "DesktopFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.DesktopFolder;
+                        return true;
+                    case "FavoritesFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.FavoritesFolder;
+                        return true;
+                    case "FontsFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.FontsFolder;
+                        return true;
+                    case "LocalAppDataFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.LocalAppDataFolder;
+                        return true;
+                    case "MyPicturesFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.MyPicturesFolder;
+                        return true;
+                    case "NetHoodFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.NetHoodFolder;
+                        return true;
+                    case "PersonalFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.PersonalFolder;
+                        return true;
+                    case "PrintHoodFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.PrintHoodFolder;
+                        return true;
+                    case "ProgramFilesFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.ProgramFilesFolder;
+                        return true;
+                    case "ProgramFiles64Folder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.ProgramFiles64Folder;
+                        return true;
+                    case "ProgramFiles6432Folder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.ProgramFiles6432Folder;
+                        return true;
+                    case "ProgramMenuFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.ProgramMenuFolder;
+                        return true;
+                    case "PerUserProgramFilesFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.PerUserProgramFilesFolder;
+                        return true;
+                    case "RecentFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.RecentFolder;
+                        return true;
+                    case "SendToFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.SendToFolder;
+                        return true;
+                    case "StartMenuFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.StartMenuFolder;
+                        return true;
+                    case "StartupFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.StartupFolder;
+                        return true;
+                    case "SystemFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.SystemFolder;
+                        return true;
+                    case "System16Folder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.System16Folder;
+                        return true;
+                    case "System64Folder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.System64Folder;
+                        return true;
+                    case "System6432Folder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.System6432Folder;
+                        return true;
+                    case "TempFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.TempFolder;
+                        return true;
+                    case "TemplateFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.TemplateFolder;
+                        return true;
+                    case "WindowsFolder":
+                        value = global::IsWiX.WiXModel.StandardDirectoryType.WindowsFolder;
+                        return true;
+                    default:
+                        value = default;
+                        return false;
+                }
+            }
+
+            public override string Format(global::IsWiX.WiXModel.StandardDirectoryType value)
+            {
+                switch (value)
+                {
+                    case global::IsWiX.WiXModel.StandardDirectoryType.TARGETDIR:
+                        return "TARGETDIR";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.AdminToolsFolder:
+                        return "AdminToolsFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.AppDataFolder:
+                        return "AppDataFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.CommonAppDataFolder:
+                        return "CommonAppDataFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.CommonFilesFolder:
+                        return "CommonFilesFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.CommonFiles64Folder:
+                        return "CommonFiles64Folder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.CommonFiles6432Folder:
+                        return "CommonFiles6432Folder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.DesktopFolder:
+                        return "DesktopFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.FavoritesFolder:
+                        return "FavoritesFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.FontsFolder:
+                        return "FontsFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.LocalAppDataFolder:
+                        return "LocalAppDataFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.MyPicturesFolder:
+                        return "MyPicturesFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.NetHoodFolder:
+                        return "NetHoodFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.PersonalFolder:
+                        return "PersonalFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.PrintHoodFolder:
+                        return "PrintHoodFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.ProgramFilesFolder:
+                        return "ProgramFilesFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.ProgramFiles64Folder:
+                        return "ProgramFiles64Folder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.ProgramFiles6432Folder:
+                        return "ProgramFiles6432Folder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.ProgramMenuFolder:
+                        return "ProgramMenuFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.PerUserProgramFilesFolder:
+                        return "PerUserProgramFilesFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.RecentFolder:
+                        return "RecentFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.SendToFolder:
+                        return "SendToFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.StartMenuFolder:
+                        return "StartMenuFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.StartupFolder:
+                        return "StartupFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.SystemFolder:
+                        return "SystemFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.System16Folder:
+                        return "System16Folder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.System64Folder:
+                        return "System64Folder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.System6432Folder:
+                        return "System6432Folder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.TempFolder:
+                        return "TempFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.TemplateFolder:
+                        return "TemplateFolder";
+                    case global::IsWiX.WiXModel.StandardDirectoryType.WindowsFolder:
+                        return "WindowsFolder";
+                    default:
+                        throw new global::System.ArgumentOutOfRangeException(nameof(value), value, "Not a StandardDirectoryType value.");
                 }
             }
         }

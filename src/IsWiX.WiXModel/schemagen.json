@@ -6,8 +6,23 @@
   "elements": [
     "Wix",
     "Package",
+    "Fragment",
+    "StandardDirectory",
     "Directory",
+    "DirectoryRef",
+    "ComponentGroup",
+    "ComponentGroupRef",
+    "ComponentRef",
     "Component",
-    "File"
+    "File",
+    "Files",
+    "Exclude",
+    "CreateFolder",
+    "RemoveFolder",
+    "RemoveFile",
+    "Feature",
+    "FeatureRef",
+    "FeatureGroup",
+    "FeatureGroupRef"
   ]
 }

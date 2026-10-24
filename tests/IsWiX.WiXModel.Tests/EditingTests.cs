@@ -205,7 +205,7 @@ public class EditingTests
         Assert.Same(package, package.Children.First().Parent);
 
         var unknown = package.Children.OfType<WixUnknownElement>().Select(e => e.Xml.Name.LocalName).ToList();
-        Assert.Equal(["MajorUpgrade", "MediaTemplate", "Feature", "StandardDirectory"], unknown);
+        Assert.Equal(["MajorUpgrade", "MediaTemplate"], unknown);
     }
 
     [Fact]

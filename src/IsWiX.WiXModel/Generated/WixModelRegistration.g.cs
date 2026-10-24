@@ -16,9 +16,24 @@ namespace IsWiX.WiXModel
         {
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Wix.ElementName, xml => new global::IsWiX.WiXModel.Wix(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Package.ElementName, xml => new global::IsWiX.WiXModel.Package(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Fragment.ElementName, xml => new global::IsWiX.WiXModel.Fragment(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.StandardDirectory.ElementName, xml => new global::IsWiX.WiXModel.StandardDirectory(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Directory.ElementName, xml => new global::IsWiX.WiXModel.Directory(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.DirectoryRef.ElementName, xml => new global::IsWiX.WiXModel.DirectoryRef(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.ComponentGroup.ElementName, xml => new global::IsWiX.WiXModel.ComponentGroup(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.ComponentGroupRef.ElementName, xml => new global::IsWiX.WiXModel.ComponentGroupRef(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.ComponentRef.ElementName, xml => new global::IsWiX.WiXModel.ComponentRef(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Component.ElementName, xml => new global::IsWiX.WiXModel.Component(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.File.ElementName, xml => new global::IsWiX.WiXModel.File(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Files.ElementName, xml => new global::IsWiX.WiXModel.Files(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Exclude.ElementName, xml => new global::IsWiX.WiXModel.Exclude(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.CreateFolder.ElementName, xml => new global::IsWiX.WiXModel.CreateFolder(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.RemoveFolder.ElementName, xml => new global::IsWiX.WiXModel.RemoveFolder(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.RemoveFile.ElementName, xml => new global::IsWiX.WiXModel.RemoveFile(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Feature.ElementName, xml => new global::IsWiX.WiXModel.Feature(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.FeatureRef.ElementName, xml => new global::IsWiX.WiXModel.FeatureRef(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.FeatureGroup.ElementName, xml => new global::IsWiX.WiXModel.FeatureGroup(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.FeatureGroupRef.ElementName, xml => new global::IsWiX.WiXModel.FeatureGroupRef(xml));
         }
     }
 }

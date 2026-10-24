@@ -68,6 +68,70 @@ namespace IsWiX.WiXModel
     /// <summary>
     /// Not documented in the WiX schema.
     /// </summary>
+    public enum FeatureInstallDefault
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;followParent&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Forces the feature to follow the same installation state as its parent feature.
+        /// </para>
+        /// </summary>
+        FollowParent,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;local&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Favors installing this feature locally by setting the msidbFeatureAttributesFavorLocal attribute.
+        /// </para>
+        /// </summary>
+        Local,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;source&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Favors running this feature from source by setting the msidbFeatureAttributesFavorSource attribute.
+        /// </para>
+        /// </summary>
+        Source,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum FeatureTypicalDefault
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;advertise&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Sets the feature to be advertised by setting the msidbFeatureAttributesFavorAdvertise attribute. This value
+        /// cannot be set if the value of the AllowAdvertise attribute is 'no' since that would ask the installer to
+        /// disallow the advertised state for this feature while at the same time favoring it.
+        /// </para>
+        /// </summary>
+        Advertise,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;install&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Sets the feature to the default non-advertised installation option.
+        /// </para>
+        /// </summary>
+        Install,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
     public enum FileAssembly
     {
         /// <summary>
@@ -148,6 +212,42 @@ namespace IsWiX.WiXModel
     }
 
     /// <summary>
+    /// Specifies whether an action occur on install, uninstall or both.
+    /// </summary>
+    public enum InstallUninstallType
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;install&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The action should happen during install (msiInstallStateLocal or msiInstallStateSource).
+        /// </para>
+        /// </summary>
+        Install,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;uninstall&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The action should happen during uninstall (msiInstallStateAbsent).
+        /// </para>
+        /// </summary>
+        Uninstall,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;both&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// The action should happen during both install and uninstall.
+        /// </para>
+        /// </summary>
+        Both,
+    }
+
+    /// <summary>
     /// Use this attribute to specify the installation scope of this package: per-machine, per-user, or a choice of
     /// either.
     /// </summary>
@@ -199,6 +299,167 @@ namespace IsWiX.WiXModel
         /// </para>
         /// </summary>
         PerUserOrMachine,
+    }
+
+    /// <summary>
+    /// A Windows Installer standard directory.
+    /// </summary>
+    public enum StandardDirectoryType
+    {
+        /// <summary>
+        /// Written as &lt;c&gt;TARGETDIR&lt;/c&gt;.
+        /// </summary>
+        TARGETDIR,
+
+        /// <summary>
+        /// Written as &lt;c&gt;AdminToolsFolder&lt;/c&gt;.
+        /// </summary>
+        AdminToolsFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;AppDataFolder&lt;/c&gt;.
+        /// </summary>
+        AppDataFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;CommonAppDataFolder&lt;/c&gt;.
+        /// </summary>
+        CommonAppDataFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;CommonFilesFolder&lt;/c&gt;.
+        /// </summary>
+        CommonFilesFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;CommonFiles64Folder&lt;/c&gt;.
+        /// </summary>
+        CommonFiles64Folder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;CommonFiles6432Folder&lt;/c&gt;.
+        /// </summary>
+        CommonFiles6432Folder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;DesktopFolder&lt;/c&gt;.
+        /// </summary>
+        DesktopFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;FavoritesFolder&lt;/c&gt;.
+        /// </summary>
+        FavoritesFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;FontsFolder&lt;/c&gt;.
+        /// </summary>
+        FontsFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;LocalAppDataFolder&lt;/c&gt;.
+        /// </summary>
+        LocalAppDataFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;MyPicturesFolder&lt;/c&gt;.
+        /// </summary>
+        MyPicturesFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;NetHoodFolder&lt;/c&gt;.
+        /// </summary>
+        NetHoodFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;PersonalFolder&lt;/c&gt;.
+        /// </summary>
+        PersonalFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;PrintHoodFolder&lt;/c&gt;.
+        /// </summary>
+        PrintHoodFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;ProgramFilesFolder&lt;/c&gt;.
+        /// </summary>
+        ProgramFilesFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;ProgramFiles64Folder&lt;/c&gt;.
+        /// </summary>
+        ProgramFiles64Folder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;ProgramFiles6432Folder&lt;/c&gt;.
+        /// </summary>
+        ProgramFiles6432Folder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;ProgramMenuFolder&lt;/c&gt;.
+        /// </summary>
+        ProgramMenuFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;PerUserProgramFilesFolder&lt;/c&gt;.
+        /// </summary>
+        PerUserProgramFilesFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;RecentFolder&lt;/c&gt;.
+        /// </summary>
+        RecentFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;SendToFolder&lt;/c&gt;.
+        /// </summary>
+        SendToFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;StartMenuFolder&lt;/c&gt;.
+        /// </summary>
+        StartMenuFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;StartupFolder&lt;/c&gt;.
+        /// </summary>
+        StartupFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;SystemFolder&lt;/c&gt;.
+        /// </summary>
+        SystemFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;System16Folder&lt;/c&gt;.
+        /// </summary>
+        System16Folder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;System64Folder&lt;/c&gt;.
+        /// </summary>
+        System64Folder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;System6432Folder&lt;/c&gt;.
+        /// </summary>
+        System6432Folder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;TempFolder&lt;/c&gt;.
+        /// </summary>
+        TempFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;TemplateFolder&lt;/c&gt;.
+        /// </summary>
+        TemplateFolder,
+
+        /// <summary>
+        /// Written as &lt;c&gt;WindowsFolder&lt;/c&gt;.
+        /// </summary>
+        WindowsFolder,
     }
 
     /// <summary>
