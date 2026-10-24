@@ -54,7 +54,7 @@ public class GeneratorTests
         Assert.Null(typeof(File).GetProperty("Files"));
     }
 
-    private static string RepositoryRoot()
+    internal static string RepositoryRoot()
     {
         for (var directory = new DirectoryInfo(AppContext.BaseDirectory); directory != null; directory = directory.Parent)
         {

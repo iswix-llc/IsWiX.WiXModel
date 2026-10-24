@@ -8,7 +8,7 @@ namespace IsWiX.WiXModel.SchemaGen.Schema;
 
 /// <summary>
 /// Reads the WiX repository's per-element schema fragments. Each file holds one top-level
-/// <c>element</c>, <c>simpleType</c> or <c>attributeGroup</c> written without a namespace (the WiX build
+/// <c>element</c>, <c>simpleType</c>, <c>complexType</c> or <c>attributeGroup</c> written without a namespace (the WiX build
 /// wraps them in an <c>xs:schema</c>), so names are matched by local name.
 /// </summary>
 internal static class SchemaLoader
@@ -18,6 +18,7 @@ internal static class SchemaLoader
         var elements = new Dictionary<string, XElement>(StringComparer.Ordinal);
         var simpleTypes = new Dictionary<string, SimpleTypeDefinition>(StringComparer.Ordinal);
         var attributeGroups = new Dictionary<string, XElement>(StringComparer.Ordinal);
+        var complexTypes = new Dictionary<string, XElement>(StringComparer.Ordinal);
         string? targetNamespace = null;
 
         foreach (var file in Directory.EnumerateFiles(directory, "*.xsd").OrderBy(f => f, StringComparer.Ordinal))
@@ -43,15 +44,23 @@ internal static class SchemaLoader
                 case "attributeGroup":
                     attributeGroups.Add(name, root);
                     break;
-                default:
-                    // complexType fragments and the like are not referenced by MSI-authoring elements yet.
+                case "complexType":
+                    // Shared content models such as ActionSequenceType, used by the standard actions.
+                    if (Child(root, "complexContent") != null)
+                    {
+                        throw new NotSupportedException($"complexType '{name}' derives from another type; derivation is not supported.");
+                    }
+
+                    complexTypes.Add(name, root);
                     break;
+                default:
+                    throw new NotSupportedException($"{Path.GetFileName(file)}: top-level <{root.Name.LocalName}> is not supported.");
             }
         }
 
         var definitions = elements.ToDictionary(
             e => e.Key,
-            e => ReadElement(e.Value, e.Key, attributeGroups),
+            e => ReadElement(e.Value, e.Key, attributeGroups, complexTypes),
             StringComparer.Ordinal);
         return new SchemaSet(
             targetNamespace ?? throw new InvalidDataException($"{directory} has no ns.xsd declaring the target namespace."),
@@ -59,12 +68,27 @@ internal static class SchemaLoader
             simpleTypes);
     }
 
-    private static ElementDefinition ReadElement(XElement element, string name, Dictionary<string, XElement> attributeGroups)
+    private static ElementDefinition ReadElement(
+        XElement element,
+        string name,
+        Dictionary<string, XElement> attributeGroups,
+        Dictionary<string, XElement> complexTypes)
     {
         var complexType = Child(element, "complexType");
         if (complexType is null)
         {
-            return new ElementDefinition(name, Documentation(element), [], [], false, false, true);
+            switch ((string?)element.Attribute("type"))
+            {
+                case null:
+                    // <element name="X"/> with no content model: an empty element with no attributes.
+                    return new ElementDefinition(name, Documentation(element), [], [], false, false, false);
+                case var typeName when complexTypes.TryGetValue(typeName, out var named):
+                    complexType = named;
+                    break;
+                default:
+                    // A simple type: the element holds text.
+                    return new ElementDefinition(name, Documentation(element), [], [], false, false, true);
+            }
         }
 
         var children = new List<string>();
