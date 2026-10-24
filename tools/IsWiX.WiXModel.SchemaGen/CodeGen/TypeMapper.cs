@@ -37,12 +37,20 @@ internal sealed class TypeMapper
 
     private readonly SchemaSet _schema;
     private readonly string _namespace;
+    private readonly TypeMapper? _base;
     private readonly Dictionary<string, EnumModel> _enums = new(StringComparer.Ordinal);
 
-    public TypeMapper(SchemaSet schema, string @namespace)
+    /// <param name="schema">The schema being generated.</param>
+    /// <param name="namespace">The C# namespace its classes and enums go in.</param>
+    /// <param name="baseMapper">
+    /// For an extension, the core WiX mapper: types written with a prefix (<c>wxs:YesNoTypeUnion</c>) are core
+    /// types and map to the core model's enums and converters.
+    /// </param>
+    public TypeMapper(SchemaSet schema, string @namespace, TypeMapper? baseMapper = null)
     {
         _schema = schema;
         _namespace = @namespace;
+        _base = baseMapper;
     }
 
     /// <summary>Gets the enums used by the attributes mapped so far.</summary>
@@ -55,6 +63,13 @@ internal sealed class TypeMapper
 
     private AttributeType MapNamedType(string? typeName)
     {
+        if (typeName != null && typeName.IndexOf(':') is > 0 and var colon && !typeName.StartsWith("xs:", StringComparison.Ordinal))
+        {
+            // A type from another schema: the core WiX one.
+            return (_base ?? throw new InvalidOperationException($"Type '{typeName}' is from another schema, but no base schema is configured."))
+                .MapNamedType(typeName[(colon + 1)..]);
+        }
+
         switch (typeName)
         {
             case null:
@@ -82,7 +97,7 @@ internal sealed class TypeMapper
         switch (definition.Kind)
         {
             case SimpleTypeKind.Union:
-                var members = definition.UnionMembers.Where(m => !ExpressionTypes.Contains(m)).ToList();
+                var members = definition.UnionMembers.Where(m => !ExpressionTypes.Contains(m[(m.IndexOf(':') + 1)..])).ToList();
                 return members.Count == 1 ? MapNamedType(members[0]) : AttributeType.String;
 
             case SimpleTypeKind.Enumeration:

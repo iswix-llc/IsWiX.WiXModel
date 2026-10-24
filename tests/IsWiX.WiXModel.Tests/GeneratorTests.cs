@@ -11,10 +11,12 @@ namespace IsWiX.WiXModel.Tests;
 
 public class GeneratorTests
 {
-    [Fact]
-    public void Generated_code_is_up_to_date()
+    [Theory]
+    [InlineData("schemagen.json")]
+    [InlineData("schemagen.util.json")]
+    public void Generated_code_is_up_to_date(string configFile)
     {
-        var config = GeneratorConfig.Load(Path.Combine(RepositoryRoot(), "src", "IsWiX.WiXModel", "schemagen.json"));
+        var config = GeneratorConfig.Load(Path.Combine(RepositoryRoot(), "src", "IsWiX.WiXModel", configFile));
 
         var files = ModelGenerator.Generate(config);
 
@@ -25,7 +27,7 @@ public class GeneratorTests
             var existing = IOFile.ReadAllText(Path.Combine(config.FullOutputDirectory, file.FileName)).Replace("\r\n", "\n", StringComparison.Ordinal);
             Assert.True(
                 existing == file.Content,
-                $"{file.FileName} is out of date. Run: dotnet run --project tools/IsWiX.WiXModel.SchemaGen -- src/IsWiX.WiXModel/schemagen.json");
+                $"{file.FileName} is out of date. Run: dotnet run --project tools/IsWiX.WiXModel.SchemaGen -- src/IsWiX.WiXModel/{configFile}");
         }
     }
 

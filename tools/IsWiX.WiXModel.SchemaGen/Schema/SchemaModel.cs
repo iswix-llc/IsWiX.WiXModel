@@ -15,7 +15,11 @@ internal sealed record ElementDefinition(
     bool AllowsExtensionElements,
     bool AllowsExtensionAttributes,
     bool HasTextContent,
-    string? SharedContentType = null);
+    string? SharedContentType = null,
+    IReadOnlyList<ParentReference>? Parents = null);
+
+/// <summary>An element of another namespace this one may be nested in (an extension schema's &lt;parent&gt;).</summary>
+internal sealed record ParentReference(string Namespace, string Name);
 
 internal sealed record AttributeDefinition(
     string Name,

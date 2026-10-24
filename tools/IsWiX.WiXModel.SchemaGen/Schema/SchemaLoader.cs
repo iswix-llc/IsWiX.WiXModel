@@ -137,8 +137,17 @@ internal static class SchemaLoader
             allowsAny,
             attributeOwner.Elements().Any(e => e.Name.LocalName == "anyAttribute"),
             hasText,
-            sharedContentType);
+            sharedContentType,
+            Parents(element));
     }
+
+    // Extension schemas name the core elements they extend: <appinfo><parent namespace="..." ref="Component" /></appinfo>.
+    private static List<ParentReference> Parents(XElement element) =>
+        (Child(element, "annotation") is { } annotation && Child(annotation, "appinfo") is { } appinfo
+            ? appinfo.Elements().Where(e => e.Name.LocalName == "parent")
+                .Select(e => new ParentReference((string?)e.Attribute("namespace") ?? string.Empty, (string)e.Attribute("ref")!))
+            : Enumerable.Empty<ParentReference>())
+        .ToList();
 
     private static void ReadAttributes(XElement owner, List<AttributeDefinition> attributes, Dictionary<string, XElement> attributeGroups)
     {

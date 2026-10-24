@@ -28,7 +28,7 @@ public class NamespaceDeclarationTests
 
         var added = fragment.AddElement(new XElement(Util + "QueryWindowsWellKnownSIDs"));
 
-        Assert.IsType<WixUnknownElement>(added);
+        Assert.IsType<IsWiX.WiXModel.Util.QueryWindowsWellKnownSIDs>(added);
         Assert.Equal(Lf("""
             <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:util="http://wixtoolset.org/schemas/v4/wxs/util">
               <Fragment>

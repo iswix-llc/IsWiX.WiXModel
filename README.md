@@ -54,6 +54,22 @@ feature.AddComponentGroupRef("Files");                            // no-op when 
 package.SetPropertyValue("ARPNOMODIFY", "1");                     // adds the property or changes only its Value
 ```
 
+## Util extension elements
+
+The WiX Util extension's elements are typed too, in `IsWiX.WiXModel.Util`. The core elements they nest in
+get `Util`-prefixed collections and `Add` overloads, and adding one declares `xmlns:util` on the root:
+
+```csharp
+using Util = IsWiX.WiXModel.Util;
+
+var user = component.Add(new Util.User { Id = "SvcUser", Name = "svc", LogonAsService = true });
+user.Add(new Util.GroupRef { Id = "Users" });
+foreach (var xmlFile in component.UtilXmlFiles) { /* ElementPath, Action, Value, ... */ }
+```
+
+Util attributes typed with core WiX types use the core enums (`Util.RegistrySearch.Bitness` is a
+`WixValue<BitnessType>?`). Elements of other extensions are still read and kept as `WixUnknownElement`.
+
 ## Diagnostics
 
 `document.Validate()` finds common mistakes without building, and never changes the document. Each
@@ -65,6 +81,7 @@ package.SetPropertyValue("ARPNOMODIFY", "1");                     // adds the pr
 | `WXM002` | error | Attribute text that is neither a valid value nor an expression (`KeyPath="maybe"`), with the allowed values |
 | `WXM003` | warning | A `ComponentGroupRef`, `ComponentRef`, `FeatureRef`, `FeatureGroupRef` or `MergeRef` nothing defines |
 
+Attribute values are checked on Util elements too; Ids and references only among core elements.
 `WixDiagnostics.Validate(product, files, ...)` checks a build's files together: duplicates across them and
 unresolved references, which are warnings since a .wixlib or extension may define them. Elements inside
 `<?if?>`/`<?foreach?>` blocks, Ids that are expressions, and `virtual`/`override` Ids are not reported as
@@ -101,7 +118,7 @@ package.Add(new Property { Id = "ARPNOMODIFY", Value = "1" });   // lands in Id 
 | `src/IsWiX.WiXModel.Core` | Infrastructure: lossless XML load/save (`LosslessXml`), `WixValue<T>` and converters, the `WixElement` base class and wrapper registry. No WiX element types. |
 | `src/IsWiX.WiXModel` | `WixDocument` plus the generated element wrappers in `Generated/` (checked in, never hand-edited). |
 | `tools/IsWiX.WiXModel.SchemaGen` | Reads the WiX schema fragments and emits `src/IsWiX.WiXModel/Generated`. |
-| `schemas/wix` | The WiX core schema, vendored from the `v7.0.0` tag (see `schemas/README.md`). |
+| `schemas/wix`, `schemas/util` | The WiX core and Util extension schemas, vendored from the `v7.0.0` tag (see `schemas/README.md`). |
 | `tests/IsWiX.WiXModel.Tests` | Round-trip, editing and generator tests. |
 
 ## Design rules
@@ -169,13 +186,19 @@ silently wins, so the .NET type must always be qualified or aliased there.
 
 ## Regenerating the model
 
-Add element names to `src/IsWiX.WiXModel/schemagen.json`, then:
+Add element names to `src/IsWiX.WiXModel/schemagen.json` (or `schemagen.util.json` for the Util
+extension), then run the generator on that config:
 
 ```bash
 dotnet run --project tools/IsWiX.WiXModel.SchemaGen -- src/IsWiX.WiXModel/schemagen.json
 ```
 
-`Generated_code_is_up_to_date` fails if the checked-in output doesn't match the generator.
+```bash
+dotnet run --project tools/IsWiX.WiXModel.SchemaGen -- src/IsWiX.WiXModel/schemagen.util.json
+```
+
+An extension config names the core config as its `base` (for core types such as `wxs:YesNoTypeUnion`) and a
+`memberPrefix` for the collections it adds to core parents. `Generated_code_is_up_to_date` fails if the checked-in output doesn't match the generator.
 
 ## Testing
 

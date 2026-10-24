@@ -18,26 +18,40 @@ internal sealed class ModelEmitter
         "GetChildren", "AddChild", "ToString", "Equals", "GetHashCode", "GetType",
     };
 
+    private const string Wxs = "http://wixtoolset.org/schemas/v4/wxs";
+
     private readonly SchemaSet _schema;
     private readonly GeneratorConfig _config;
+    private readonly SchemaSet? _baseSchema;
+    private readonly GeneratorConfig? _baseConfig;
     private readonly TypeMapper _types;
 
-    public ModelEmitter(SchemaSet schema, GeneratorConfig config)
+    /// <param name="schema">The schema to generate.</param>
+    /// <param name="config">Its config.</param>
+    /// <param name="baseSchema">For an extension, the core WiX schema its types and parents come from.</param>
+    /// <param name="baseConfig">For an extension, the core config (which elements have classes, and their namespace).</param>
+    public ModelEmitter(SchemaSet schema, GeneratorConfig config, SchemaSet? baseSchema = null, GeneratorConfig? baseConfig = null)
     {
         _schema = schema;
         _config = config;
-        _types = new TypeMapper(schema, config.Namespace);
+        _baseSchema = baseSchema;
+        _baseConfig = baseConfig;
+        _types = new TypeMapper(
+            schema,
+            config.Namespace,
+            baseSchema is null || baseConfig is null ? null : new TypeMapper(baseSchema, baseConfig.Namespace));
     }
 
     private string Namespace => _config.Namespace;
 
     public IReadOnlyList<GeneratedFile> Emit()
     {
-        // Generated ElementName fields use IsWiX.WiXModel.Core.WixNamespaces.Wxs.
-        const string Wxs = "http://wixtoolset.org/schemas/v4/wxs";
-        if (_schema.TargetNamespace != Wxs)
+        // The core schema is in the wxs namespace; an extension is in its own and names the core config as its base.
+        if ((_baseConfig is null) != (_schema.TargetNamespace == Wxs))
         {
-            throw new InvalidOperationException($"The schema's target namespace is '{_schema.TargetNamespace}', but the generator emits names in '{Wxs}'.");
+            throw new InvalidOperationException(_baseConfig is null
+                ? $"The schema's target namespace is '{_schema.TargetNamespace}'; an extension schema needs a \"base\" config naming the core one."
+                : $"The schema's target namespace is the core '{Wxs}', but the config names a base.");
         }
 
         var missing = _config.Elements.Where(e => !_schema.Elements.ContainsKey(e)).ToList();
@@ -51,6 +65,7 @@ internal sealed class ModelEmitter
         files.Add(new GeneratedFile("Enums.g.cs", EmitEnums()));
         files.Add(new GeneratedFile("WixEnumConverters.g.cs", EmitEnumConverters()));
         files.Add(new GeneratedFile("WixModelRegistration.g.cs", EmitRegistration(elements)));
+        files.AddRange(EmitParentAccessors(elements));
         return files.OrderBy(f => f.FileName, StringComparer.Ordinal).ToList();
     }
 
@@ -77,7 +92,7 @@ internal sealed class ModelEmitter
         code.Open($"public sealed partial class {className} : global::IsWiX.WiXModel.Core.WixElement");
 
         code.Line($"/// <summary>The XML name of the <c>{element.Name}</c> element.</summary>");
-        code.Line($"public static readonly global::System.Xml.Linq.XName ElementName = global::IsWiX.WiXModel.Core.WixNamespaces.Wxs + {Naming.Literal(element.Name)};");
+        code.Line($"public static readonly global::System.Xml.Linq.XName ElementName = {XmlNamespace} + {Naming.Literal(element.Name)};");
         code.Line();
         code.Line($"/// <summary>Creates a detached <c>{element.Name}</c> element. Add it to a parent to place it in a document.</summary>");
         code.Line($"public {className}()");
@@ -279,10 +294,62 @@ internal sealed class ModelEmitter
         return code.ToString();
     }
 
+    // The XNamespace expression generated ElementName fields use.
+    private string XmlNamespace => _schema.TargetNamespace == Wxs
+        ? "global::IsWiX.WiXModel.Core.WixNamespaces.Wxs"
+        : $"global::System.Xml.Linq.XNamespace.Get({Naming.Literal(_schema.TargetNamespace)})";
+
+    /// <summary>
+    /// For an extension: the core elements its elements may be nested in get a typed collection and Add overload
+    /// for each, in a partial class next to the generated core one (<c>component.UtilUsers</c>,
+    /// <c>component.Add(new Util.User())</c>).
+    /// </summary>
+    private IEnumerable<GeneratedFile> EmitParentAccessors(IReadOnlyList<ElementDefinition> elements)
+    {
+        if (_baseConfig is null || _baseSchema is null)
+        {
+            yield break;
+        }
+
+        var prefix = _config.MemberPrefix ?? throw new InvalidOperationException("An extension config needs a \"memberPrefix\" for the members it adds to core classes.");
+        var byParent = elements
+            .SelectMany(e => (e.Parents ?? []).Where(p => p.Namespace == _baseSchema.TargetNamespace && _baseConfig.Elements.Contains(p.Name)).Select(p => (Parent: p.Name, Child: e.Name)))
+            .GroupBy(p => p.Parent, p => p.Child, StringComparer.Ordinal)
+            .OrderBy(g => g.Key, StringComparer.Ordinal);
+        foreach (var group in byParent)
+        {
+            var code = Header();
+            code.Open($"namespace {_baseConfig.Namespace}");
+            code.Open($"public sealed partial class {group.Key}");
+            var first = true;
+            foreach (var child in group.OrderBy(c => c, StringComparer.Ordinal))
+            {
+                var childRef = $"global::{Namespace}.{child}";
+                if (!first)
+                {
+                    code.Line();
+                }
+
+                first = false;
+                code.Line($"/// <summary>Gets the child <c>{prefix.ToLowerInvariant()}:{child}</c> elements.</summary>");
+                code.Line($"public global::System.Collections.Generic.IEnumerable<{childRef}> {prefix}{Naming.Plural(child)} => GetChildren<{childRef}>({childRef}.ElementName);");
+                code.Line();
+                code.Line($"/// <summary>Adds a <c>{prefix.ToLowerInvariant()}:{child}</c> element, declaring its namespace on the root if needed.</summary>");
+                code.Line("/// <param name=\"child\">A detached element.</param>");
+                code.Line("/// <returns><paramref name=\"child\"/>, for chaining.</returns>");
+                code.Line($"public {childRef} Add({childRef} child) => AddChild(child);");
+            }
+
+            code.Close();
+            code.Close();
+            yield return new GeneratedFile($"{group.Key}.{prefix}.g.cs", code.ToString());
+        }
+    }
+
     private CodeWriter Header() => new CodeWriter()
         .Line("// <auto-generated>")
         .Line($"//     Generated by IsWiX.WiXModel.SchemaGen from the WiX {_config.SchemaVersion} schema.")
-        .Line("//     Do not edit: change src/IsWiX.WiXModel/schemagen.json or the generator and regenerate.")
+        .Line($"//     Do not edit: change {_config.FileName} or the generator and regenerate.")
         .Line("// </auto-generated>")
         .Line()
         .Line("#nullable enable")

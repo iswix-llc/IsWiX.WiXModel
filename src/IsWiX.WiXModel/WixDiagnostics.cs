@@ -139,7 +139,10 @@ namespace IsWiX.WiXModel
         {
             var list = (documents ?? throw new ArgumentNullException(nameof(documents))).ToList();
             var diagnostics = new List<WixDiagnostic>();
-            var elements = list.SelectMany(d => Elements(d).Select(e => (Document: d, e.Element, e.Conditional))).ToList();
+            var all = list.SelectMany(d => Elements(d).Select(e => (Document: d, e.Element, e.Conditional))).ToList();
+
+            // Ids and references are compared among core elements; extension elements have tables of their own.
+            var elements = all.Where(e => e.Element.Name.Namespace == WixNamespaces.Wxs).ToList();
 
             // Duplicate Ids. Elements inside <?if?> or <?foreach?> blocks are skipped: alternate branches often
             // define the same Id on purpose. So are virtual and override Ids, which redefine a symbol on purpose.
@@ -167,7 +170,7 @@ namespace IsWiX.WiXModel
             }
 
             // Attribute values WiX won't accept: neither a valid value nor a $(var)/!(loc) expression.
-            foreach (var (document, element, _) in elements)
+            foreach (var (document, element, _) in all)
             {
                 diagnostics.AddRange(InvalidValues(document, element));
             }
@@ -200,7 +203,7 @@ namespace IsWiX.WiXModel
         /// <returns>The problems found.</returns>
         public static IReadOnlyList<WixDiagnostic> Validate(params WixSourceDocument[] documents) => Validate((IEnumerable<WixSourceDocument>)documents);
 
-        // Every WiX element in document order, and whether it is inside a conditional block.
+        // Every element in document order, and whether it is inside a conditional block.
         private static IEnumerable<(XElement Element, bool Conditional)> Elements(WixSourceDocument document)
         {
             var depth = 0;
@@ -217,7 +220,7 @@ namespace IsWiX.WiXModel
                         depth = Math.Max(0, depth - 1);
                     }
                 }
-                else if (node is XElement element && element.Name.Namespace == WixNamespaces.Wxs)
+                else if (node is XElement element)
                 {
                     yield return (element, depth > 0);
                 }
@@ -299,7 +302,9 @@ namespace IsWiX.WiXModel
 
             if (literal.IsEnum)
             {
-                var converter = typeof(WixEnumConverters).GetProperty(literal.Name, BindingFlags.Public | BindingFlags.Static)?.GetValue(null);
+                // Each generated namespace (core, Util, ...) has its own WixEnumConverters.
+                var converters = literal.Assembly.GetType(literal.Namespace + ".WixEnumConverters");
+                var converter = converters?.GetProperty(literal.Name, BindingFlags.Public | BindingFlags.Static)?.GetValue(null);
                 var format = converter?.GetType().GetMethod("Format", new[] { literal });
                 if (format != null)
                 {

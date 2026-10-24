@@ -219,11 +219,10 @@ public class EditingTests
 
         Assert.DoesNotContain(package.Children, e => e is WixUnknownElement);
 
-        // Extension elements with no registered wrapper are still exposed, and kept.
+        // Util extension elements get their generated wrappers.
         var crlf = WixDocument.Load(System.IO.Path.Combine(AppContext.BaseDirectory, "Corpus", "crlf-bom-tabs.wxs"));
         var component = crlf.Root.Packages.Single().Directories.Single().Directories.Single().Components.First();
-        var unknown = component.Children.OfType<WixUnknownElement>().Select(e => e.Xml.Name.LocalName).ToList();
-        Assert.Equal(["RemoveFolderEx"], unknown);
+        Assert.Single(component.UtilRemoveFolderExes);
     }
 
     [Fact]
