@@ -7,7 +7,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
     <!-- One version for every package; .github/workflows/publish.yml increments it. -->
-    <Version>0.4.0</Version>
+    <Version>0.4.1</Version>
     <Authors>IsWiX LLC</Authors>
     <Company>IsWiX LLC</Company>
     <Copyright>Copyright (c) 2026 ISWIX, LLC</Copyright>
