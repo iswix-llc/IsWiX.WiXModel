@@ -37,6 +37,36 @@ document.Save("Package.wxs");
   expression, or invalid text kept as written. Reading never throws or rewrites.
 - **No global state, no UI.** `netstandard2.0` and `net8.0`; WPF and designers live in IsWiX.
 - **WiX v4+ only.** v3 files are rejected with a hint to run `wix convert`.
+- **Exact WiX names.** Classes, properties and enum values use the names in the WiX schema and docs, even
+  where they match a .NET type (see below).
+
+## Names that match .NET types
+
+Element classes keep their exact WiX names, so code reads like the `.wxs` it edits. Six of them share a
+name with a type in a namespace .NET projects commonly import:
+
+| WiX class | Same name as | Usually imported by |
+|---|---|---|
+| `Environment` | `System.Environment` | `using System;` (every project) |
+| `File`, `Directory` | `System.IO.File`, `System.IO.Directory` | `using System.IO;` (SDK implicit usings) |
+| `Icon` | `System.Drawing.Icon` | WinForms implicit usings |
+| `Shortcut` | `System.Windows.Forms.Shortcut` | WinForms implicit usings |
+| `Module` | `System.Reflection.Module` | `using System.Reflection;` |
+
+When a file imports both namespaces, the short name is ambiguous (error CS0104). Resolve it with using
+aliases, either at the top of the file or once per project in a `GlobalUsings.cs`:
+
+```csharp
+using IsWiX.WiXModel;
+using Environment = IsWiX.WiXModel.Environment;   // the WiX element in this file
+using File = IsWiX.WiXModel.File;
+using SysEnvironment = System.Environment;        // and a short name for the .NET type
+using IOFile = System.IO.File;
+```
+
+or by writing the .NET type out in full (`System.Environment.GetEnvironmentVariable("PATH")`). Code in a
+namespace under `IsWiX.WiXModel` (such as `IsWiX.WiXModel.Tests`) gets no error: the WiX type silently
+wins, so the .NET type must always be qualified or aliased there.
 
 ## Regenerating the model
 
