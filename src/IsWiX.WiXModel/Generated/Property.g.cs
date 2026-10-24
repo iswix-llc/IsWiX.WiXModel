@@ -10,9 +10,6 @@ namespace IsWiX.WiXModel
     /// <summary>
     /// Property value for a Package or Module.
     /// </summary>
-    /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: ComplianceDrive.
-    /// </remarks>
     public sealed partial class Property : global::IsWiX.WiXModel.Core.WixElement
     {
         /// <summary>The XML name of the <c>Property</c> element.</summary>
@@ -100,6 +97,14 @@ namespace IsWiX.WiXModel
             get => GetValue("SuppressModularization", global::IsWiX.WiXModel.Core.WixConverters.YesNo);
             set => SetValue("SuppressModularization", global::IsWiX.WiXModel.Core.WixConverters.YesNo, value);
         }
+
+        /// <summary>Gets the child <c>ComplianceDrive</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ComplianceDrive> ComplianceDrives => GetChildren<global::IsWiX.WiXModel.ComplianceDrive>(global::IsWiX.WiXModel.ComplianceDrive.ElementName);
+
+        /// <summary>Adds a <c>ComplianceDrive</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.ComplianceDrive Add(global::IsWiX.WiXModel.ComplianceDrive child) => AddChild(child);
 
         /// <summary>Gets the child <c>ComponentSearch</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ComponentSearch> ComponentSearches => GetChildren<global::IsWiX.WiXModel.ComponentSearch>(global::IsWiX.WiXModel.ComponentSearch.ElementName);

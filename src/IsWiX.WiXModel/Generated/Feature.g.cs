@@ -11,9 +11,6 @@ namespace IsWiX.WiXModel
     /// A feature for the Feature table. Features are the smallest installable unit. See msi.chm for more detailed
     /// information on the myriad installation options for a feature.
     /// </summary>
-    /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: Level.
-    /// </remarks>
     public sealed partial class Feature : global::IsWiX.WiXModel.Core.WixElement
     {
         /// <summary>The XML name of the <c>Feature</c> element.</summary>
@@ -178,6 +175,14 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.Files Add(global::IsWiX.WiXModel.Files child) => AddChild(child);
+
+        /// <summary>Gets the child <c>Level</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Level> Levels => GetChildren<global::IsWiX.WiXModel.Level>(global::IsWiX.WiXModel.Level.ElementName);
+
+        /// <summary>Adds a <c>Level</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Level Add(global::IsWiX.WiXModel.Level child) => AddChild(child);
 
         /// <summary>Gets the child <c>Feature</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Feature> Features => GetChildren<global::IsWiX.WiXModel.Feature>(global::IsWiX.WiXModel.Feature.ElementName);

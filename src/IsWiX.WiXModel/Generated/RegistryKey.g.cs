@@ -11,9 +11,6 @@ namespace IsWiX.WiXModel
     /// Used for organization of child RegistryValue elements or to create a registry key (and optionally remove it
     /// during uninstallation).
     /// </summary>
-    /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: Permission, PermissionEx.
-    /// </remarks>
     public sealed partial class RegistryKey : global::IsWiX.WiXModel.Core.WixElement
     {
         /// <summary>The XML name of the <c>RegistryKey</c> element.</summary>
@@ -108,5 +105,21 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.RegistryValue Add(global::IsWiX.WiXModel.RegistryValue child) => AddChild(child);
+
+        /// <summary>Gets the child <c>Permission</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Permission> Permissions => GetChildren<global::IsWiX.WiXModel.Permission>(global::IsWiX.WiXModel.Permission.ElementName);
+
+        /// <summary>Adds a <c>Permission</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Permission Add(global::IsWiX.WiXModel.Permission child) => AddChild(child);
+
+        /// <summary>Gets the child <c>PermissionEx</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.PermissionEx> PermissionExElements => GetChildren<global::IsWiX.WiXModel.PermissionEx>(global::IsWiX.WiXModel.PermissionEx.ElementName);
+
+        /// <summary>Adds a <c>PermissionEx</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.PermissionEx Add(global::IsWiX.WiXModel.PermissionEx child) => AddChild(child);
     }
 }

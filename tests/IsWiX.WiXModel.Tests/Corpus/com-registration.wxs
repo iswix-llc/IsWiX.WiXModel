@@ -1,0 +1,28 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <ComponentGroup Id="Com" Directory="INSTALLFOLDER">
+      <Component Id="AcmeCom">
+        <File Id="AcmeComDll" Source="Acme.Com.dll" KeyPath="yes">
+          <TypeLib Id="{6B8E4F2A-1C3D-4E5F-8A9B-0C1D2E3F4A5B}" Language="0" MajorVersion="1" MinorVersion="0" Description="Acme COM 1.0">
+            <AppId Id="{7C9F5A3B-2D4E-4F60-9B0C-1D2E3F4A5B6C}" Description="Acme Server" RunAsInteractiveUser="no">
+              <Class Id="{8DA06B4C-3E5F-4071-AC1D-2E3F4A5B6C7D}" Context="InprocServer32 LocalServer32" ThreadingModel="apartment" Description="Acme.Widget" Version="1.0">
+                <ProgId Id="Acme.Widget.1" Description="Acme Widget">
+                  <ProgId Id="Acme.Widget" Description="Acme Widget (version independent)" />
+                </ProgId>
+                <FileTypeMask Offset="0" Mask="FFFF" Value="4D5A" />
+              </Class>
+            </AppId>
+            <Interface Id="{9EB17C5D-4F60-4182-BD2E-3F4A5B6C7D8E}" Name="IWidget" ProxyStubClassId32="{00020424-0000-0000-C000-000000000046}" NumMethods="7" />
+          </TypeLib>
+        </File>
+        <ProgId Id="Acme.Document" Description="Acme document" Icon="AcmeComDll" IconIndex="0">
+          <Extension Id="acme" ContentType="application/x-acme">
+            <Verb Id="open" Command="Open" TargetFile="AcmeComDll" Argument="&quot;%1&quot;" Sequence="1" />
+            <MIME ContentType="application/x-acme" Default="yes" />
+          </Extension>
+        </ProgId>
+        <Category Id="{40FC6ED5-2438-11CF-A3DB-080036F12502}" Qualifier="AcmeWidgets" AppData="widgets" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

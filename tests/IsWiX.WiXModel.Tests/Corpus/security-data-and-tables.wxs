@@ -1,0 +1,77 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="Everything Else" Manufacturer="Acme" Version="1.0.0.0">
+    <Media Id="1" Cabinet="data.cab" EmbedCab="yes">
+      <DigitalSignature SourceFile="Signing\data.cab.sig">
+        <DigitalCertificate Id="MediaSigner" SourceFile="Signing\acme.cer" />
+      </DigitalSignature>
+    </Media>
+    <PackageCertificates>
+      <DigitalCertificate Id="PackageSigner" SourceFile="Signing\acme.cer" />
+    </PackageCertificates>
+    <SoftwareTag Regid="regid.2026-10.com.acme" InstallDirectory="INSTALLFOLDER" />
+    <Requires ProviderKey="Acme.Runtime" Minimum="2.0" IncludeMinimum="yes" />
+    <UIRef Id="WixUI_InstallDir" />
+    <SymbolPath Path="\\symbols\acme" />
+    <ComplianceCheck>
+      <DirectorySearch Id="LegacyAcme" Path="[ProgramFilesFolder]Acme Legacy" />
+    </ComplianceCheck>
+    <SFPCatalog Name="acme.cat" SourceFile="acme.cat">
+      <SFPFile Id="DataFile" />
+    </SFPCatalog>
+
+    <CustomTable Id="AcmeSettings">
+      <Column Id="Key" Type="string" PrimaryKey="yes" Width="72" Category="identifier" />
+      <Column Id="Value" Type="string" Nullable="yes" Modularize="property" />
+      <Row>
+        <Data Column="Key" Value="Mode" />
+        <Data Column="Value" Value="production" />
+      </Row>
+    </CustomTable>
+    <CustomTableRef Id="SharedSettings">
+      <Row>
+        <Data Column="Key" Value="Region" />
+      </Row>
+    </CustomTableRef>
+    <EnsureTable Id="LockPermissions" />
+
+    <StandardDirectory Id="ProgramFiles6432Folder">
+      <Directory Id="INSTALLFOLDER" Name="Everything Else">
+        <Component Id="Data">
+          <File Id="DataFile" Source="data.db" KeyPath="yes">
+            <PermissionEx Sddl="D:(A;;FA;;;BA)(A;;FR;;;BU)" />
+            <CopyFile Id="DataBackup" DestinationDirectory="INSTALLFOLDER" DestinationName="data.db.bak" />
+          </File>
+          <CreateFolder>
+            <Permission User="Users" GenericRead="yes" Read="yes" />
+          </CreateFolder>
+          <RemoveRegistryKey Root="HKCU" Key="Software\Acme\Cache" Action="removeOnUninstall" />
+          <RemoveRegistryValue Root="HKCU" Key="Software\Acme" Name="LastRun" />
+          <ReserveCost Id="DataGrowth" RunLocal="1048576" RunFromSource="0" />
+          <IsolateComponent Shared="SharedRuntime" />
+          <Provides Key="Acme.Data" Version="1.0.0" DisplayName="Acme Data">
+            <Requires ProviderKey="Acme.Runtime" Minimum="2.0" />
+          </Provides>
+        </Component>
+        <Component Id="Odbc">
+          <File Id="AcmeOdbcDll" Source="AcmeOdbc.dll" KeyPath="yes">
+            <AssemblyName Id="Culture" Value="neutral" />
+          </File>
+          <ODBCDriver Id="AcmeDriver" Name="Acme ODBC Driver" File="AcmeOdbcDll">
+            <ODBCDataSource Id="AcmeDsn" Name="Acme" Registration="machine" />
+          </ODBCDriver>
+          <ODBCTranslator Id="AcmeTranslator" Name="Acme Translator" File="AcmeOdbcDll" />
+        </Component>
+        <Merge Id="AcmeConfigurable" SourceFile="AcmeConfigurable.msm" Language="0">
+          <ConfigurationData Name="TargetMode" Value="production" />
+        </Merge>
+      </Directory>
+    </StandardDirectory>
+
+    <Feature Id="Main" Level="1">
+      <Level Value="0" Condition="NOT VersionNT64" />
+      <ComponentRef Id="Data" />
+      <ComponentRef Id="Odbc" />
+      <MergeRef Id="AcmeConfigurable" />
+    </Feature>
+  </Package>
+</Wix>

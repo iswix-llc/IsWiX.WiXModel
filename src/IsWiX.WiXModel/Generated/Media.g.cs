@@ -11,8 +11,7 @@ namespace IsWiX.WiXModel
     /// Media element describes a disk that makes up the source media for the installation.
     /// </summary>
     /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: DigitalSignature,
-    /// PatchBaseline, SymbolPath.
+    /// Child elements not yet in the typed model are available through Children and Xml: PatchBaseline.
     /// </remarks>
     public sealed partial class Media : global::IsWiX.WiXModel.Core.WixElement
     {
@@ -121,5 +120,21 @@ namespace IsWiX.WiXModel
             get => GetString("Source");
             set => SetString("Source", value);
         }
+
+        /// <summary>Gets the child <c>DigitalSignature</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.DigitalSignature> DigitalSignatures => GetChildren<global::IsWiX.WiXModel.DigitalSignature>(global::IsWiX.WiXModel.DigitalSignature.ElementName);
+
+        /// <summary>Adds a <c>DigitalSignature</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.DigitalSignature Add(global::IsWiX.WiXModel.DigitalSignature child) => AddChild(child);
+
+        /// <summary>Gets the child <c>SymbolPath</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.SymbolPath> SymbolPaths => GetChildren<global::IsWiX.WiXModel.SymbolPath>(global::IsWiX.WiXModel.SymbolPath.ElementName);
+
+        /// <summary>Adds a <c>SymbolPath</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.SymbolPath Add(global::IsWiX.WiXModel.SymbolPath child) => AddChild(child);
     }
 }

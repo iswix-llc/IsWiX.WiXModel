@@ -42,7 +42,7 @@ document.Save("Package.wxs");
 
 ## Names that match .NET types
 
-Element classes keep their exact WiX names, so code reads like the `.wxs` it edits. Six of them share a
+Element classes keep their exact WiX names, so code reads like the `.wxs` it edits. Seven of them share a
 name with a type in a namespace .NET projects commonly import:
 
 | WiX class | Same name as | Usually imported by |
@@ -51,7 +51,7 @@ name with a type in a namespace .NET projects commonly import:
 | `File`, `Directory` | `System.IO.File`, `System.IO.Directory` | `using System.IO;` (SDK implicit usings) |
 | `Icon` | `System.Drawing.Icon` | WinForms implicit usings |
 | `Shortcut` | `System.Windows.Forms.Shortcut` | WinForms implicit usings |
-| `Module` | `System.Reflection.Module` | `using System.Reflection;` |
+| `Module`, `AssemblyName` | `System.Reflection.Module`, `System.Reflection.AssemblyName` | `using System.Reflection;` |
 
 When a file imports both namespaces, the short name is ambiguous (error CS0104). Resolve it with using
 aliases, either at the top of the file or once per project in a `GlobalUsings.cs`:

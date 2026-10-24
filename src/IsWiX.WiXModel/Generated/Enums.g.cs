@@ -31,6 +31,281 @@ namespace IsWiX.WiXModel
     /// <summary>
     /// Not documented in the WiX schema.
     /// </summary>
+    public enum ClassThreadingModel
+    {
+        /// <summary>
+        /// Written as &lt;c&gt;apartment&lt;/c&gt;.
+        /// </summary>
+        Apartment,
+
+        /// <summary>
+        /// Written as &lt;c&gt;free&lt;/c&gt;.
+        /// </summary>
+        Free,
+
+        /// <summary>
+        /// Written as &lt;c&gt;both&lt;/c&gt;.
+        /// </summary>
+        Both,
+
+        /// <summary>
+        /// Written as &lt;c&gt;neutral&lt;/c&gt;.
+        /// </summary>
+        Neutral,
+
+        /// <summary>
+        /// Written as &lt;c&gt;single&lt;/c&gt;.
+        /// </summary>
+        Single,
+
+        /// <summary>
+        /// Written as &lt;c&gt;rental&lt;/c&gt;.
+        /// </summary>
+        Rental,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum ColumnCategory
+    {
+        /// <summary>
+        /// Written as &lt;c&gt;text&lt;/c&gt;.
+        /// </summary>
+        Text,
+
+        /// <summary>
+        /// Written as &lt;c&gt;upperCase&lt;/c&gt;.
+        /// </summary>
+        UpperCase,
+
+        /// <summary>
+        /// Written as &lt;c&gt;lowerCase&lt;/c&gt;.
+        /// </summary>
+        LowerCase,
+
+        /// <summary>
+        /// Written as &lt;c&gt;integer&lt;/c&gt;.
+        /// </summary>
+        Integer,
+
+        /// <summary>
+        /// Written as &lt;c&gt;doubleInteger&lt;/c&gt;.
+        /// </summary>
+        DoubleInteger,
+
+        /// <summary>
+        /// Written as &lt;c&gt;timeDate&lt;/c&gt;.
+        /// </summary>
+        TimeDate,
+
+        /// <summary>
+        /// Written as &lt;c&gt;identifier&lt;/c&gt;.
+        /// </summary>
+        Identifier,
+
+        /// <summary>
+        /// Written as &lt;c&gt;property&lt;/c&gt;.
+        /// </summary>
+        Property,
+
+        /// <summary>
+        /// Written as &lt;c&gt;filename&lt;/c&gt;.
+        /// </summary>
+        Filename,
+
+        /// <summary>
+        /// Written as &lt;c&gt;wildCardFilename&lt;/c&gt;.
+        /// </summary>
+        WildCardFilename,
+
+        /// <summary>
+        /// Written as &lt;c&gt;path&lt;/c&gt;.
+        /// </summary>
+        Path,
+
+        /// <summary>
+        /// Written as &lt;c&gt;paths&lt;/c&gt;.
+        /// </summary>
+        Paths,
+
+        /// <summary>
+        /// Written as &lt;c&gt;anyPath&lt;/c&gt;.
+        /// </summary>
+        AnyPath,
+
+        /// <summary>
+        /// Written as &lt;c&gt;defaultDir&lt;/c&gt;.
+        /// </summary>
+        DefaultDir,
+
+        /// <summary>
+        /// Written as &lt;c&gt;regPath&lt;/c&gt;.
+        /// </summary>
+        RegPath,
+
+        /// <summary>
+        /// Written as &lt;c&gt;formatted&lt;/c&gt;.
+        /// </summary>
+        Formatted,
+
+        /// <summary>
+        /// Written as &lt;c&gt;formattedSddl&lt;/c&gt;.
+        /// </summary>
+        FormattedSddl,
+
+        /// <summary>
+        /// Written as &lt;c&gt;template&lt;/c&gt;.
+        /// </summary>
+        Template,
+
+        /// <summary>
+        /// Written as &lt;c&gt;condition&lt;/c&gt;.
+        /// </summary>
+        Condition,
+
+        /// <summary>
+        /// Written as &lt;c&gt;guid&lt;/c&gt;.
+        /// </summary>
+        Guid,
+
+        /// <summary>
+        /// Written as &lt;c&gt;version&lt;/c&gt;.
+        /// </summary>
+        Version,
+
+        /// <summary>
+        /// Written as &lt;c&gt;language&lt;/c&gt;.
+        /// </summary>
+        Language,
+
+        /// <summary>
+        /// Written as &lt;c&gt;binary&lt;/c&gt;.
+        /// </summary>
+        Binary,
+
+        /// <summary>
+        /// Written as &lt;c&gt;customSource&lt;/c&gt;.
+        /// </summary>
+        CustomSource,
+
+        /// <summary>
+        /// Written as &lt;c&gt;cabinet&lt;/c&gt;.
+        /// </summary>
+        Cabinet,
+
+        /// <summary>
+        /// Written as &lt;c&gt;shortcut&lt;/c&gt;.
+        /// </summary>
+        Shortcut,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum ColumnModularize
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;none&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Column should not be modularized. This is the default value.
+        /// </para>
+        /// </summary>
+        None,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;column&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Column should be modularized.
+        /// </para>
+        /// </summary>
+        Column,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;condition&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Column is a condition and should be modularized.
+        /// </para>
+        /// </summary>
+        Condition,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;icon&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// When the column is an primary or foreign key to the Icon table it should be modularized special.
+        /// </para>
+        /// </summary>
+        Icon,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;property&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Any Properties in the column should be modularized.
+        /// </para>
+        /// </summary>
+        Property,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;semicolonDelimited&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Semi-colon list of keys, all of which need to be modularized.
+        /// </para>
+        /// </summary>
+        SemicolonDelimited,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum ColumnType
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;binary&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Column contains a path to a file that will be inserted into the column as a binary object. If this value is
+        /// set, the Category attribute must also be set with a value of 'Binary' to pass ICE validation.
+        /// </para>
+        /// </summary>
+        Binary,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;int&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Column contains an integer or datetime value (the MinValue and MaxValue attributes should also be set).
+        /// </para>
+        /// </summary>
+        Int,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;string&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Column contains a non-localizable string value.
+        /// </para>
+        /// </summary>
+        String,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
     public enum ComponentLocation
     {
         /// <summary>
@@ -120,6 +395,32 @@ namespace IsWiX.WiXModel
         /// Written as &lt;c&gt;none&lt;/c&gt;.
         /// </summary>
         None,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum ConfigurationFormat
+    {
+        /// <summary>
+        /// Written as &lt;c&gt;Text&lt;/c&gt;.
+        /// </summary>
+        Text,
+
+        /// <summary>
+        /// Written as &lt;c&gt;Key&lt;/c&gt;.
+        /// </summary>
+        Key,
+
+        /// <summary>
+        /// Written as &lt;c&gt;Integer&lt;/c&gt;.
+        /// </summary>
+        Integer,
+
+        /// <summary>
+        /// Written as &lt;c&gt;Bitfield&lt;/c&gt;.
+        /// </summary>
+        Bitfield,
     }
 
     /// <summary>
@@ -718,6 +1019,32 @@ namespace IsWiX.WiXModel
     }
 
     /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum ODBCDataSourceRegistration
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;machine&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Data source is registered per machine.
+        /// </para>
+        /// </summary>
+        Machine,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;user&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Data source is registered per user.
+        /// </para>
+        /// </summary>
+        User,
+    }
+
+    /// <summary>
     /// Use this attribute to specify the installation scope of this package: per-machine, per-user, or a choice of
     /// either.
     /// </summary>
@@ -1054,6 +1381,32 @@ namespace IsWiX.WiXModel
         /// </para>
         /// </summary>
         MultiString,
+    }
+
+    /// <summary>
+    /// Not documented in the WiX schema.
+    /// </summary>
+    public enum RemoveRegistryKeyAction
+    {
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;removeOnInstall&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Removes a key with all its values and subkeys when the parent component is installed.
+        /// </para>
+        /// </summary>
+        RemoveOnInstall,
+
+        /// <summary>
+        /// <para>
+        /// Written as &lt;c&gt;removeOnUninstall&lt;/c&gt;.
+        /// </para>
+        /// <para>
+        /// Removes a key with all its values and subkeys when the parent component is uninstalled.
+        /// </para>
+        /// </summary>
+        RemoveOnUninstall,
     }
 
     /// <summary>

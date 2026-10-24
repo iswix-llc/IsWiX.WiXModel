@@ -1,0 +1,10 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Module Id="AcmeConfigurable" Language="0" Version="1.0.0.0">
+    <Configuration Name="TargetMode" Format="Text" DefaultValue="test" DisplayName="Target mode" Description="test or production" />
+    <Substitution Table="Property" Row="ACMEMODE" Column="Value" Value="[=TargetMode]" />
+    <Property Id="ACMEMODE" Value="test" />
+    <Dependency RequiredId="AcmeRuntime.0F1E2D3C_4B5A_6978_8796_A5B4C3D2E1F0" RequiredLanguage="1033" RequiredVersion="1.2.3.0" />
+    <Exclusion ExcludedId="AcmeLegacy.11111111_2222_3333_4444_555555555555" ExcludeLanguage="1033" />
+    <IgnoreTable Id="Shortcut" />
+  </Module>
+</Wix>

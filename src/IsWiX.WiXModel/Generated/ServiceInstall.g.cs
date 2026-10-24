@@ -10,9 +10,6 @@ namespace IsWiX.WiXModel
     /// <summary>
     /// Adds services for parent Component. Use the ServiceControl element to remove services.
     /// </summary>
-    /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: PermissionEx.
-    /// </remarks>
     public sealed partial class ServiceInstall : global::IsWiX.WiXModel.Core.WixElement
     {
         /// <summary>The XML name of the <c>ServiceInstall</c> element.</summary>
@@ -170,6 +167,14 @@ namespace IsWiX.WiXModel
             get => GetValue("EraseDescription", global::IsWiX.WiXModel.Core.WixConverters.YesNo);
             set => SetValue("EraseDescription", global::IsWiX.WiXModel.Core.WixConverters.YesNo, value);
         }
+
+        /// <summary>Gets the child <c>PermissionEx</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.PermissionEx> PermissionExElements => GetChildren<global::IsWiX.WiXModel.PermissionEx>(global::IsWiX.WiXModel.PermissionEx.ElementName);
+
+        /// <summary>Adds a <c>PermissionEx</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.PermissionEx Add(global::IsWiX.WiXModel.PermissionEx child) => AddChild(child);
 
         /// <summary>Gets the child <c>ServiceDependency</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ServiceDependency> ServiceDependencies => GetChildren<global::IsWiX.WiXModel.ServiceDependency>(global::IsWiX.WiXModel.ServiceDependency.ElementName);

@@ -9,8 +9,8 @@ internal static class Naming
 {
     private static readonly string[] UncountableEndings = ["Media", "Information", "Data"];
 
-    // Names whose regular plural reads as a different word ("Customs").
-    private static readonly HashSet<string> NoPlural = new(StringComparer.Ordinal) { "Custom" };
+    // Names whose regular plural reads as a different word ("Customs") or not as a word ("PermissionExes").
+    private static readonly HashSet<string> NoPlural = new(StringComparer.Ordinal) { "Custom", "PermissionEx" };
 
     /// <summary>Turns a schema value such as <c>perMachine</c>, <c>always64</c> or <c>.net</c> into a C# identifier.</summary>
     public static string Pascal(string value)

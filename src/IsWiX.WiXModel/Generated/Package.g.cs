@@ -13,9 +13,8 @@ namespace IsWiX.WiXModel
     /// referred to as a Product.
     /// </summary>
     /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: AppId, ComplianceCheck,
-    /// CustomTable, CustomTableRef, EmbeddedChainer, EmbeddedChainerRef, EnsureTable, InstanceTransforms,
-    /// PackageCertificates, PatchCertificates, Requires, SFPCatalog, SoftwareTag, SymbolPath, UI, UIRef.
+    /// Child elements not yet in the typed model are available through Children and Xml: EmbeddedChainer,
+    /// EmbeddedChainerRef, InstanceTransforms, UI.
     /// </remarks>
     public sealed partial class Package : global::IsWiX.WiXModel.Core.WixElement
     {
@@ -200,6 +199,14 @@ namespace IsWiX.WiXModel
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.AdvertiseExecuteSequence Add(global::IsWiX.WiXModel.AdvertiseExecuteSequence child) => AddChild(child);
 
+        /// <summary>Gets the child <c>AppId</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.AppId> AppIds => GetChildren<global::IsWiX.WiXModel.AppId>(global::IsWiX.WiXModel.AppId.ElementName);
+
+        /// <summary>Adds a <c>AppId</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.AppId Add(global::IsWiX.WiXModel.AppId child) => AddChild(child);
+
         /// <summary>Gets the child <c>Binary</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Binary> Binaries => GetChildren<global::IsWiX.WiXModel.Binary>(global::IsWiX.WiXModel.Binary.ElementName);
 
@@ -207,6 +214,14 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.Binary Add(global::IsWiX.WiXModel.Binary child) => AddChild(child);
+
+        /// <summary>Gets the child <c>ComplianceCheck</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ComplianceCheck> ComplianceChecks => GetChildren<global::IsWiX.WiXModel.ComplianceCheck>(global::IsWiX.WiXModel.ComplianceCheck.ElementName);
+
+        /// <summary>Adds a <c>ComplianceCheck</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.ComplianceCheck Add(global::IsWiX.WiXModel.ComplianceCheck child) => AddChild(child);
 
         /// <summary>Gets the child <c>Component</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Component> Components => GetChildren<global::IsWiX.WiXModel.Component>(global::IsWiX.WiXModel.Component.ElementName);
@@ -256,6 +271,22 @@ namespace IsWiX.WiXModel
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.CustomActionRef Add(global::IsWiX.WiXModel.CustomActionRef child) => AddChild(child);
 
+        /// <summary>Gets the child <c>CustomTable</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.CustomTable> CustomTables => GetChildren<global::IsWiX.WiXModel.CustomTable>(global::IsWiX.WiXModel.CustomTable.ElementName);
+
+        /// <summary>Adds a <c>CustomTable</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.CustomTable Add(global::IsWiX.WiXModel.CustomTable child) => AddChild(child);
+
+        /// <summary>Gets the child <c>CustomTableRef</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.CustomTableRef> CustomTableRefs => GetChildren<global::IsWiX.WiXModel.CustomTableRef>(global::IsWiX.WiXModel.CustomTableRef.ElementName);
+
+        /// <summary>Adds a <c>CustomTableRef</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.CustomTableRef Add(global::IsWiX.WiXModel.CustomTableRef child) => AddChild(child);
+
         /// <summary>Gets the child <c>Directory</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Directory> Directories => GetChildren<global::IsWiX.WiXModel.Directory>(global::IsWiX.WiXModel.Directory.ElementName);
 
@@ -271,6 +302,14 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.DirectoryRef Add(global::IsWiX.WiXModel.DirectoryRef child) => AddChild(child);
+
+        /// <summary>Gets the child <c>EnsureTable</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.EnsureTable> EnsureTables => GetChildren<global::IsWiX.WiXModel.EnsureTable>(global::IsWiX.WiXModel.EnsureTable.ElementName);
+
+        /// <summary>Adds a <c>EnsureTable</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.EnsureTable Add(global::IsWiX.WiXModel.EnsureTable child) => AddChild(child);
 
         /// <summary>Gets the child <c>Feature</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Feature> Features => GetChildren<global::IsWiX.WiXModel.Feature>(global::IsWiX.WiXModel.Feature.ElementName);
@@ -368,6 +407,22 @@ namespace IsWiX.WiXModel
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.MediaTemplate Add(global::IsWiX.WiXModel.MediaTemplate child) => AddChild(child);
 
+        /// <summary>Gets the child <c>PackageCertificates</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.PackageCertificates> PackageCertificatesElements => GetChildren<global::IsWiX.WiXModel.PackageCertificates>(global::IsWiX.WiXModel.PackageCertificates.ElementName);
+
+        /// <summary>Adds a <c>PackageCertificates</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.PackageCertificates Add(global::IsWiX.WiXModel.PackageCertificates child) => AddChild(child);
+
+        /// <summary>Gets the child <c>PatchCertificates</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.PatchCertificates> PatchCertificatesElements => GetChildren<global::IsWiX.WiXModel.PatchCertificates>(global::IsWiX.WiXModel.PatchCertificates.ElementName);
+
+        /// <summary>Adds a <c>PatchCertificates</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.PatchCertificates Add(global::IsWiX.WiXModel.PatchCertificates child) => AddChild(child);
+
         /// <summary>Gets the child <c>Property</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Property> Properties => GetChildren<global::IsWiX.WiXModel.Property>(global::IsWiX.WiXModel.Property.ElementName);
 
@@ -383,6 +438,14 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.PropertyRef Add(global::IsWiX.WiXModel.PropertyRef child) => AddChild(child);
+
+        /// <summary>Gets the child <c>Requires</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Requires> RequiresElements => GetChildren<global::IsWiX.WiXModel.Requires>(global::IsWiX.WiXModel.Requires.ElementName);
+
+        /// <summary>Adds a <c>Requires</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.Requires Add(global::IsWiX.WiXModel.Requires child) => AddChild(child);
 
         /// <summary>Gets the child <c>SetDirectory</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.SetDirectory> SetDirectories => GetChildren<global::IsWiX.WiXModel.SetDirectory>(global::IsWiX.WiXModel.SetDirectory.ElementName);
@@ -400,6 +463,22 @@ namespace IsWiX.WiXModel
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.SetProperty Add(global::IsWiX.WiXModel.SetProperty child) => AddChild(child);
 
+        /// <summary>Gets the child <c>SFPCatalog</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.SFPCatalog> SFPCatalogs => GetChildren<global::IsWiX.WiXModel.SFPCatalog>(global::IsWiX.WiXModel.SFPCatalog.ElementName);
+
+        /// <summary>Adds a <c>SFPCatalog</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.SFPCatalog Add(global::IsWiX.WiXModel.SFPCatalog child) => AddChild(child);
+
+        /// <summary>Gets the child <c>SoftwareTag</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.SoftwareTag> SoftwareTags => GetChildren<global::IsWiX.WiXModel.SoftwareTag>(global::IsWiX.WiXModel.SoftwareTag.ElementName);
+
+        /// <summary>Adds a <c>SoftwareTag</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.SoftwareTag Add(global::IsWiX.WiXModel.SoftwareTag child) => AddChild(child);
+
         /// <summary>Gets the child <c>StandardDirectory</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.StandardDirectory> StandardDirectories => GetChildren<global::IsWiX.WiXModel.StandardDirectory>(global::IsWiX.WiXModel.StandardDirectory.ElementName);
 
@@ -415,6 +494,22 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.SummaryInformation Add(global::IsWiX.WiXModel.SummaryInformation child) => AddChild(child);
+
+        /// <summary>Gets the child <c>SymbolPath</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.SymbolPath> SymbolPaths => GetChildren<global::IsWiX.WiXModel.SymbolPath>(global::IsWiX.WiXModel.SymbolPath.ElementName);
+
+        /// <summary>Adds a <c>SymbolPath</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.SymbolPath Add(global::IsWiX.WiXModel.SymbolPath child) => AddChild(child);
+
+        /// <summary>Gets the child <c>UIRef</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.UIRef> UIRefs => GetChildren<global::IsWiX.WiXModel.UIRef>(global::IsWiX.WiXModel.UIRef.ElementName);
+
+        /// <summary>Adds a <c>UIRef</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.UIRef Add(global::IsWiX.WiXModel.UIRef child) => AddChild(child);
 
         /// <summary>Gets the child <c>Upgrade</c> elements.</summary>
         public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.Upgrade> Upgrades => GetChildren<global::IsWiX.WiXModel.Upgrade>(global::IsWiX.WiXModel.Upgrade.ElementName);

@@ -10,9 +10,6 @@ namespace IsWiX.WiXModel
     /// <summary>
     /// Directory layout for the product. Also specifies the mappings between source and target directories.
     /// </summary>
-    /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: SymbolPath.
-    /// </remarks>
     public sealed partial class Directory : global::IsWiX.WiXModel.Core.WixElement
     {
         /// <summary>The XML name of the <c>Directory</c> element.</summary>
@@ -177,5 +174,13 @@ namespace IsWiX.WiXModel
         /// <param name="child">A detached element.</param>
         /// <returns><paramref name="child"/>, for chaining.</returns>
         public global::IsWiX.WiXModel.Merge Add(global::IsWiX.WiXModel.Merge child) => AddChild(child);
+
+        /// <summary>Gets the child <c>SymbolPath</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.SymbolPath> SymbolPaths => GetChildren<global::IsWiX.WiXModel.SymbolPath>(global::IsWiX.WiXModel.SymbolPath.ElementName);
+
+        /// <summary>Adds a <c>SymbolPath</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.SymbolPath Add(global::IsWiX.WiXModel.SymbolPath child) => AddChild(child);
     }
 }

@@ -10,9 +10,6 @@ namespace IsWiX.WiXModel
     /// <summary>
     /// Merge directive to bring in a merge module that will be redirected to the parent directory.
     /// </summary>
-    /// <remarks>
-    /// Child elements not yet in the typed model are available through Children and Xml: ConfigurationData.
-    /// </remarks>
     public sealed partial class Merge : global::IsWiX.WiXModel.Core.WixElement
     {
         /// <summary>The XML name of the <c>Merge</c> element.</summary>
@@ -81,5 +78,13 @@ namespace IsWiX.WiXModel
             get => GetString("SourceFile");
             set => SetString("SourceFile", value);
         }
+
+        /// <summary>Gets the child <c>ConfigurationData</c> elements.</summary>
+        public global::System.Collections.Generic.IEnumerable<global::IsWiX.WiXModel.ConfigurationData> ConfigurationDataElements => GetChildren<global::IsWiX.WiXModel.ConfigurationData>(global::IsWiX.WiXModel.ConfigurationData.ElementName);
+
+        /// <summary>Adds a <c>ConfigurationData</c> element after the last existing one, indented to match.</summary>
+        /// <param name="child">A detached element.</param>
+        /// <returns><paramref name="child"/>, for chaining.</returns>
+        public global::IsWiX.WiXModel.ConfigurationData Add(global::IsWiX.WiXModel.ConfigurationData child) => AddChild(child);
     }
 }
