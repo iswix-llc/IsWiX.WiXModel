@@ -13,7 +13,7 @@ internal static class TestText
 
     public static WixDocument Parse(string text) => WixDocument.Parse(Lf(text));
 
-    public static byte[] Save(WixDocument document)
+    public static byte[] Save(WixSourceDocument document)
     {
         using var stream = new MemoryStream();
         document.Save(stream);

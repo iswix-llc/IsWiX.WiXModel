@@ -14,7 +14,7 @@ namespace IsWiX.WiXModel.Tests;
 
 /// <summary>
 /// The core promise: loading and saving a file without edits reproduces it byte-for-byte.
-/// Runs over Corpus/*.wxs, plus every .wxs under the folders in WIXMODEL_CORPUS
+/// Runs over Corpus/*.wxs and *.wxi, plus every .wxs and .wxi under the folders in WIXMODEL_CORPUS
 /// (separated by ';'), e.g. a clone of the wixtoolset/wix test data.
 /// </summary>
 public class RoundTripTests
@@ -26,7 +26,7 @@ public class RoundTripTests
         folders.AddRange((System.Environment.GetEnvironmentVariable("WIXMODEL_CORPUS") ?? string.Empty)
             .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
 
-        foreach (var file in folders.SelectMany(f => IODirectory.EnumerateFiles(f, "*.wxs", SearchOption.AllDirectories)).Where(IsWixV4Source))
+        foreach (var file in folders.SelectMany(f => IODirectory.EnumerateFiles(f, "*.*", SearchOption.AllDirectories).Where(IsWixSourceName)).Where(IsWixV4Source))
         {
             data.Add(file);
         }
@@ -39,7 +39,7 @@ public class RoundTripTests
     public void Unchanged_document_saves_byte_for_byte(string path)
     {
         var source = IOFile.ReadAllBytes(path);
-        var document = WixDocument.Load(new MemoryStream(source));
+        var document = WixSourceDocument.Load(new MemoryStream(source));
 
         Assert.True(document.IsLossless, "Source text capture fell back to normalized serialization.");
         TestText.AssertSameBytes(source, TestText.Save(document), Path.GetFileName(path));
@@ -50,7 +50,7 @@ public class RoundTripTests
     public void Reading_every_typed_property_changes_nothing(string path)
     {
         var source = IOFile.ReadAllBytes(path);
-        var document = WixDocument.Load(new MemoryStream(source));
+        var document = WixSourceDocument.Load(new MemoryStream(source));
 
         foreach (var element in document.Xml.Root!.DescendantsAndSelf().Select(WixElement.Wrap))
         {
@@ -75,7 +75,7 @@ public class RoundTripTests
         var encoding = new UnicodeEncoding(bigEndian: false, byteOrderMark: true);
         var source = encoding.GetPreamble().Concat(encoding.GetBytes(text)).ToArray();
 
-        var document = WixDocument.Load(new MemoryStream(source));
+        var document = WixSourceDocument.Load(new MemoryStream(source));
 
         Assert.Equal("utf-16", document.Format.Encoding.WebName);
         TestText.AssertSameBytes(source, TestText.Save(document), "UTF-16");
@@ -89,11 +89,14 @@ public class RoundTripTests
         Assert.Throws<WixDocumentException>(() => WixDocument.Parse(text));
     }
 
+    private static bool IsWixSourceName(string path) =>
+        path.EndsWith(".wxs", StringComparison.OrdinalIgnoreCase) || path.EndsWith(".wxi", StringComparison.OrdinalIgnoreCase);
+
     private static bool IsWixV4Source(string path)
     {
         try
         {
-            WixDocument.Load(path);
+            WixSourceDocument.Load(path);
             return true;
         }
         catch (WixDocumentException)

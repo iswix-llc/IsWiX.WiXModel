@@ -15,6 +15,7 @@ namespace IsWiX.WiXModel
         internal static void Register()
         {
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Wix.ElementName, xml => new global::IsWiX.WiXModel.Wix(xml));
+            global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Include.ElementName, xml => new global::IsWiX.WiXModel.Include(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Package.ElementName, xml => new global::IsWiX.WiXModel.Package(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Module.ElementName, xml => new global::IsWiX.WiXModel.Module(xml));
             global::IsWiX.WiXModel.Core.WixElementFactory.Register(global::IsWiX.WiXModel.Fragment.ElementName, xml => new global::IsWiX.WiXModel.Fragment(xml));

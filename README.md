@@ -1,7 +1,7 @@
 # IsWiX.WiXModel
 
-A typed object model for WiX v4+ source (`.wxs`) files, generated from the WiX schema and backed
-directly by the XML, so editing a hand-written file changes only what you edit.
+A typed object model for WiX v4+ source (`.wxs`) and include (`.wxi`) files, generated from the WiX schema
+and backed directly by the XML, so editing a hand-written file changes only what you edit.
 
 ```csharp
 using IsWiX.WiXModel;
@@ -15,6 +15,19 @@ component.Add(new File { Source = "App.exe", KeyPath = true });   // indented li
 
 document.Save("Package.wxs");
 ```
+
+## Source and include files
+
+| Class | File | Root |
+|---|---|---|
+| `WixDocument` | `.wxs` source | `Root` is a typed `Wix` |
+| `WixIncludeDocument` | `.wxi` include | `Root` is a typed `Include` |
+| `WixSourceDocument` | either | the base class; `WixSourceDocument.Load` returns whichever one the file is |
+
+The schema lets `<Include>` hold any element, so its contents are read through `Children`
+(`include.Root.Children.OfType<Property>()`) and added with `include.Root.Add(...)`. `<?define?>`, `<?if?>`
+and other preprocessor instructions are kept exactly as written. Loading a file with the wrong class fails
+with a message naming the right one.
 
 ## Layout
 

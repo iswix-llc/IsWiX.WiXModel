@@ -5,6 +5,7 @@
   "namespace": "IsWiX.WiXModel",
   "elements": [
     "Wix",
+    "Include",
     "Package",
     "Module",
     "Fragment",

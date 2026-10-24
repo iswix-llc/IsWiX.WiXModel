@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shared settings, pulled into Product.wxs with <?include Common.wxi?>. -->
+<Include xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <?define Manufacturer = "Acme" ?>
+  <?define ProductVersion = "1.2.3.0" ?>
+  <?if $(sys.BUILDARCH) = x64 ?>
+  <?define ProgramFilesFolder = "ProgramFiles64Folder" ?>
+  <?else?>
+  <?define ProgramFilesFolder = "ProgramFilesFolder" ?>
+  <?endif?>
+
+  <Property Id="ARPNOMODIFY" Value="1" />
+  <Property Id="ARPHELPLINK" Value="https://acme.example/help" />
+  <MajorUpgrade DowngradeErrorMessage="!(loc.NewerVersionInstalled)" />
+</Include>
