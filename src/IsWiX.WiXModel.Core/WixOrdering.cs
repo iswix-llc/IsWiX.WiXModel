@@ -186,6 +186,17 @@ namespace IsWiX.WiXModel.Core
                 return true;
             }
 
+            // Next to its own kind when there is one, so a file that is not (yet) in canonical order still gets the
+            // new element beside its siblings: after the last one that sorts at or before it, else in front of the
+            // first. In a canonical file this is the same place the kind order gives.
+            var sameKind = parent.Elements(child.Name).ToList();
+            if (sameKind.Count > 0)
+            {
+                var after = sameKind.LastOrDefault(s => Compare(parent.Name, s, child) <= 0);
+                predecessor = after ?? sameKind[0].ElementsBeforeSelf().LastOrDefault();
+                return true;
+            }
+
             foreach (var sibling in parent.Elements())
             {
                 if (Compare(parent.Name, sibling, child) <= 0)

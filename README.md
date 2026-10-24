@@ -45,6 +45,8 @@ package.Add(new Property { Id = "ARPNOMODIFY", Value = "1" });   // lands in Id 
 - `CanonicalOrder.Create()` is IsWiX's order: `Package` and `Fragment` children by kind (summary information
   and upgrade first, sequences last), `Property` and top-level `Feature` by `Id`, `Component` in a
   `ComponentGroup` by file source, `File` by source. Kinds it does not list go last, in their existing order.
+- In a file that is not yet in canonical order, a new element still goes beside the existing elements of its
+  kind, in key order among them, rather than where the kind order alone would put it.
 - Rules are data on a `WixOrdering` (`OrderChildren`, `SortBy`), so they can be extended or replaced.
 - `Canonicalize()` moves each element together with the comments directly above it, leaves an already
   canonical document byte-for-byte unchanged, and never reorders a parent containing `<?if?>` or

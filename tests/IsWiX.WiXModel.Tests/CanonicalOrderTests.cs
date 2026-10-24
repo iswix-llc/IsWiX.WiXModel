@@ -251,6 +251,38 @@ public class CanonicalOrderTests
     }
 
     [Fact]
+    public void In_a_file_not_in_canonical_order_new_elements_go_beside_their_own_kind()
+    {
+        // Like IsWiX's own MSI template: Icon before the properties, directories and features after UIRef.
+        var source = """
+            <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+              <Package Name="Sample" Manufacturer="Acme" Version="1.0.0.0">
+                <MajorUpgrade DowngradeErrorMessage="Newer version installed." />
+                <Icon Id="Icon.ico" SourceFile="Icon.ico" />
+                <Property Id="ARPPRODUCTICON" Value="Icon.ico" />
+                <Property Id="DISABLEADVTSHORTCUTS" Value="1" />
+                <UIRef Id="UI" />
+                <StandardDirectory Id="ProgramFiles6432Folder" />
+                <Feature Id="Main" />
+              </Package>
+            </Wix>
+            """;
+        var document = Canonical(source);
+        var package = document.Root.Packages.Single();
+
+        package.Add(new Property { Id = "NewProperty1" });
+        package.Add(new Property { Id = "AAA" });
+
+        Assert.Equal(
+            Lf(source).Replace(
+                "    <Property Id=\"ARPPRODUCTICON\" Value=\"Icon.ico\" />\n    <Property Id=\"DISABLEADVTSHORTCUTS\" Value=\"1\" />\n",
+                "    <Property Id=\"AAA\" />\n    <Property Id=\"ARPPRODUCTICON\" Value=\"Icon.ico\" />\n" +
+                "    <Property Id=\"DISABLEADVTSHORTCUTS\" Value=\"1\" />\n    <Property Id=\"NewProperty1\" />\n",
+                StringComparison.Ordinal),
+            document.ToString());
+    }
+
+    [Fact]
     public void Without_an_ordering_add_appends_after_the_last_sibling_of_the_same_kind()
     {
         var document = Parse(Source);
