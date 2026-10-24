@@ -49,47 +49,35 @@ namespace IsWiX.WiXModel
         /// <param name="stream">The stream, read to the end.</param>
         /// <returns>The document.</returns>
         /// <exception cref="WixDocumentException">The content is not a readable WiX v4+ source or include file.</exception>
-        public static WixSourceDocument Load(Stream stream) => FromXml(ReadXml(() => LosslessXml.Load(stream)));
+        public static WixSourceDocument Load(Stream stream) => FromXmlCore(ReadXml(() => LosslessXml.Load(stream)));
 
         /// <summary>Parses .wxs or .wxi text. See <see cref="Load(string)"/>.</summary>
         /// <param name="text">The WiX source.</param>
         /// <returns>The document.</returns>
         /// <exception cref="WixDocumentException">The text is not a WiX v4+ source or include document.</exception>
-        public static WixSourceDocument Parse(string text) => FromXml(ReadXml(() => LosslessXml.Parse(text)));
+        public static WixSourceDocument Parse(string text) => FromXmlCore(ReadXml(() => LosslessXml.Parse(text)));
 
         /// <summary>
         /// Saves to a file. The file is written to a temporary file first and then swapped in, so a failure
         /// part-way through never leaves a truncated source file.
         /// </summary>
         /// <param name="path">The destination.</param>
-        public void Save(string path)
-        {
-            var fullPath = Path.GetFullPath(path);
-            var temporary = fullPath + "." + Guid.NewGuid().ToString("N") + ".tmp";
-            try
-            {
-                using (var stream = System.IO.File.Create(temporary))
-                {
-                    Save(stream);
-                }
+        public void Save(string path) => LosslessXml.Save(Xml, path);
 
-                if (System.IO.File.Exists(fullPath))
-                {
-                    System.IO.File.Replace(temporary, fullPath, destinationBackupFileName: null);
-                }
-                else
-                {
-                    System.IO.File.Move(temporary, fullPath);
-                }
-            }
-            finally
-            {
-                if (System.IO.File.Exists(temporary))
-                {
-                    System.IO.File.Delete(temporary);
-                }
-            }
-        }
+        /// <summary>
+        /// Wraps an <see cref="XDocument"/> that is already in memory, such as one a host application owns, as a
+        /// <see cref="WixDocument"/> or <see cref="WixIncludeDocument"/> depending on its root element. The
+        /// document is not copied: edits through the model and edits to <paramref name="xml"/> are the same edits.
+        /// </summary>
+        /// <remarks>
+        /// Load the <see cref="XDocument"/> with <see cref="LosslessXml.Load(Stream)"/> to keep unchanged parts
+        /// byte-for-byte on save. A document loaded any other way still works, but is saved with normalized
+        /// markup (<see cref="IsLossless"/> is <see langword="false"/>).
+        /// </remarks>
+        /// <param name="xml">The document.</param>
+        /// <returns>The typed document.</returns>
+        /// <exception cref="WixDocumentException">The document is not a WiX v4+ source or include document.</exception>
+        public static WixSourceDocument FromXml(XDocument xml) => FromXmlCore(xml ?? throw new ArgumentNullException(nameof(xml)));
 
         /// <summary>Saves to a stream.</summary>
         /// <param name="stream">The destination.</param>
@@ -148,7 +136,7 @@ namespace IsWiX.WiXModel
                 $"The root element is <{root.Name.LocalName}> in namespace '{root.Name.NamespaceName}', not <{expected.LocalName}> in '{WixNamespaces.Wxs.NamespaceName}'.");
         }
 
-        private static WixSourceDocument FromXml(XDocument xml) =>
+        private static WixSourceDocument FromXmlCore(XDocument xml) =>
             xml.Root?.Name == Include.ElementName ? new WixIncludeDocument(xml) : new WixDocument(xml);
     }
 }

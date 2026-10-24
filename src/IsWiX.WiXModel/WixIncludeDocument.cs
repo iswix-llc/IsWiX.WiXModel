@@ -54,5 +54,13 @@ namespace IsWiX.WiXModel
         /// <returns>The document.</returns>
         /// <exception cref="WixDocumentException">The text is not a WiX v4+ include document.</exception>
         public static new WixIncludeDocument Parse(string text) => new WixIncludeDocument(ReadXml(() => LosslessXml.Parse(text)));
+
+        /// <summary>
+        /// Wraps an <see cref="XDocument"/> already in memory without copying it. See <see cref="WixSourceDocument.FromXml"/>.
+        /// </summary>
+        /// <param name="xml">The document.</param>
+        /// <returns>The typed document.</returns>
+        /// <exception cref="WixDocumentException">The root is not <c>&lt;Include&gt;</c> in the WiX v4+ namespace.</exception>
+        public static new WixIncludeDocument FromXml(XDocument xml) => new WixIncludeDocument(xml ?? throw new System.ArgumentNullException(nameof(xml)));
     }
 }

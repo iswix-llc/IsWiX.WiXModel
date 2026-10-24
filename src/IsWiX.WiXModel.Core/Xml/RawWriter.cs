@@ -10,16 +10,27 @@ namespace IsWiX.WiXModel.Core.Xml
     /// writing fresh, minimally escaped text for anything new or edited. Within a start tag, unchanged
     /// attributes keep their exact text and the whitespace before them, so multi-line attribute layouts survive edits.
     /// </summary>
+    /// <remarks>
+    /// Elements added with plain LINQ to XML (<c>XElement.Add</c> and friends, as older code does) carry no
+    /// whitespace. The writer lays those out as it writes, without changing the tree: a new element goes on its
+    /// own line, indented like its siblings, and a parent whose last child is new gets its end tag back on its
+    /// own line. Parents whose existing children are inline, or that contain text, are written as they are.
+    /// </remarks>
     internal sealed class RawWriter
     {
         private readonly StringBuilder _output = new StringBuilder();
         private readonly string _newLine;
+        private readonly string _indent;
 
-        private RawWriter(string newLine) => _newLine = newLine;
-
-        public static string Write(XDocument document, string newLine)
+        private RawWriter(string newLine, string indent)
         {
-            var writer = new RawWriter(newLine);
+            _newLine = newLine;
+            _indent = indent;
+        }
+
+        public static string Write(XDocument document, XmlTextFormat format)
+        {
+            var writer = new RawWriter(format.NewLine, format.Indent);
             writer.WriteDocument(document);
             return writer._output.ToString();
         }
@@ -73,7 +84,7 @@ namespace IsWiX.WiXModel.Core.Xml
             switch (node)
             {
                 case XElement element:
-                    WriteElement(element, inheritedDefault: null);
+                    WriteElement(element, inheritedDefault: null, indent: string.Empty);
                     break;
 
                 case XCData cdata:
@@ -133,7 +144,10 @@ namespace IsWiX.WiXModel.Core.Xml
             return true;
         }
 
-        private void WriteElement(XElement element, XNamespace? inheritedDefault)
+        /// <param name="element">The element.</param>
+        /// <param name="inheritedDefault">A default namespace declared by a fresh ancestor, if any.</param>
+        /// <param name="indent">The indentation of the line the element starts on.</param>
+        private void WriteElement(XElement element, XNamespace? inheritedDefault, string indent)
         {
             var raw = element.Annotation<RawElement>();
             var keepName = raw != null && raw.Name == element.Name;
@@ -174,20 +188,133 @@ namespace IsWiX.WiXModel.Core.Xml
             }
 
             _output.Append(raw != null && !raw.SelfClosing ? raw.Tail : ">");
-            foreach (var node in element.Nodes())
+            WriteContent(element, declareDefault ?? inheritedDefault, indent);
+            _output.Append(endTag);
+        }
+
+        private void WriteContent(XElement element, XNamespace? inheritedDefault, string indent)
+        {
+            var nodes = element.Nodes().ToList();
+            if (!NeedsLayout(element, nodes))
             {
+                foreach (var node in nodes)
+                {
+                    if (node is XElement child)
+                    {
+                        WriteElement(child, inheritedDefault, IndentBefore(child) ?? indent);
+                    }
+                    else
+                    {
+                        WriteNode(node);
+                    }
+                }
+
+                return;
+            }
+
+            var childIndent = SiblingIndent(nodes) ?? indent + _indent;
+            for (var i = 0; i < nodes.Count; i++)
+            {
+                var node = nodes[i];
+                if (IsWhitespace(node) && i + 1 < nodes.Count && nodes[i + 1] is XElement next && IsNew(next))
+                {
+                    // Whitespace in front of a new element (often the parent's closing whitespace, when the element
+                    // was appended): keep its line breaks, but line the element up with its siblings.
+                    var lineBreaks = Math.Max(1, ((XText)node).Value.Count(c => c == '\n'));
+                    for (var line = 0; line < lineBreaks; line++)
+                    {
+                        _output.Append(_newLine);
+                    }
+
+                    _output.Append(childIndent);
+                    continue;
+                }
+
                 if (node is XElement child)
                 {
-                    WriteElement(child, declareDefault ?? inheritedDefault);
+                    if (IsNew(child))
+                    {
+                        if (i == 0 || !IsWhitespace(nodes[i - 1]))
+                        {
+                            _output.Append(_newLine).Append(childIndent);
+                        }
+
+                        WriteElement(child, inheritedDefault, childIndent);
+                    }
+                    else
+                    {
+                        WriteElement(child, inheritedDefault, IndentBefore(child) ?? childIndent);
+                    }
+
+                    continue;
                 }
-                else
+
+                WriteNode(node);
+            }
+
+            var last = nodes[nodes.Count - 1];
+            if (!(IsWhitespace(last) && ((XText)last).Value.IndexOf('\n') >= 0))
+            {
+                _output.Append(_newLine).Append(indent);
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the element has new children to lay out, and content that layout cannot disturb: its
+        /// existing children are already one per line (or it has none), and it holds no text.
+        /// </summary>
+        private static bool NeedsLayout(XElement element, System.Collections.Generic.List<XNode> nodes)
+        {
+            if (!nodes.Any(n => n is XElement e && IsNew(e)) ||
+                nodes.Any(n => n is XText && !IsWhitespace(n)) ||
+                element.AncestorsAndSelf().Any(e => (string?)e.Attribute(XNamespace.Xml + "space") == "preserve"))
+            {
+                return false;
+            }
+
+            var hasExistingContent = nodes.Any(n => !IsWhitespace(n) && !(n is XElement e && IsNew(e)));
+            var isLaidOut = nodes.Any(n => IsWhitespace(n) && ((XText)n).Value.IndexOf('\n') >= 0);
+            return isLaidOut || !hasExistingContent;
+        }
+
+        /// <summary>Gets the indentation existing children use, preferring children that came from the source.</summary>
+        private static string? SiblingIndent(System.Collections.Generic.List<XNode> nodes)
+        {
+            string? any = null;
+            for (var i = 1; i < nodes.Count; i++)
+            {
+                if (nodes[i] is XElement element && IndentBefore(element) is { } indent)
                 {
-                    WriteNode(node);
+                    if (!IsNew(element))
+                    {
+                        return indent;
+                    }
+
+                    any ??= indent;
                 }
             }
 
-            _output.Append(endTag);
+            return any;
         }
+
+        private static string? IndentBefore(XNode node)
+        {
+            if (node.PreviousNode is XText text && IsWhitespace(text))
+            {
+                var newLine = text.Value.LastIndexOf('\n');
+                if (newLine >= 0)
+                {
+                    return text.Value.Substring(newLine + 1);
+                }
+            }
+
+            return null;
+        }
+
+        private static bool IsNew(XElement element) => element.Annotation<RawElement>() is null;
+
+        private static bool IsWhitespace(XNode node) =>
+            node is XText text && !(node is XCData) && text.Value.Trim(' ', '\t', '\r', '\n').Length == 0;
 
         private void WriteAttributes(XElement element, RawElement? raw)
         {

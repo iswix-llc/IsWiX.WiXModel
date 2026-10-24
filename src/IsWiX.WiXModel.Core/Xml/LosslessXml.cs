@@ -67,11 +67,51 @@ namespace IsWiX.WiXModel.Core.Xml
             stream.Write(bytes, 0, bytes.Length);
         }
 
-        /// <summary>Gets the document's text, as <see cref="Save"/> would write it.</summary>
+        /// <summary>
+        /// Saves a document to a file. The file is written to a temporary file first and then swapped in, so a
+        /// failure part-way through never leaves a truncated file.
+        /// </summary>
+        /// <param name="document">The document.</param>
+        /// <param name="path">The destination.</param>
+        public static void Save(XDocument document, string path)
+        {
+            if (document is null)
+            {
+                throw new ArgumentNullException(nameof(document));
+            }
+
+            var fullPath = Path.GetFullPath(path);
+            var temporary = fullPath + "." + Guid.NewGuid().ToString("N") + ".tmp";
+            try
+            {
+                using (var stream = File.Create(temporary))
+                {
+                    Save(document, stream);
+                }
+
+                if (File.Exists(fullPath))
+                {
+                    File.Replace(temporary, fullPath, destinationBackupFileName: null);
+                }
+                else
+                {
+                    File.Move(temporary, fullPath);
+                }
+            }
+            finally
+            {
+                if (File.Exists(temporary))
+                {
+                    File.Delete(temporary);
+                }
+            }
+        }
+
+        /// <summary>Gets the document's text, as <see cref="Save(XDocument, Stream)"/> would write it.</summary>
         /// <param name="document">The document.</param>
         /// <returns>The XML text.</returns>
         public static string ToXmlString(XDocument document) =>
-            RawWriter.Write(document ?? throw new ArgumentNullException(nameof(document)), GetFormat(document).NewLine);
+            RawWriter.Write(document ?? throw new ArgumentNullException(nameof(document)), GetFormat(document));
 
         /// <summary>Gets the format the document is saved with.</summary>
         /// <param name="document">The document.</param>
@@ -126,7 +166,7 @@ namespace IsWiX.WiXModel.Core.Xml
                 RawCapture.Capture(document, text);
 
                 // Belt and braces: the capture is only kept if it reproduces the source exactly.
-                if (!string.Equals(RawWriter.Write(document, newLine), text, StringComparison.Ordinal))
+                if (!string.Equals(RawWriter.Write(document, GetFormat(document)), text, StringComparison.Ordinal))
                 {
                     RawCapture.Clear(document);
                 }
